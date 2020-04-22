@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Glorpy: The Space Thing</string>
+    <string name="fire_button">FIRE</string>
+    <string name="score_text">SCORE: </string>
+    <string name="health_text">HEALTH: </string>
+    <string name="game_over">GAME OVER</string>
+    <string name="exit_button">EXIT TO MAIN</string>
+    <string name="play_again">PLAY AGAIN</string>
+    <string name="scores_button">HIGH SCORES</string>
+    <string name="scores_empty">There no scores to display. You could be #1!</string>
+    <string name="enter_name">Enter your name!</string>
+    <string name="rank_text">Rank:</string>
+    <string name="submit">submit</string>
+    <string name="user_name_hint">Enter up to 7 characters</string>
+    <string name="user_name_error">Error: Please enter a valid username</string>
+    <string name="upload_success">upload successful</string>
+    <string name="upload_error">upload error: Please try again!</string>
+    <string name="your_score_text">Your highest score:</string>
+    </resources>

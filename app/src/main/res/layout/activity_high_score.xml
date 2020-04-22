@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewHighScoreActivity">
+
+    <LinearLayout
+        android:id="@+id/enter_name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="64dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/geo"
+            android:text="@string/enter_name"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/username_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:hint="@string/user_name_hint"
+            android:maxLength="7" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rank_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/geo"
+            android:text="@string/rank_text"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/rank_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:fontFamily="@font/geo"
+            android:textSize="36sp"
+            tools:text="#5" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/score_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rank_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/geo"
+        android:textSize="52sp"
+        tools:text="654654 Pts" />
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"
+        android:text="@string/submit"
+        android:textSize="24sp" />
+
+    <ProgressBar
+        android:id="@+id/score_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+</RelativeLayout>

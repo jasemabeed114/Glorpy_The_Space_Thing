@@ -1,5 +1,7 @@
 package com.bronzeswordstudios.glorpythespacething;
 
+import android.provider.BaseColumns;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,6 +9,7 @@ public class DataHolder {
     public static final String SCORE_KEY = "score";
     // holds static data for use across activities
     public static int score;
+    public static int highestScore;
     public static int rank;
     public static ScoreItem userToRemove;
 
@@ -30,6 +33,13 @@ public class DataHolder {
             sortedItems = new ArrayList<>(Arrays.asList(score_array));
         }
         return sortedItems;
+    }
+
+    public static final class DataEntry implements BaseColumns {
+        public static final String _ID = BaseColumns._ID;
+        public static String HIGHEST_SCORE = "user_score";
+        public static final String[] projection = {_ID, HIGHEST_SCORE};
+        public static String TABLE_NAME = "glorpy_data";
     }
 }
 

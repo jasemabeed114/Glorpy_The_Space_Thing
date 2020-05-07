@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="0000"
-        android:id="@+id/user_score_number"
+        android:id="@+id/highest_score_number"
         android:textSize="24sp"
         android:layout_gravity="center"/>
     </LinearLayout>

@@ -1,7 +1,10 @@
 package com.bronzeswordstudios.glorpythespacething;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,6 +27,15 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+        if (DataHolder.score > DataHolder.highestScore){
+            ContentValues values = new ContentValues();
+            values.put(DataHolder.DataEntry.HIGHEST_SCORE, DataHolder.score);
+            String selection = DataHolder.DataEntry._ID + " = ?";
+            String selectionArgs[] = {"1"};
+            int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
+        }
         final int score = DataHolder.score;
         final TextView scoreValueView = findViewById(R.id.score_value);
         scoreValueView.setText(String.valueOf(score));

@@ -30,15 +30,18 @@ public class MainActivity extends AppCompatActivity {
             String highestScore = String.valueOf(cursor.getInt(1));
             highest_score_view.setText(highestScore);
             DataHolder.highestScore = Integer.parseInt(highestScore);
+            cursor.close();
         } else {
             highest_score_view.setText("0");
             DataHolder.highestScore = 0;
             ContentValues values = new ContentValues();
             values.put(DataHolder.DataEntry.HIGHEST_SCORE, 0);
             long newRowID = localDb.insert(DataHolder.DataEntry.TABLE_NAME, null, values);
+            cursor.close();
         }
         //test code
         Button playButton = findViewById(R.id.play_button);
+        Button scoreButton = findViewById(R.id.score_button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,26 +51,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        // test code
-        /*db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Error", "DocumentSnapshot added with ID: " + documentReference.getId());
-                        Intent intent = new Intent(MainActivity.this, GameActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Error", "Error adding document", e);
-                    }
-                });*/
-
+        scoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

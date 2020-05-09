@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#000000">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        tools:text="TITLE"
+        android:src="@drawable/title"
         android:textSize="64sp"/>
 
     <LinearLayout
@@ -37,7 +38,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="8dp"
-            android:text="Scores" />
+            android:text="@string/scores_button" />
 
         <Button
             android:id="@+id/stats_button"
@@ -63,7 +64,8 @@
         android:layout_height="wrap_content"
         android:text="@string/your_score_text"
         android:fontFamily="@font/geo"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +73,9 @@
         tools:text="0000"
         android:id="@+id/highest_score_number"
         android:textSize="24sp"
-        android:layout_gravity="center"/>
+        android:fontFamily="@font/geo"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:background="#000000">
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/background_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -14,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:src="@drawable/title"
-        android:textSize="64sp"/>
+        android:textSize="64sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,17 +30,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="8dp"
             android:gravity="center"
-            android:text="play"
-            android:layout_margin="8dp"/>
+            android:text="play" />
 
         <Button
             android:id="@+id/score_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_margin="8dp"
+            android:gravity="center"
             android:text="@string/scores_button" />
 
         <Button
@@ -45,8 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_margin="8dp"
+            android:gravity="center"
             android:text="Stats" />
 
     </LinearLayout>
@@ -54,28 +57,28 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="32dp">
+        android:layout_alignParentBottom="true"
+        android:layout_margin="32dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/your_score_text"
-        android:fontFamily="@font/geo"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/geo"
+            android:text="@string/your_score_text"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="0000"
-        android:id="@+id/highest_score_number"
-        android:textSize="24sp"
-        android:fontFamily="@font/geo"
-        android:layout_gravity="center"
-        android:textColor="#FFFFFF"/>
+        <TextView
+            android:id="@+id/highest_score_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/geo"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            tools:text="0000" />
     </LinearLayout>
 
 </RelativeLayout>

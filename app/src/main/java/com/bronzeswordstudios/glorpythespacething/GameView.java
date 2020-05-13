@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -15,10 +16,8 @@ public class GameView extends SurfaceView implements Runnable {
 
     public Glorpy glorpy;
     public ArrayList<FireBall> fireballs = new ArrayList<>();
-    public boolean gameEnd;
     volatile boolean playing;
     private Paint paint;
-    private Canvas canvas;
     private SurfaceHolder ourHolder;
     private Context context;
     private int screenX;
@@ -45,16 +44,24 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while (playing) {
-            // for testing
-            long frameStart = System.currentTimeMillis();
-            update();
-            draw();
-            control();
-           /* // for testing
-            long frameTime = System.currentTimeMillis() - frameStart;
-            if (frameTime >= 1) {
-                long fps = 1000 / frameTime;
-            }*/
+            try {
+                update();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ERROR: ", "" + e);
+            }
+            try {
+                draw();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ERROR: ", "" + e);
+            }
+            try {
+                control();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("ERROR: ", "" + e);
+            }
         }
     }
 
@@ -70,6 +77,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void draw() {
+        Canvas canvas;
         if (ourHolder.getSurface().isValid()) {
             canvas = ourHolder.lockCanvas();
             canvas.drawColor(Color.argb(255, 0, 0, 0));
@@ -101,11 +109,6 @@ public class GameView extends SurfaceView implements Runnable {
                 }
             }
             glorpy.animationControl(canvas, paint);
-            // for debugging fps
-            /*Paint textPaint = new Paint();
-            textPaint.setColor(Color.WHITE);
-            textPaint.setTextSize(48);
-            canvas.drawText(String.valueOf(fps), 0, screenY / 2, textPaint);*/
             ourHolder.unlockCanvasAndPost(canvas);
         }
     }

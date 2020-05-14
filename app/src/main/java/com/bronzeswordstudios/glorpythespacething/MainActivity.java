@@ -9,8 +9,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Display display = getWindowManager().getDefaultDisplay();
         Point displayPoint = new Point();
         display.getSize(displayPoint);
@@ -55,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
             long newRowID = localDb.insert(DataHolder.DataEntry.TABLE_NAME, null, values);
             cursor.close();
         }
-        Button playButton = findViewById(R.id.play_button);
-        Button scoreButton = findViewById(R.id.score_button);
+        ImageButton playButton = findViewById(R.id.play_button);
+        ImageButton scoreButton = findViewById(R.id.score_button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -15,6 +15,7 @@
         android:id="@+id/score_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#000000"
         android:scrollbars="vertical" />
 
     <TextView
@@ -24,5 +25,6 @@
         android:layout_centerInParent="true"
         android:fontFamily="@font/geo"
         android:text="@string/scores_empty"
+        android:textColor="#FFFFFF"
         android:textSize="16sp" />
 </RelativeLayout>

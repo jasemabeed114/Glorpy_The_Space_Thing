@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
         android:fontFamily="@font/geo"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         tools:text="User Name" />
 
@@ -26,6 +27,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:fontFamily="@font/geo"
+            android:textColor="#FFFFFF"
             android:textSize="36sp"
             tools:text="#1:" />
 
@@ -37,6 +39,7 @@
             android:layout_marginLeft="64dp"
             android:layout_toRightOf="@id/rank"
             android:fontFamily="@font/geo"
+            android:textColor="#FFFFFF"
             android:textSize="32sp"
             tools:text="5245 Pts" />
 
@@ -45,7 +48,7 @@
             android:layout_height="1dp"
             android:layout_below="@id/score_text_view"
             android:layout_marginTop="8dp"
-            android:background="#000000" />
+            android:background="#FFFFFF" />
 
     </RelativeLayout>
 

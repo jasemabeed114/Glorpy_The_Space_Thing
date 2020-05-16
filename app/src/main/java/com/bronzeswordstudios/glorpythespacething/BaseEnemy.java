@@ -28,7 +28,7 @@ class BaseEnemy {
     int currentFrame;
     long lastFrameChangeTime;
     int frameLengthInMilliseconds;
-    int shotTimeInMilliseconds;
+    int reloadTime;
     Rect frameToDraw;
     RectF whereToDraw;
     int maxY;
@@ -89,7 +89,7 @@ class BaseEnemy {
         lastFrameChangeTime = 0;
         lastShotTime = 0;
         frameLengthInMilliseconds = 50;
-        shotTimeInMilliseconds = 7000;
+        reloadTime = 7000;
         frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
         whereToDraw = new RectF(x, 0, x + frameWidth, y + frameHeight);
 
@@ -186,6 +186,12 @@ class BaseEnemy {
         }
     }
 
+    boolean timeToShoot(){
+        long currentTime = System.currentTimeMillis();
+        long timeElapsed = currentTime - lastShotTime;
+        return timeElapsed >= reloadTime;
+    }
+
     Rect getHitBox() {
         return hitBox;
     }
@@ -198,8 +204,8 @@ class BaseEnemy {
         return y;
     }
 
-    int getShotTimeInMilliseconds() {
-        return shotTimeInMilliseconds;
+    int getreloadTime() {
+        return reloadTime;
     }
 
     int getEnemyAICode() {

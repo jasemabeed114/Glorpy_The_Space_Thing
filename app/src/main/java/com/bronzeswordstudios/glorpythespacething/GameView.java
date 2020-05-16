@@ -213,11 +213,10 @@ public class GameView extends SurfaceView implements Runnable {
                     baseEnemies.remove(i);
                     break;
                 }
-                long time = System.currentTimeMillis();
-                if (time > baseEnemy.lastShotTime + baseEnemy.getShotTimeInMilliseconds() &&
+                if (baseEnemy.timeToShoot() &&
                         baseEnemy.getEnemyAICode() >= 5 && baseEnemy.getX() <= baseEnemy.getFiringRange()) {
                     laserBlasts.add(new LaserBlast(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY));
-                    baseEnemy.lastShotTime = time;
+                    baseEnemy.lastShotTime = System.currentTimeMillis();
                 }
             }
         }

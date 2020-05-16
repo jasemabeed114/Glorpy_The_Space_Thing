@@ -10,46 +10,47 @@ import android.graphics.RectF;
 
 import java.util.Random;
 
-public class BaseEnemy {
+class BaseEnemy {
 
-    public long lastShotTime;
-    public boolean isDestroyed;
-    public boolean deleteShip;
+    long lastShotTime;
+    boolean isDestroyed;
+    boolean deleteShip;
     Glorpy glorpy;
-    private int bitFrames;
-    private Rect hitBox;
-    private Bitmap bitmap;
-    private int x, y;
-    private int maxX;
-    private int health;
-    private int velocity;
-    private int frameWidth;
-    private int frameHeight;
-    private int currentFrame;
-    private long lastFrameChangeTime;
-    private int frameLengthInMilliseconds;
-    private int shotTimeInMilliseconds;
-    private Rect frameToDraw;
-    private RectF whereToDraw;
-    private int maxY;
-    private int minY;
-    private Random typeGenerator = new Random();
-    private int enemyArtAssetNum;
-    private int enemyAICode;
-    private int firingRange;
-    private boolean moveUp;
-    private boolean moveDown;
-    private int scoreValue;
+    int bitFrames;
+    Rect hitBox;
+    Bitmap bitmap;
+    int x, y;
+    int maxX;
+    int health;
+    int velocity;
+    int frameWidth;
+    int frameHeight;
+    int currentFrame;
+    long lastFrameChangeTime;
+    int frameLengthInMilliseconds;
+    int shotTimeInMilliseconds;
+    Rect frameToDraw;
+    RectF whereToDraw;
+    int maxY;
+    int minY;
+    Random typeGenerator = new Random();
+    int enemyArtAssetNum;
+    int enemyAICode;
+    int firingRange;
+    boolean moveUp;
+    boolean moveDown;
+    int scoreValue;
     // designed for a phone that is x:1920 by y:1080 so we must scale to other screens
     // to maintain play style
-    private float scaleFactorX;
-    private float scaleFactorY;
-    private int damage;
+    float scaleFactorX;
+    float scaleFactorY;
+    int damage;
+    float bitScale;
 
-    public BaseEnemy(Context context, int screenX, int screenY, Glorpy glorpy) {
+    BaseEnemy(Context context, int screenX, int screenY, Glorpy glorpy) {
         scaleFactorX = screenScaleX((float) screenX);
         scaleFactorY = screenScaleY((float) screenY);
-        float bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
         scoreValue = 55;
         minY = 0;
         maxX = screenX;
@@ -94,7 +95,7 @@ public class BaseEnemy {
 
     }
 
-    public void update() {
+    void update() {
         if (enemyAICode >= 5) {
             if (x > firingRange) {
                 x -= velocity * scaleFactorX;
@@ -143,13 +144,13 @@ public class BaseEnemy {
         hitBox.bottom = y + frameHeight - (int) (25 * scaleFactorY);
     }
 
-    public void animationControl(Canvas canvas, Paint paint) {
+    void animationControl(Canvas canvas, Paint paint) {
         whereToDraw.set(x, y, x + frameWidth, y + frameHeight);
         getCurrentFrame();
         canvas.drawBitmap(bitmap, frameToDraw, whereToDraw, paint);
     }
 
-    private void getCurrentFrame() {
+    void getCurrentFrame() {
         long time = System.currentTimeMillis();
         if (isDestroyed) {
             if (time > lastFrameChangeTime + frameLengthInMilliseconds) {
@@ -167,17 +168,17 @@ public class BaseEnemy {
         frameToDraw.right = frameToDraw.left + frameWidth;
     }
 
-    private float screenScaleX(float screenX) {
+    float screenScaleX(float screenX) {
         screenX = screenX / 1920f;
         return screenX;
     }
 
-    private float screenScaleY(float screenY) {
+    float screenScaleY(float screenY) {
         screenY = screenY / 930f;
         return screenY;
     }
 
-    private float bitmapScale(float scaleX, float scaleY) {
+    float bitmapScale(float scaleX, float scaleY) {
         if (scaleX > scaleY) {
             return scaleX;
         } else {
@@ -185,39 +186,39 @@ public class BaseEnemy {
         }
     }
 
-    public Rect getHitBox() {
+    Rect getHitBox() {
         return hitBox;
     }
 
-    public int getX() {
+    int getX() {
         return x;
     }
 
-    public int getY() {
+    int getY() {
         return y;
     }
 
-    public int getShotTimeInMilliseconds() {
+    int getShotTimeInMilliseconds() {
         return shotTimeInMilliseconds;
     }
 
-    public int getEnemyAICode() {
+    int getEnemyAICode() {
         return enemyAICode;
     }
 
-    public int getFiringRange() {
+    int getFiringRange() {
         return firingRange;
     }
 
-    public int getScoreValue() {
+    int getScoreValue() {
         return scoreValue;
     }
 
-    public int getDamage() {
+    int getDamage() {
         return damage;
     }
 
-    public int getEnemyArtAssetNum() {
+    int getEnemyArtAssetNum() {
         return enemyArtAssetNum;
     }
 }

@@ -119,9 +119,9 @@ public class GameView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
 
         }
-        int enemycount = updateDifficulty(DataHolder.score);
+        int enemyCount = updateDifficulty(DataHolder.score);
 
-        if (baseEnemies.size() < enemycount) {
+        if (baseEnemies.size() < enemyCount) {
             BaseEnemy baseEnemy = new BaseEnemy(context, screenX, screenY, glorpy);
             baseEnemies.add(baseEnemy);
         }
@@ -283,18 +283,18 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private int updateDifficulty(int score) {
-        int enemycount;
+        int enemyCount;
 
         if (score < 100) {
-            enemycount = 1;
+            enemyCount = 1;
         } else if (score < 200) {
-            enemycount = score / 100;
+            enemyCount = score / 100;
         } else if (score < 2000) {
-            enemycount = 2 + score / 500;
+            enemyCount = 2 + score / 500;
         } else {
-            enemycount = 6 + score / 2000;
+            enemyCount = 6 + score / 2000;
         }
-        return enemycount;
+        return enemyCount;
 
     }
 

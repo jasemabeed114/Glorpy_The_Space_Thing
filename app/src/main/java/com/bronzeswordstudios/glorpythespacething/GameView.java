@@ -318,7 +318,7 @@ public class GameView extends SurfaceView implements Runnable {
                             screenX, screenY, bigBossBlaster));
                     bigBossBlaster.setAnimationStartTime(System.currentTimeMillis());
                 } else {
-                    if (System.currentTimeMillis() - bigBossBlaster.getAnimationStartTime() >= 1500) {
+                    if (System.currentTimeMillis() - bigBossBlaster.getAnimationStartTime() >= 1500 || this.bigBossBlaster == null) {
                         graphicElements.remove(0);
                         graphicElements.add(new BigBlast(context, bigBossBlaster.getX(),
                                 bigBossBlaster.getY(), screenX, screenY));

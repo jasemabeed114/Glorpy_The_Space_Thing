@@ -54,7 +54,7 @@ public class Glorpy {
         frameLengthInMilliseconds = 50;
         frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
         whereToDraw = new RectF(x, 0, x + frameWidth, frameHeight);
-        fireDamage = -100; //todo: add modifier later
+        fireDamage = -10; //todo: add modifier later
 
 
     }

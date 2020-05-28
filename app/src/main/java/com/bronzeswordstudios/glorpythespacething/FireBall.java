@@ -78,6 +78,8 @@ public class FireBall {
         }
         frameToDraw.left = currentFrame * frameWidth;
         frameToDraw.right = frameToDraw.left + frameWidth;
+        frameToDraw.top = 0;
+        frameToDraw.bottom = frameHeight;
     }
 
     private float screenScaleX(float screenX) {

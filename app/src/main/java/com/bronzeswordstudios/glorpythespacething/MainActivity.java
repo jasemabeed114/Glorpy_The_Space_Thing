@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         backgroundView.addView(mainBackgroundView);
 
         backTrack = MediaPlayer.create(this, R.raw.glorpy_main);
-        backTrack.setVolume(0.075f, 0.075f);
+        //backTrack.setVolume(1.0f, 1.0f);
         backTrack.start();
 
 

@@ -6,30 +6,42 @@ import android.graphics.BitmapFactory;
 
 public class BigBossBlaster extends BaseEnemy {
 
-    private boolean cannonCharged;
+    static final int AI_POSITION_MODE = 0;
+    static final int AI_LASER_MODE = 1;
+    static final int AI_CANNON_MODE = 2;
+    static final int AI_KAMIKAZE_MODE = 3;
     private int cannonChargeTime;
-    private long cannonShotTime;
+    private long animationStartTime;
     private long lastCannonShotTime;
     private long attackRunTime;
     private long lastRunTime;
-    private boolean directionEstablished;
-    private int direction;
+    private boolean moveUp;
+    private long laserReload;
+    private long lastLaserShot;
+    private int currentAI;
+    private boolean ramDamaged;
+    private int health;
 
     public BigBossBlaster(Context context, int screenX, int screenY, Glorpy glorpy) {
         super(context, screenX, screenY, glorpy);
-        frameHeight = (int) (200 * bitScale);
-        frameWidth = (int) (275 * bitScale);
+        frameHeight = (int) (98 * bitScale);
+        frameWidth = (int) (300 * bitScale);
         bitFrames = 4;
+        damage = -25;
+        health = 300;
         reloadTime = 3000;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.big_boss_blaster);
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth * bitFrames, frameHeight, false);
         scoreValue = 2500;
-        cannonCharged = false;
-        directionEstablished = false;
+        moveUp = true;
         cannonChargeTime = 10000;
         attackRunTime = 20000;
+        laserReload = 2000;
         velocity = 20;
-        direction = 0;
+        currentAI = 0;
+        lastCannonShotTime = System.currentTimeMillis();
+        lastRunTime = System.currentTimeMillis();
+        lastLaserShot = System.currentTimeMillis();
     }
 
     @Override
@@ -44,33 +56,67 @@ public class BigBossBlaster extends BaseEnemy {
         }
         frameToDraw.left = currentFrame * frameWidth;
         frameToDraw.right = frameToDraw.left + frameWidth;
+        frameToDraw.top = 0;
+        frameToDraw.bottom = frameHeight;
     }
 
     @Override
     void update() {
-        if (x > firingRange) {
-            x--;
-        } else if (!timeToShootCannon() && beginAttackRun()) {
-            x -= velocity;
-            if (!directionEstablished) {
-                establishDirection();
-            } else if (direction > 0 && x > 0) {
-                y += velocity;
-            } else if (direction < 0 && x > 0) {
-                y -= velocity;
-            } else if (x <= 0) {
-                x = maxX;
-                directionEstablished = false;
-                lastRunTime = System.currentTimeMillis();
-            }
+        switch (currentAI) {
+            case AI_POSITION_MODE:
+                int bitmapRightEdge = x + frameWidth;
+                // make sure all in view
+                if (bitmapRightEdge > (maxX - 30)) {
+                    x -= 7;
+                } else {
+                    currentAI = AI_LASER_MODE;
+                }
+                break;
+            case AI_LASER_MODE:
+                if (moveUp) {
+                    y -= 5;
+                    if (y <= 0) {
+                        y = 0;
+                        moveUp = false;
+                    }
+                } else {
+                    y += 5;
+                    if (y >= maxY) {
+                        y = maxY;
+                        moveUp = true;
+                    }
+                }
+                if (timeToShootCannon()) {
+                    currentAI = AI_CANNON_MODE;
+                    break;
+                }
+                if (beginAttackRun()) {
+                    currentAI = AI_KAMIKAZE_MODE;
+                    break;
+                }
+                break;
+            case AI_CANNON_MODE:
+                // hold position, to be handled in GameView since spawning game elements
+                break;
+            case AI_KAMIKAZE_MODE:
+                x -= velocity;
+                if (glorpy.getY() > y) {
+                    y += 5;
+                } else {
+                    y -= 5;
+                }
+                if (x <= 0 - frameWidth) {
+                    x = maxX;
+                    currentAI = AI_POSITION_MODE;
+                    lastRunTime = System.currentTimeMillis();
+                    ramDamaged = false;
+                }
+                break;
         }
-        else if (timeToShootCannon()){
-            //todo: need code to spawn cannon fire
-
-        }
-        else {
-            //todo: write code to move up and down
-        }
+        hitBox.left = x;
+        hitBox.top = y;
+        hitBox.right = x + frameWidth;
+        hitBox.bottom = y + frameHeight;
     }
 
     private boolean timeToShootCannon() {
@@ -85,13 +131,54 @@ public class BigBossBlaster extends BaseEnemy {
         return timeElapsed >= attackRunTime;
     }
 
-    private void establishDirection() {
-        if (glorpy.getY() > y) {
-            directionEstablished = true;
-            direction = 1;
-        } else {
-            directionEstablished = true;
-            direction = -1;
-        }
+    boolean fireLaser() {
+        long currentTime = System.currentTimeMillis();
+        long timeElapsed = currentTime - lastLaserShot;
+        return timeElapsed >= laserReload;
+    }
+
+    int getFrameHeight() {
+        return frameHeight;
+    }
+
+
+    void setLastLaserShot(long lastLaserShot) {
+        this.lastLaserShot = lastLaserShot;
+    }
+
+    int getCurrentAI() {
+        return currentAI;
+    }
+
+    void setCurrentAI(int currentAI) {
+        this.currentAI = currentAI;
+    }
+
+    long getAnimationStartTime() {
+        return animationStartTime;
+    }
+
+    void setAnimationStartTime(long animationStartTime) {
+        this.animationStartTime = animationStartTime;
+    }
+
+    void setLastCannonShotTime(long lastCannonShotTime) {
+        this.lastCannonShotTime = lastCannonShotTime;
+    }
+
+    public boolean isRamDamaged() {
+        return ramDamaged;
+    }
+
+    public void setRamDamaged(boolean ramDamaged) {
+        this.ramDamaged = ramDamaged;
+    }
+
+    public void updateHealth(int healthValue) {
+        health += healthValue;
+    }
+
+    public int getHealth() {
+        return health;
     }
 }

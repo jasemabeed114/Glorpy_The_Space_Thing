@@ -186,7 +186,7 @@ class BaseEnemy {
         }
     }
 
-    boolean timeToShoot(){
+    boolean timeToShoot() {
         long currentTime = System.currentTimeMillis();
         long timeElapsed = currentTime - lastShotTime;
         return timeElapsed >= reloadTime;

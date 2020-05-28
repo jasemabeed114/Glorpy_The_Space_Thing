@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,8 +27,10 @@ public class GameView extends SurfaceView implements Runnable {
     private ArrayList<BaseEnemy> baseEnemies = new ArrayList<>();
     private ArrayList<LaserBlast> laserBlasts = new ArrayList<>();
     private ArrayList<PilotPowerUp> pilotPowerUps = new ArrayList<>();
+    private ArrayList<GraphicElement> graphicElements = new ArrayList<>();
     private Thread gameThread;
     private Activity gameActivity;
+    private BigBossBlaster bigBossBlaster;
 
 
     public GameView(Context context, Activity gameActivity, int x, int y) {
@@ -38,6 +41,7 @@ public class GameView extends SurfaceView implements Runnable {
         screenX = x;
         screenY = y;
         this.gameActivity = gameActivity;
+        //test boss
         startGame();
     }
 
@@ -73,6 +77,8 @@ public class GameView extends SurfaceView implements Runnable {
         updateEnemies(baseEnemies, laserBlasts, glorpy);
         updateLasers(laserBlasts, glorpy);
         updatePilots(pilotPowerUps, glorpy);
+        updateBigBossBlaster(bigBossBlaster, glorpy);
+        updateGraphics(graphicElements, glorpy);
         glorpy.update();
     }
 
@@ -108,6 +114,8 @@ public class GameView extends SurfaceView implements Runnable {
                     pilot.draw(canvas, paint);
                 }
             }
+            drawBigBossBlaster(bigBossBlaster, canvas, paint);
+            drawGraphics(graphicElements, canvas, paint);
             glorpy.animationControl(canvas, paint);
             ourHolder.unlockCanvasAndPost(canvas);
         }
@@ -146,6 +154,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void startGame() {
         glorpy = new Glorpy(context, screenX, screenY);
+        bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
         int numStars = 15;
         for (int i = 0; i < numStars; i++) {
             Star star = new Star(context, screenX, screenY);
@@ -283,18 +292,126 @@ public class GameView extends SurfaceView implements Runnable {
 
     private int updateDifficulty(int score) {
         int enemyCount;
-
-        if (score < 100) {
-            enemyCount = 1;
-        } else if (score < 200) {
-            enemyCount = score / 100;
-        } else if (score < 2000) {
-            enemyCount = 2 + score / 500;
-        } else {
-            enemyCount = 6 + score / 2000;
-        }
+        if (bigBossBlaster == null) {
+            if (score < 100) {
+                enemyCount = 1;
+            } else if (score < 200) {
+                enemyCount = score / 100;
+            } else if (score < 2000) {
+                enemyCount = 2 + score / 500;
+            } else {
+                enemyCount = 6 + score / 2000;
+            }
+        } else enemyCount = 0;
         return enemyCount;
 
+    }
+
+    private void updateBigBossBlaster(BigBossBlaster bigBossBlaster, Glorpy glorpy) {
+        if (bigBossBlaster != null) {
+            bigBossBlaster.update();
+            if (bigBossBlaster.getCurrentAI() == BigBossBlaster.AI_CANNON_MODE) {
+                if (graphicElements.size() == 0) {
+                    graphicElements.add(new CannonCharging(context, bigBossBlaster.getX(),
+                            bigBossBlaster.getY() + ((bigBossBlaster.getFrameHeight())
+                                    * (int) screenScaleY(screenY)) - CannonCharging.getFrameHeight(screenX, screenY),
+                            screenX, screenY, bigBossBlaster));
+                    bigBossBlaster.setAnimationStartTime(System.currentTimeMillis());
+                } else {
+                    if (System.currentTimeMillis() - bigBossBlaster.getAnimationStartTime() >= 1500) {
+                        graphicElements.remove(0);
+                        graphicElements.add(new BigBlast(context, bigBossBlaster.getX(),
+                                bigBossBlaster.getY(), screenX, screenY));
+                        bigBossBlaster.setLastCannonShotTime(System.currentTimeMillis());
+                        bigBossBlaster.setLastLaserShot(System.currentTimeMillis());
+                        bigBossBlaster.setCurrentAI(BigBossBlaster.AI_LASER_MODE);
+                    }
+                }
+
+            }
+            if (bigBossBlaster.getCurrentAI() == BigBossBlaster.AI_LASER_MODE) {
+                if (bigBossBlaster.fireLaser()) {
+                    laserBlasts.add(new LaserBlast(context, bigBossBlaster.getX(), bigBossBlaster.getY(), screenX, screenY));
+                    bigBossBlaster.setLastLaserShot(System.currentTimeMillis());
+                }
+            }
+            if (Rect.intersects(bigBossBlaster.getHitBox(), glorpy.gethitBox()) && !bigBossBlaster.isRamDamaged()) {
+                bigBossBlaster.setRamDamaged(true);
+                final int ramDamage = bigBossBlaster.getDamage();
+                gameActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameActivity.updateHealth(ramDamage);
+                    }
+                });
+            }
+        }
+        for (int i = 0; i < fireballs.size(); i++) {
+            FireBall fireBall = fireballs.get(i);
+            if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
+                bigBossBlaster.updateHealth(glorpy.getFireDamage());
+                if (bigBossBlaster.getHealth() <= 0) {
+                    this.bigBossBlaster = null;
+                    final int scoreValue = bigBossBlaster.getScoreValue();
+                    gameActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            GameActivity.updateScore(scoreValue);
+                        }
+                    });
+                }
+                fireballs.remove(i);
+                break;
+            }
+        }
+
+    }
+
+    private void updateGraphics(final ArrayList<GraphicElement> graphicElements, Glorpy glorpy) {
+        if (graphicElements.size() > 0) {
+            for (int i = 0; i < graphicElements.size(); i++) {
+                final GraphicElement currentElement = graphicElements.get(i);
+                graphicElements.get(i).update();
+                if (currentElement.getX() < 0) {
+                    graphicElements.remove(i);
+                    break;
+                }
+                if (Rect.intersects(glorpy.gethitBox(), currentElement.getHitBox())) {
+                    gameActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            GameActivity.updateHealth(currentElement.getDamage());
+                        }
+                    });
+                    graphicElements.remove(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void drawGraphics(ArrayList<GraphicElement> graphicElements, Canvas canvas, Paint paint) {
+        if (graphicElements.size() > 0) {
+            for (int i = 0; i < graphicElements.size(); i++) {
+                graphicElements.get(i).animationControl(canvas, paint);
+            }
+        }
+    }
+
+    private void drawBigBossBlaster(BigBossBlaster bigBossBlaster, Canvas canvas, Paint paint) {
+        if (bigBossBlaster != null) {
+            bigBossBlaster.animationControl(canvas, paint);
+        }
+    }
+
+    float screenScaleX(float screenX) {
+        screenX = screenX / 1920f;
+        return screenX;
+    }
+
+    float screenScaleY(float screenY) {
+        screenY = screenY / 930f;
+        return screenY;
     }
 
 

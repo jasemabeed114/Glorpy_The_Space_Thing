@@ -32,6 +32,7 @@ public class Glorpy {
     // to maintain play style
     private float scaleFactorX;
     private float scaleFactorY;
+    private int fireDamage;
 
     public Glorpy(Context context, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);
@@ -53,6 +54,7 @@ public class Glorpy {
         frameLengthInMilliseconds = 50;
         frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
         whereToDraw = new RectF(x, 0, x + frameWidth, frameHeight);
+        fireDamage = -100; //todo: add modifier later
 
 
     }
@@ -105,6 +107,8 @@ public class Glorpy {
         //the next frame on the sprite sheet
         frameToDraw.left = currentFrame * frameWidth;
         frameToDraw.right = frameToDraw.left + frameWidth;
+        frameToDraw.top = 0;
+        frameToDraw.bottom = frameHeight;
 
     }
 
@@ -161,5 +165,9 @@ public class Glorpy {
 
     public void setIsShooting(boolean isShooting) {
         this.isShooting = isShooting;
+    }
+
+    public int getFireDamage() {
+        return fireDamage;
     }
 }

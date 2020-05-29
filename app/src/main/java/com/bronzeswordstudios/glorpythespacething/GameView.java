@@ -345,26 +345,25 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                 });
             }
-        }
-        for (int i = 0; i < fireballs.size(); i++) {
-            FireBall fireBall = fireballs.get(i);
-            if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
-                bigBossBlaster.updateHealth(glorpy.getFireDamage());
-                if (bigBossBlaster.getHealth() <= 0) {
-                    this.bigBossBlaster = null;
-                    final int scoreValue = bigBossBlaster.getScoreValue();
-                    gameActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            GameActivity.updateScore(scoreValue);
-                        }
-                    });
+            for (int i = 0; i < fireballs.size(); i++) {
+                FireBall fireBall = fireballs.get(i);
+                if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
+                    bigBossBlaster.updateHealth(glorpy.getFireDamage());
+                    if (bigBossBlaster.getHealth() <= 0) {
+                        this.bigBossBlaster = null;
+                        final int scoreValue = bigBossBlaster.getScoreValue();
+                        gameActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                GameActivity.updateScore(scoreValue);
+                            }
+                        });
+                    }
+                    fireballs.remove(i);
+                    break;
                 }
-                fireballs.remove(i);
-                break;
             }
         }
-
     }
 
     private void updateGraphics(final ArrayList<GraphicElement> graphicElements, Glorpy glorpy) {

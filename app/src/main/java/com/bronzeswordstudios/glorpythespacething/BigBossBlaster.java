@@ -67,20 +67,20 @@ public class BigBossBlaster extends BaseEnemy {
                 int bitmapRightEdge = x + frameWidth;
                 // make sure all in view
                 if (bitmapRightEdge > (maxX - 30)) {
-                    x -= 7;
+                    x -= 7 * scaleFactorX;
                 } else {
                     currentAI = AI_LASER_MODE;
                 }
                 break;
             case AI_LASER_MODE:
                 if (moveUp) {
-                    y -= 5;
+                    y -= 5 * scaleFactorY;
                     if (y <= 0) {
                         y = 0;
                         moveUp = false;
                     }
                 } else {
-                    y += 5;
+                    y += 5 * scaleFactorY;
                     if (y >= maxY) {
                         y = maxY;
                         moveUp = true;
@@ -101,9 +101,9 @@ public class BigBossBlaster extends BaseEnemy {
             case AI_KAMIKAZE_MODE:
                 x -= velocity;
                 if (glorpy.getY() > y) {
-                    y += 5;
+                    y += 3 * scaleFactorY;
                 } else {
-                    y -= 5;
+                    y -= 3 * scaleFactorY;
                 }
                 if (x <= 0 - frameWidth) {
                     x = maxX;

@@ -370,7 +370,7 @@ public class GameView extends SurfaceView implements Runnable {
                         });
                     }
                     Random randInt = new Random();
-                    int yHitPosition = fireBall.getHitBox().centerY() + randInt.nextInt(200) - 100;
+                    int yHitPosition = fireBall.getHitBox().centerY() + randInt.nextInt(150) - 75;
                     int xHitPosition = fireBall.getX() + randInt.nextInt(100);
                     graphicElements.add(new FireDamageGraphic(context, xHitPosition, yHitPosition, screenX, screenY));
                     fireballs.remove(i);

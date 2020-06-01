@@ -31,6 +31,10 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread gameThread;
     private Activity gameActivity;
     private BigBossBlaster bigBossBlaster;
+    private CannonCharging cannonCharging;
+    private Rect explosionLocation;
+    private int explosionCounter;
+    private long lastExplosionTime;
 
 
     public GameView(Context context, Activity gameActivity, int x, int y) {
@@ -79,6 +83,7 @@ public class GameView extends SurfaceView implements Runnable {
         updatePilots(pilotPowerUps, glorpy);
         updateBigBossBlaster(bigBossBlaster, glorpy);
         updateGraphics(graphicElements, glorpy);
+        createExplosion(explosionLocation);
         glorpy.update();
     }
 
@@ -311,15 +316,17 @@ public class GameView extends SurfaceView implements Runnable {
         if (bigBossBlaster != null) {
             bigBossBlaster.update();
             if (bigBossBlaster.getCurrentAI() == BigBossBlaster.AI_CANNON_MODE) {
-                if (graphicElements.size() == 0) {
-                    graphicElements.add(new CannonCharging(context, bigBossBlaster.getX(),
+                if (!graphicElements.contains(cannonCharging)) {
+                    cannonCharging = new CannonCharging(context, bigBossBlaster.getX(),
                             bigBossBlaster.getY() + ((bigBossBlaster.getFrameHeight())
                                     * (int) screenScaleY(screenY)) - CannonCharging.getFrameHeight(screenX, screenY),
-                            screenX, screenY, bigBossBlaster));
+                            screenX, screenY, bigBossBlaster);
+                    graphicElements.add(cannonCharging);
                     bigBossBlaster.setAnimationStartTime(System.currentTimeMillis());
                 } else {
                     if (System.currentTimeMillis() - bigBossBlaster.getAnimationStartTime() >= 1500 || this.bigBossBlaster == null) {
-                        graphicElements.remove(0);
+                        graphicElements.remove(cannonCharging);
+                        cannonCharging = null;
                         graphicElements.add(new BigBlast(context, bigBossBlaster.getX(),
                                 bigBossBlaster.getY(), screenX, screenY));
                         bigBossBlaster.setLastCannonShotTime(System.currentTimeMillis());
@@ -350,6 +357,9 @@ public class GameView extends SurfaceView implements Runnable {
                 if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
                     bigBossBlaster.updateHealth(glorpy.getFireDamage());
                     if (bigBossBlaster.getHealth() <= 0) {
+                        explosionLocation = bigBossBlaster.getHitBox();
+                        explosionCounter = 30;
+                        lastExplosionTime = System.currentTimeMillis();
                         this.bigBossBlaster = null;
                         final int scoreValue = bigBossBlaster.getScoreValue();
                         gameActivity.runOnUiThread(new Runnable() {
@@ -359,6 +369,10 @@ public class GameView extends SurfaceView implements Runnable {
                             }
                         });
                     }
+                    Random randInt = new Random();
+                    int yHitPosition = fireBall.getHitBox().centerY() + randInt.nextInt(200) - 100;
+                    int xHitPosition = fireBall.getX() + randInt.nextInt(100);
+                    graphicElements.add(new FireDamageGraphic(context, xHitPosition, yHitPosition, screenX, screenY));
                     fireballs.remove(i);
                     break;
                 }
@@ -382,6 +396,10 @@ public class GameView extends SurfaceView implements Runnable {
                             GameActivity.updateHealth(currentElement.getDamage());
                         }
                     });
+                    graphicElements.remove(i);
+                    break;
+                }
+                if (currentElement.isNeedDelete()) {
                     graphicElements.remove(i);
                     break;
                 }
@@ -411,6 +429,21 @@ public class GameView extends SurfaceView implements Runnable {
     float screenScaleY(float screenY) {
         screenY = screenY / 930f;
         return screenY;
+    }
+
+    private void createExplosion(Rect location) {
+        if (location != null && explosionCounter > 0) {
+            if (System.currentTimeMillis() - lastExplosionTime > 100) {
+                Random randInt = new Random();
+                int xPos = randInt.nextInt(location.right - location.left) + location.left;
+                int yPos = randInt.nextInt(location.bottom - location.top) + location.top;
+                graphicElements.add(new FireDamageGraphic(context, xPos, yPos, screenX, screenY));
+                explosionCounter--;
+            }
+        }
+        if (explosionCounter == 0){
+            explosionLocation = null;
+        }
     }
 
 

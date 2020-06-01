@@ -28,12 +28,13 @@ public class GraphicElement {
     float scaleFactorY;
     boolean needDelete;
     Context context;
+    float bitScale;
 
     public GraphicElement(Context context, int positionX, int positionY, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);
         scaleFactorY = screenScaleY((float) screenY);
         this.context = context;
-        float bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
         // bitFrames must be updated per game object's sprite sheet. How many frames does it have?
         bitFrames = 5;
         // bitmap to be updated in the child class
@@ -122,5 +123,9 @@ public class GraphicElement {
 
     public Rect getHitBox() {
         return hitBox;
+    }
+
+    public boolean isNeedDelete() {
+        return needDelete;
     }
 }

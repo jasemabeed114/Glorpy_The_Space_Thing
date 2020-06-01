@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         backgroundView.addView(mainBackgroundView);
 
         backTrack = MediaPlayer.create(this, R.raw.glorpy_main);
-        //backTrack.setVolume(1.0f, 1.0f);
+        backTrack.setVolume(0.5f, 0.5f);
         backTrack.start();
 
 
@@ -48,15 +48,14 @@ public class MainActivity extends AppCompatActivity {
             String highestScore = String.valueOf(cursor.getInt(1));
             highest_score_view.setText(highestScore);
             DataHolder.highestScore = Integer.parseInt(highestScore);
-            cursor.close();
         } else {
             highest_score_view.setText("0");
             DataHolder.highestScore = 0;
             ContentValues values = new ContentValues();
             values.put(DataHolder.DataEntry.HIGHEST_SCORE, 0);
             long newRowID = localDb.insert(DataHolder.DataEntry.TABLE_NAME, null, values);
-            cursor.close();
         }
+        cursor.close();
         ImageButton playButton = findViewById(R.id.play_button);
         ImageButton scoreButton = findViewById(R.id.score_button);
         playButton.setOnClickListener(new View.OnClickListener() {

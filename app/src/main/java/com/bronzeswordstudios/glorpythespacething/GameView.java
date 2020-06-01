@@ -35,6 +35,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Rect explosionLocation;
     private int explosionCounter;
     private long lastExplosionTime;
+    private int difficultyFactor;
+    private boolean spawnBoss;
 
 
     public GameView(Context context, Activity gameActivity, int x, int y) {
@@ -45,7 +47,8 @@ public class GameView extends SurfaceView implements Runnable {
         screenX = x;
         screenY = y;
         this.gameActivity = gameActivity;
-        //test boss
+        difficultyFactor = 1;
+        spawnBoss = false;
         startGame();
     }
 
@@ -159,7 +162,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void startGame() {
         glorpy = new Glorpy(context, screenX, screenY);
-        bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
         int numStars = 15;
         for (int i = 0; i < numStars; i++) {
             Star star = new Star(context, screenX, screenY);
@@ -188,11 +190,6 @@ public class GameView extends SurfaceView implements Runnable {
                                 });
                             }
                             baseEnemy.isDestroyed = true;
-                            Random randGen = new Random();
-                            int healthCode = randGen.nextInt(100);
-                            if (healthCode <= 15) {
-                                pilotPowerUps.add(new PilotPowerUp(context, screenX, screenY, baseEnemy));
-                            }
                             fireballs.remove(fireballIndex);
                             break;
                         }
@@ -211,6 +208,11 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                 }
                 if (baseEnemy.isDestroyed && baseEnemy.deleteShip) {
+                    Random randGen = new Random();
+                    int healthCode = randGen.nextInt(100);
+                    if (healthCode <= 15) {
+                        pilotPowerUps.add(new PilotPowerUp(context, screenX, screenY, baseEnemy));
+                    }
                     baseEnemies.remove(i);
                     break;
                 }
@@ -296,8 +298,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private int updateDifficulty(int score) {
-        int enemyCount;
-        if (bigBossBlaster == null) {
+        int enemyCount = 0;
+        if (bigBossBlaster == null && !spawnBoss) {
             if (score < 100) {
                 enemyCount = 1;
             } else if (score < 200) {
@@ -307,7 +309,15 @@ public class GameView extends SurfaceView implements Runnable {
             } else {
                 enemyCount = 6 + score / 2000;
             }
-        } else enemyCount = 0;
+        if (score/1000 >= difficultyFactor){
+            spawnBoss = true;
+        }
+        }
+        else if (spawnBoss && baseEnemies.size() == 0){
+            bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
+            difficultyFactor += 4;
+            spawnBoss = false;
+        }
         return enemyCount;
 
     }
@@ -357,6 +367,7 @@ public class GameView extends SurfaceView implements Runnable {
                 if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
                     bigBossBlaster.updateHealth(glorpy.getFireDamage());
                     if (bigBossBlaster.getHealth() <= 0) {
+                        // set explosion details
                         explosionLocation = bigBossBlaster.getHitBox();
                         explosionCounter = 30;
                         lastExplosionTime = System.currentTimeMillis();

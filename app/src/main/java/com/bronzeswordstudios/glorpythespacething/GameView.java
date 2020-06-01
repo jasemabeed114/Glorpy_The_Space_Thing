@@ -441,7 +441,7 @@ public class GameView extends SurfaceView implements Runnable {
                 explosionCounter--;
             }
         }
-        if (explosionCounter == 0){
+        if (explosionCounter == 0) {
             explosionLocation = null;
         }
     }

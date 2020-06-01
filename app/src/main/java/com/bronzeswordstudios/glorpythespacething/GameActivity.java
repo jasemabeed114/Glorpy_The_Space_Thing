@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -100,19 +99,19 @@ public class GameActivity extends AppCompatActivity {
         userHUD.setLayoutParams(HUDlayoutParams);
 
         // fire button
-        Button fireButton = new Button(this);
+        ImageButton fireButton = new ImageButton(this);
+        fireButton.setImageResource(R.drawable.fireball);
+        fireButton.setBackground(null);
         RelativeLayout.LayoutParams fireButtonParams = new RelativeLayout.LayoutParams(250, 150);
         fireButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         fireButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         fireButton.setLayoutParams(fireButtonParams);
-        fireButton.setText(R.string.fire_button);
-        fireButton.setTextSize(16);
 
         // control buttons
         ImageButton upButton = new ImageButton(this);
         ImageButton downButton = new ImageButton(this);
-        upButton.setImageResource(R.drawable.baseline_arrow_upward_white_18dp2);
-        downButton.setImageResource(R.drawable.baseline_arrow_downward_white_18dp2);
+        upButton.setImageResource(R.drawable.baseline_arrow_upward_black_18dp);
+        downButton.setImageResource(R.drawable.baseline_arrow_downward_black_18dp);
         RelativeLayout.LayoutParams upButtonParams = new RelativeLayout.LayoutParams(200, 150);
         RelativeLayout.LayoutParams downButtonParams = new RelativeLayout.LayoutParams(200, 150);
         upButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);

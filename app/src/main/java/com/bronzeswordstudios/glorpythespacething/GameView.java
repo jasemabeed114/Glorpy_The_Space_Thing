@@ -298,6 +298,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private int updateDifficulty(int score) {
+        // todo: add multiples boss spawns and vary boss abilities based on score, also make 3 more bosses for random gen
         int enemyCount = 0;
         if (bigBossBlaster == null && !spawnBoss) {
             if (score < 100) {

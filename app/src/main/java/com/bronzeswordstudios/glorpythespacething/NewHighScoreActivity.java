@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewHighScoreActivity extends AppCompatActivity {
-//todo: fix overwriting bug if two people pick the same name
+    //todo: fix overwriting bug if two people pick the same name
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -10,8 +10,8 @@ public class BigBlast extends GraphicElement {
     public BigBlast(Context context, int positionX, int positionY, int screenX, int screenY) {
         super(context, positionX, positionY, screenX, screenY);
         bitFrames = 13;
-        frameWidth = (int)(100 * bitScale);
-        frameHeight = (int)(100 * bitScale);
+        frameWidth = (int) (100 * bitScale);
+        frameHeight = (int) (100 * bitScale);
         frameLengthInMilliseconds = 50;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.big_boss_blast);
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth * bitFrames, frameHeight, false);

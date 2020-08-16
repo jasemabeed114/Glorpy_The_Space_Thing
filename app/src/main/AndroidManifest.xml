@@ -9,11 +9,16 @@
         android:roundIcon="@mipmap/glorp_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewHighScoreActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ScoreActivity"
+        <activity android:name=".EvolutionActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+        <activity
+            android:name=".NewHighScoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScoreActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GameOverActivity"
             android:screenOrientation="portrait"
@@ -29,9 +34,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

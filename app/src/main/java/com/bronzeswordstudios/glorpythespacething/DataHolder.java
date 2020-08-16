@@ -11,6 +11,9 @@ public class DataHolder {
     public static int score;
     public static int highestScore;
     public static int rank;
+    public static int powerMod;
+    public static int lifeMod;
+    public static int speedMod;
     public static ScoreItem userToRemove;
 
     // insertion sort by score value in descending order

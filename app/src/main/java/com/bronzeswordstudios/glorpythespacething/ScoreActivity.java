@@ -61,8 +61,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(getParentActivityIntent());
+        finish();
     }
 }
 

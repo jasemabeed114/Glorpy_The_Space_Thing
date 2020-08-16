@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         ImageButton playButton = findViewById(R.id.play_button);
         ImageButton scoreButton = findViewById(R.id.score_button);
+        ImageButton evoButton = findViewById(R.id.evolution_button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        evoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EvolutionActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -82,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         mainBackgroundView.pause();
         backTrack.pause();
-
     }
 
     @Override

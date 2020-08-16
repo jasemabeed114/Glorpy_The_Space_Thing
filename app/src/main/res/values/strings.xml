@@ -16,4 +16,9 @@
     <string name="upload_success">upload successful</string>
     <string name="upload_error">upload error: Please try again!</string>
     <string name="your_score_text">Your highest score:</string>
-    </resources>
+    <string name="power">Power</string>
+    <string name="speed">Speed</string>
+    <string name="life">Life</string>
+    <string name="back">back</string>
+    <string name="points_avail">points</string>
+</resources>

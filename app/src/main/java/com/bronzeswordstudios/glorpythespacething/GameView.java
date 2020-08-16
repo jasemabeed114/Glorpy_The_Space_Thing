@@ -310,11 +310,10 @@ public class GameView extends SurfaceView implements Runnable {
             } else {
                 enemyCount = 6 + score / 2000;
             }
-        if (score/1000 >= difficultyFactor){
-            spawnBoss = true;
-        }
-        }
-        else if (spawnBoss && baseEnemies.size() == 0){
+            if (score / 1000 >= difficultyFactor) {
+                spawnBoss = true;
+            }
+        } else if (spawnBoss && baseEnemies.size() == 0) {
             bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
             difficultyFactor += 4;
             spawnBoss = false;

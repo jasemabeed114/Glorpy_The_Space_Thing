@@ -21,4 +21,5 @@
     <string name="life">Life</string>
     <string name="back">back</string>
     <string name="points_avail">points</string>
+    <string name="name_exists">Error: That name is already taken!</string>
 </resources>

@@ -222,16 +222,6 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/back_button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/geo"
-            android:text="@string/back"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <Button
             android:id="@+id/submit_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"

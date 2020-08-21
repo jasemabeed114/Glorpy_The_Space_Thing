@@ -14,6 +14,7 @@ public class DataHolder {
     public static int powerMod;
     public static int lifeMod;
     public static int speedMod;
+    public static int freePoints;
     public static ScoreItem userToRemove;
 
     // insertion sort by score value in descending order
@@ -40,8 +41,17 @@ public class DataHolder {
 
     public static final class DataEntry implements BaseColumns {
         public static final String _ID = BaseColumns._ID;
-        public static String HIGHEST_SCORE = "user_score";
-        public static final String[] projection = {_ID, HIGHEST_SCORE};
+        public static final String HIGHEST_SCORE = "user_score";
+        public static final String POWER_VALUE = "power_value";
+        public static final String LIFE_VALUE = "life_value";
+        public static final String SPEED_VALUE = "speed_value";
+        public static final String POINTS_VALUE = "points_value";
+        public static final int HIGHEST_SCORE_INDEX = 1;
+        public static final int POWER_INDEX = 2;
+        public static final int LIFE_INDEX = 3;
+        public static final int SPEED_INDEX = 4;
+        public static final int POINTS_INDEX = 5;
+        public static final String[] projection = {_ID, HIGHEST_SCORE, POWER_VALUE, LIFE_VALUE, SPEED_VALUE, POINTS_VALUE};
         public static String TABLE_NAME = "glorpy_data";
     }
 }

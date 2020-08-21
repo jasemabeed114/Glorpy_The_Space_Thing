@@ -17,7 +17,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String SQL_CREATE_INVENTORY_TABLE = "CREATE TABLE " + DataHolder.DataEntry.TABLE_NAME + " (" +
                 DataHolder.DataEntry._ID + " INTEGER PRIMARY KEY, " +
-                DataHolder.DataEntry.HIGHEST_SCORE + " INTEGER NOT NULL); ";
+                DataHolder.DataEntry.HIGHEST_SCORE + " INTEGER NOT NULL, " +
+                DataHolder.DataEntry.POWER_VALUE + " INTEGER NOT NULL, " +
+                DataHolder.DataEntry.LIFE_VALUE + " INTEGER NOT NULL, " +
+                DataHolder.DataEntry.SPEED_VALUE + " INTEGER NOT NULL, " +
+                DataHolder.DataEntry.POINTS_VALUE + " INTEGER NOT NULL ); ";
         db.execSQL(SQL_CREATE_INVENTORY_TABLE);
     }
 

@@ -1,17 +1,24 @@
 package com.bronzeswordstudios.glorpythespacething;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EvolutionActivity extends AppCompatActivity {
     private MainBackgroundView mainBackgroundView;
+    private ContentValues contentValues;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +30,116 @@ public class EvolutionActivity extends AppCompatActivity {
         display.getSize(displayPoint);
         mainBackgroundView = new MainBackgroundView(this, displayPoint.x, displayPoint.y);
         backgroundView.addView(mainBackgroundView);
+        contentValues = new ContentValues();
 
         Button submitButton = findViewById(R.id.submit_button);
-        Button backButton = findViewById(R.id.back_button);
+
+        final TextView freePointsView = findViewById(R.id.free_points);
         TextView increasePowerView = findViewById(R.id.increase_power_button);
         TextView decreasePowerView = findViewById(R.id.decrease_power_button);
         TextView increaseLifeView = findViewById(R.id.increase_life_button);
         TextView decreaseLifeView = findViewById(R.id.decrease_life_button);
         TextView increaseSpeedView = findViewById(R.id.increase_speed_button);
         TextView decreaseSpeedView = findViewById(R.id.decrease_speed_button);
+        final TextView powerValueView = findViewById(R.id.power_mod_value);
+        final TextView lifeValueView = findViewById(R.id.life_mod_value);
+        final TextView speedValueView = findViewById(R.id.speed_mod_value);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        powerValueView.setText(String.valueOf(DataHolder.powerMod));
+        lifeValueView.setText(String.valueOf(DataHolder.lifeMod));
+        speedValueView.setText(String.valueOf(DataHolder.speedMod));
+        freePointsView.setText(String.valueOf(DataHolder.freePoints));
+
+        increasePowerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (DataHolder.freePoints > 0) {
+                    DataHolder.freePoints--;
+                    freePointsView.setText(String.valueOf(DataHolder.freePoints));
+                    DataHolder.powerMod++;
+                    powerValueView.setText(String.valueOf(DataHolder.powerMod));
+                    contentValues.put(DataHolder.DataEntry.POWER_VALUE, DataHolder.powerMod);
+                    contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+                }
+            }
+        });
+
+        decreasePowerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DataHolder.powerMod > 0){
+                    DataHolder.freePoints++;
+                    freePointsView.setText(String.valueOf(DataHolder.freePoints));
+                    DataHolder.powerMod--;
+                    powerValueView.setText(String.valueOf(DataHolder.powerMod));
+                    contentValues.put(DataHolder.DataEntry.POWER_VALUE, DataHolder.powerMod);
+                    contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+                }
+            }
+        });
+
+        increaseLifeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DataHolder.freePoints > 0){
+                    DataHolder.freePoints--;
+                    freePointsView.setText(String.valueOf(DataHolder.freePoints));
+                    DataHolder.lifeMod++;
+                    lifeValueView.setText(String.valueOf(DataHolder.lifeMod));
+                    contentValues.put(DataHolder.DataEntry.LIFE_VALUE, DataHolder.lifeMod);
+                    contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+                }
+            }
+        });
+
+        decreaseLifeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DataHolder.lifeMod > 0){
+                    DataHolder.freePoints++;
+                    freePointsView.setText(String.valueOf(DataHolder.freePoints));
+                    DataHolder.lifeMod--;
+                    lifeValueView.setText(String.valueOf(DataHolder.lifeMod));
+                    contentValues.put(DataHolder.DataEntry.LIFE_VALUE, DataHolder.lifeMod);
+                    contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+                }
+            }
+        });
+
+        increaseSpeedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DataHolder.freePoints > 0){
+                    DataHolder.freePoints--;
+                    freePointsView.setText(String.valueOf(DataHolder.freePoints));
+                    DataHolder.speedMod++;
+                    speedValueView.setText(String.valueOf(DataHolder.speedMod));
+                    contentValues.put(DataHolder.DataEntry.SPEED_VALUE, DataHolder.speedMod);
+                    contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+                }
+            }
+        });
+
+        decreaseSpeedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(DataHolder.speedMod > 0){
+                    DataHolder.freePoints++;
+                    freePointsView.setText(String.valueOf(DataHolder.freePoints));
+                    DataHolder.speedMod--;
+                    speedValueView.setText(String.valueOf(DataHolder.speedMod));
+                    contentValues.put(DataHolder.DataEntry.SPEED_VALUE, DataHolder.speedMod);
+                    contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+                }
+            }
+        });
+
+
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDatabase(contentValues);
                 finish();
             }
         });
@@ -44,6 +148,9 @@ public class EvolutionActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         mainBackgroundView.pause();
+        if (contentValues.size() > 0) {
+            updateDatabase(contentValues);
+        }
         super.onPause();
     }
 
@@ -52,4 +159,22 @@ public class EvolutionActivity extends AppCompatActivity {
         mainBackgroundView.resume();
         super.onResume();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (contentValues.size() > 0) {
+            updateDatabase(contentValues);
+        }
+        super.onBackPressed();
+    }
+
+    public void updateDatabase(ContentValues contentValues){
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+            if (contentValues.size() > 0) {
+
+                    long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
+                }
+            }
+
 }

@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,16 +44,34 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = localDb.query(DataHolder.DataEntry.TABLE_NAME, DataHolder.DataEntry.projection,
                 null, null, null, null, null);
         TextView highest_score_view = findViewById(R.id.highest_score_number);
+        // if database exists get data
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            String highestScore = String.valueOf(cursor.getInt(1));
+            String highestScore = String.valueOf(cursor.getInt(DataHolder.DataEntry.HIGHEST_SCORE_INDEX));
             highest_score_view.setText(highestScore);
+            int powerMod = cursor.getInt(DataHolder.DataEntry.POWER_INDEX);
+            int lifeMod = cursor.getInt(DataHolder.DataEntry.LIFE_INDEX);
+            int speedMod = cursor.getInt(DataHolder.DataEntry.SPEED_INDEX);
+            int freePoints = cursor.getInt(DataHolder.DataEntry.POINTS_INDEX);
             DataHolder.highestScore = Integer.parseInt(highestScore);
+            DataHolder.powerMod = powerMod;
+            DataHolder.lifeMod = lifeMod;
+            DataHolder.speedMod = speedMod;
+            DataHolder.freePoints = freePoints;
+        // else create database
         } else {
             highest_score_view.setText("0");
             DataHolder.highestScore = 0;
+            DataHolder.powerMod = 0;
+            DataHolder.lifeMod = 0;
+            DataHolder.speedMod = 0;
+            DataHolder.freePoints = 5;
             ContentValues values = new ContentValues();
             values.put(DataHolder.DataEntry.HIGHEST_SCORE, 0);
+            values.put(DataHolder.DataEntry.POWER_VALUE, 0);
+            values.put(DataHolder.DataEntry.LIFE_VALUE, 0);
+            values.put(DataHolder.DataEntry.SPEED_VALUE, 0);
+            values.put(DataHolder.DataEntry.POINTS_VALUE, 5);
             long newRowID = localDb.insert(DataHolder.DataEntry.TABLE_NAME, null, values);
         }
         cursor.close();

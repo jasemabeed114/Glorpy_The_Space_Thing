@@ -189,8 +189,11 @@ public class GameView extends SurfaceView implements Runnable {
                                     }
                                 });
                             }
+                            if (!baseEnemy.isDestroyed) {
+                                fireballs.get(fireballIndex).updateHealth();
+                            }
                             baseEnemy.isDestroyed = true;
-                            fireballs.get(fireballIndex).updateHealth();
+                            Log.e("TEST: ", "updateEnemies: " + fireballs.get(fireballIndex).getHealth());
                             if (fireballs.get(fireballIndex).getHealth() == 0) {
                                 fireballs.remove(fireballIndex);
                                 break;
@@ -285,6 +288,7 @@ public class GameView extends SurfaceView implements Runnable {
                 break;
             }
             if (pilot.getHitBox().intersect(glorpy.gethitBox())) {
+                // using shooting animation for power up consumption
                 glorpy.setIsShooting(true);
 
                 gameActivity.runOnUiThread(new Runnable() {
@@ -294,6 +298,9 @@ public class GameView extends SurfaceView implements Runnable {
                         GameActivity.updateScore(pilot.getHealingPower());
                     }
                 });
+                if (pilot instanceof EvoPowerUp) {
+                    DataHolder.freePoints++;
+                }
                 pilotPowerUps.remove(i);
                 break;
             }
@@ -375,6 +382,7 @@ public class GameView extends SurfaceView implements Runnable {
                         explosionLocation = bigBossBlaster.getHitBox();
                         explosionCounter = 30;
                         lastExplosionTime = System.currentTimeMillis();
+                        pilotPowerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
                         this.bigBossBlaster = null;
                         final int scoreValue = bigBossBlaster.getScoreValue();
                         gameActivity.runOnUiThread(new Runnable() {

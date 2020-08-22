@@ -10,13 +10,16 @@ import android.graphics.Rect;
 import java.util.Random;
 
 public class PilotPowerUp {
+    Bitmap bitmap;
+    int frameWidth;
+    int frameHeight;
+    int healingPower;
+    float bitScale;
+    // used as parent class for evo power ups
     private Rect hitBox;
-    private Bitmap bitmap;
     private int x, y;
     private int velocity;
     private int yMax, yMin;
-    private int frameWidth;
-    private int frameHeight;
     // designed for a phone that is x:1920 by y:1080 so we must scale to other screens
     // to maintain play style
     private float scaleFactorX;
@@ -32,7 +35,7 @@ public class PilotPowerUp {
         yMin = 0;
         scaleFactorX = screenScaleX(screenX);
         scaleFactorY = screenScaleY(screenY);
-        float bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
 
         // create pilot bitmap based on which pilot was in the cockpit
         if (baseEnemy.getEnemyArtAssetNum() >= 5) {
@@ -46,6 +49,7 @@ public class PilotPowerUp {
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth, frameHeight, false);
         hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);
         velocity = 5;
+        healingPower = 18;
         Random random = new Random();
         randInt = random.nextInt(10);
         movingUp = false;
@@ -112,7 +116,7 @@ public class PilotPowerUp {
     }
 
     public int getHealingPower() {
-        return 18;
+        return healingPower;
     }
 }
 

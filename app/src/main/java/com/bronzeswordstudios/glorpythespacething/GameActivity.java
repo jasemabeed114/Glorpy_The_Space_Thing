@@ -2,7 +2,9 @@ package com.bronzeswordstudios.glorpythespacething;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -32,6 +34,11 @@ public class GameActivity extends AppCompatActivity {
     private static void checkEndCondition(int health) {
         if (health <= 0) {
             Intent intent = new Intent(activity, GameOverActivity.class);
+            DBHelper dbHelper = new DBHelper(activity);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+            SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+            long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
             activity.startActivity(intent);
             activity.finish();
         }
@@ -251,6 +258,11 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
+        DBHelper dbHelper = new DBHelper(this);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataHolder.DataEntry.POINTS_VALUE, DataHolder.freePoints);
+        SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+        long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
     }
 
     @Override

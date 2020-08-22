@@ -35,7 +35,7 @@ public class FireBall {
         x = positionX;
         y = positionY;
         maxX = screenX;
-        health = 100;
+        health = 1 + (DataHolder.powerMod/10);
         bitFrames = 4;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.glorpy_fireball);
         frameHeight = (int) (175 * bitScale);
@@ -98,6 +98,14 @@ public class FireBall {
         } else {
             return scaleY;
         }
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void updateHealth(){
+        health--;
     }
 
     public int getX() {

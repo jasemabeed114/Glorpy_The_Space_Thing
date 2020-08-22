@@ -28,8 +28,8 @@ public class LaserBlast {
         y = positionY;
         velocity = (int) (25 * scaleFactorX);
         damage = -15;
-        frameWidth = (int) (32 * bitScale);
-        frameHeight = (int) (9 * bitScale);
+        frameWidth = (int) (64 * bitScale);
+        frameHeight = (int) (18 * bitScale);
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.laser_blast);
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth, frameHeight, false);
         hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);

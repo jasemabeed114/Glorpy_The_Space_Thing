@@ -190,8 +190,11 @@ public class GameView extends SurfaceView implements Runnable {
                                 });
                             }
                             baseEnemy.isDestroyed = true;
-                            fireballs.remove(fireballIndex);
-                            break;
+                            fireballs.get(fireballIndex).updateHealth();
+                            if(fireballs.get(fireballIndex).getHealth() == 0){
+                                fireballs.remove(fireballIndex);
+                                break;
+                            }
                         }
                     }
                 }
@@ -367,6 +370,7 @@ public class GameView extends SurfaceView implements Runnable {
                 if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
                     bigBossBlaster.updateHealth(glorpy.getFireDamage());
                     if (bigBossBlaster.getHealth() <= 0) {
+                        graphicElements.remove(cannonCharging);
                         // set explosion details
                         explosionLocation = bigBossBlaster.getHitBox();
                         explosionCounter = 30;

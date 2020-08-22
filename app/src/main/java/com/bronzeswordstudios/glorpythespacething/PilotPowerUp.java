@@ -41,8 +41,8 @@ public class PilotPowerUp {
             bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pilot_2);
         }
 
-        frameWidth = (int) (32 * bitScale);
-        frameHeight = (int) (32 * bitScale);
+        frameWidth = (int) (64 * bitScale);
+        frameHeight = (int) (64 * bitScale);
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth, frameHeight, false);
         hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);
         velocity = 5;

@@ -40,7 +40,7 @@ public class Glorpy {
         float bitScale = bitmapScale(scaleFactorX, scaleFactorY);
         x = (int) (50 * scaleFactorX);
         y = screenY / 2;
-        health = 100;
+        health = 100 + DataHolder.lifeMod;
         bitFrames = 6;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.glorpy);
         frameHeight = (int) (125 * bitScale);
@@ -54,16 +54,16 @@ public class Glorpy {
         frameLengthInMilliseconds = 50;
         frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
         whereToDraw = new RectF(x, 0, x + frameWidth, frameHeight);
-        fireDamage = -10; //todo: add modifier later
+        fireDamage = -10 - (DataHolder.powerMod/2);
 
 
     }
 
     public void update() {
         if (movingDown) {
-            velocity = (int) (-10 * scaleFactorY);
+            velocity = (int) ((-10 - (DataHolder.speedMod/3)) * scaleFactorY);
         } else if (movingUp) {
-            velocity = (int) (10 * scaleFactorY);
+            velocity = (int) ((10 + (DataHolder.speedMod/3)) * scaleFactorY);
         } else {
             velocity = 0;
         }

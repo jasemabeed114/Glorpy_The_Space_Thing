@@ -1,5 +1,6 @@
 package com.bronzeswordstudios.glorpythespacething;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -55,8 +56,8 @@ public class GameActivity extends AppCompatActivity {
         int currentHealth = Integer.parseInt(healthNumView.getText().toString());
         currentHealth += healthChange;
         // make sure we stay in range
-        if (currentHealth > 100) {
-            currentHealth = 100;
+        if (currentHealth > (100 + DataHolder.lifeMod)) {
+            currentHealth = 100 + DataHolder.lifeMod;
         }
         if (currentHealth < 0) {
             currentHealth = 0;
@@ -71,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
         checkEndCondition(currentHealth);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final int DOWN_BUTTON_ID = 2257611;
@@ -174,7 +176,8 @@ public class GameActivity extends AppCompatActivity {
         healthNum.setId(HEALTH_NUM_ID);
         healthNum.setTextSize(16 * bitScale);
         healthNum.setTextColor(Color.WHITE);
-        healthNum.setText("100");
+        int healthTotal = 100 + DataHolder.lifeMod;
+        healthNum.setText(String.valueOf(healthTotal));
         RelativeLayout.LayoutParams healthNumParams = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         healthTextParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);

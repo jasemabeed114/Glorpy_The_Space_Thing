@@ -54,16 +54,16 @@ public class Glorpy {
         frameLengthInMilliseconds = 50;
         frameToDraw = new Rect(0, 0, frameWidth, frameHeight);
         whereToDraw = new RectF(x, 0, x + frameWidth, frameHeight);
-        fireDamage = -10 - (DataHolder.powerMod/2);
+        fireDamage = -10 - (DataHolder.powerMod / 2);
 
 
     }
 
     public void update() {
         if (movingDown) {
-            velocity = (int) ((-10 - (DataHolder.speedMod/3)) * scaleFactorY);
+            velocity = (int) ((-10 - (DataHolder.speedMod / 3)) * scaleFactorY);
         } else if (movingUp) {
-            velocity = (int) ((10 + (DataHolder.speedMod/3)) * scaleFactorY);
+            velocity = (int) ((10 + (DataHolder.speedMod / 3)) * scaleFactorY);
         } else {
             velocity = 0;
         }

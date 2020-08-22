@@ -191,7 +191,7 @@ public class GameView extends SurfaceView implements Runnable {
                             }
                             baseEnemy.isDestroyed = true;
                             fireballs.get(fireballIndex).updateHealth();
-                            if(fireballs.get(fireballIndex).getHealth() == 0){
+                            if (fireballs.get(fireballIndex).getHealth() == 0) {
                                 fireballs.remove(fireballIndex);
                                 break;
                             }

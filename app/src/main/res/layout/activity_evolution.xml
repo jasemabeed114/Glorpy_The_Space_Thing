@@ -26,35 +26,36 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/title"
-        android:layout_marginLeft="36dp">
+        android:layout_marginLeft="36dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/geo"
             android:text="@string/points_avail"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:fontFamily="@font/geo"
-            android:layout_gravity="center"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/geo"
+            android:text=" : "
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:fontFamily="@font/geo"
-            android:text=" : "/>
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/free_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/free_points"
+            android:layout_gravity="center"
+            android:fontFamily="@font/geo"
             android:text="0"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:fontFamily="@font/geo"
-            android:layout_gravity="center"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -85,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/geo"
+                android:padding="8dp"
                 android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"
@@ -94,8 +96,8 @@
                 android:id="@+id/power_mod_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:fontFamily="@font/geo"
                 android:text="0"
                 android:textColor="#FFFFFF"
@@ -107,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/geo"
+                android:padding="8dp"
                 android:text="+"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"
@@ -134,6 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/geo"
+                android:padding="8dp"
                 android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"
@@ -143,8 +147,8 @@
                 android:id="@+id/speed_mod_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:fontFamily="@font/geo"
                 android:text="0"
                 android:textColor="#FFFFFF"
@@ -156,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/geo"
+                android:padding="8dp"
                 android:text="+"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"
@@ -182,6 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/geo"
+                android:padding="8dp"
                 android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"
@@ -191,8 +197,8 @@
                 android:id="@+id/life_mod_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:fontFamily="@font/geo"
                 android:text="0"
                 android:textColor="#FFFFFF"
@@ -204,6 +210,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/geo"
+                android:padding="8dp"
                 android:text="+"
                 android:textColor="#FFFFFF"
                 android:textSize="48sp"

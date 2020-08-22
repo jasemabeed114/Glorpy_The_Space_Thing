@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             DataHolder.lifeMod = lifeMod;
             DataHolder.speedMod = speedMod;
             DataHolder.freePoints = freePoints;
-        // else create database
+            // else create database
         } else {
             highest_score_view.setText("0");
             DataHolder.highestScore = 0;

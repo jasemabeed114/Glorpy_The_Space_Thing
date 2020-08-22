@@ -1,17 +1,14 @@
 package com.bronzeswordstudios.glorpythespacething;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -67,7 +64,7 @@ public class EvolutionActivity extends AppCompatActivity {
         decreasePowerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DataHolder.powerMod > 0){
+                if (DataHolder.powerMod > 0) {
                     DataHolder.freePoints++;
                     freePointsView.setText(String.valueOf(DataHolder.freePoints));
                     DataHolder.powerMod--;
@@ -81,7 +78,7 @@ public class EvolutionActivity extends AppCompatActivity {
         increaseLifeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DataHolder.freePoints > 0){
+                if (DataHolder.freePoints > 0) {
                     DataHolder.freePoints--;
                     freePointsView.setText(String.valueOf(DataHolder.freePoints));
                     DataHolder.lifeMod++;
@@ -95,7 +92,7 @@ public class EvolutionActivity extends AppCompatActivity {
         decreaseLifeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DataHolder.lifeMod > 0){
+                if (DataHolder.lifeMod > 0) {
                     DataHolder.freePoints++;
                     freePointsView.setText(String.valueOf(DataHolder.freePoints));
                     DataHolder.lifeMod--;
@@ -109,7 +106,7 @@ public class EvolutionActivity extends AppCompatActivity {
         increaseSpeedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DataHolder.freePoints > 0){
+                if (DataHolder.freePoints > 0) {
                     DataHolder.freePoints--;
                     freePointsView.setText(String.valueOf(DataHolder.freePoints));
                     DataHolder.speedMod++;
@@ -123,7 +120,7 @@ public class EvolutionActivity extends AppCompatActivity {
         decreaseSpeedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DataHolder.speedMod > 0){
+                if (DataHolder.speedMod > 0) {
                     DataHolder.freePoints++;
                     freePointsView.setText(String.valueOf(DataHolder.freePoints));
                     DataHolder.speedMod--;
@@ -133,7 +130,6 @@ public class EvolutionActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -168,13 +164,13 @@ public class EvolutionActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void updateDatabase(ContentValues contentValues){
+    public void updateDatabase(ContentValues contentValues) {
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase localDb = dbHelper.getWritableDatabase();
-            if (contentValues.size() > 0) {
+        if (contentValues.size() > 0) {
 
-                    long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
-                }
-            }
+            long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
+        }
+    }
 
 }

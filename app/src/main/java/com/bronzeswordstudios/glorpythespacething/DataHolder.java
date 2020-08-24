@@ -2,6 +2,8 @@ package com.bronzeswordstudios.glorpythespacething;
 
 import android.provider.BaseColumns;
 
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +17,7 @@ public class DataHolder {
     public static int lifeMod;
     public static int speedMod;
     public static int freePoints;
+    public static InterstitialAd interstitialAd;
     public static ScoreItem userToRemove;
 
     // insertion sort by score value in descending order
@@ -54,5 +57,6 @@ public class DataHolder {
         public static final String[] projection = {_ID, HIGHEST_SCORE, POWER_VALUE, LIFE_VALUE, SPEED_VALUE, POINTS_VALUE};
         public static String TABLE_NAME = "glorpy_data";
     }
+
 }
 

@@ -12,6 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,6 +24,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class GameOverActivity extends AppCompatActivity {
+    private String TAG = "Debug: ";
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class GameOverActivity extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put(DataHolder.DataEntry.HIGHEST_SCORE, DataHolder.score);
             String selection = DataHolder.DataEntry._ID + " = ?";
-            String[] selectionArgs = {"1"};
+            String[] selectionArgs = {String.valueOf(DataHolder.DataEntry.HIGHEST_SCORE_INDEX)};
             int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
         }
         final int score = DataHolder.score;
@@ -42,6 +48,15 @@ public class GameOverActivity extends AppCompatActivity {
         Button replayButton = findViewById(R.id.replay_button);
         Button viewScoresButton = findViewById(R.id.view_scores_button);
         Button exitButton = findViewById(R.id.exit_button);
+
+
+        //handle ads (note these are test ads)
+        MobileAds.initialize(this);
+        if (DataHolder.interstitialAd.isLoaded()) {
+            DataHolder.interstitialAd.show();
+            DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
+        }
+
         replayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

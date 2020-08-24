@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -45,6 +46,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public static void updateScore(int scoredPoints) {
+        if (DataHolder.interstitialAd.isLoaded()) {
+            Toast.makeText(activity, "LOADED", Toast.LENGTH_SHORT).show();
+        }
         TextView scoreNumView = totalView.findViewById(SCORE_NUM_ID);
         int score = Integer.parseInt(scoreNumView.getText().toString());
         score += scoredPoints;

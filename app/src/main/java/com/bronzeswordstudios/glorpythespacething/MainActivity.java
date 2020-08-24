@@ -16,10 +16,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 public class MainActivity extends AppCompatActivity {
 
     private MainBackgroundView mainBackgroundView;
     private MediaPlayer backTrack;
+    private String TAG = "Debug: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         backTrack.setVolume(0.5f, 0.5f);
         backTrack.start();
 
+        //setup ads
+        DataHolder.interstitialAd = new InterstitialAd(MainActivity.this);
+        DataHolder.interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
 
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase localDb = dbHelper.getReadableDatabase();
@@ -77,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton playButton = findViewById(R.id.play_button);
         ImageButton scoreButton = findViewById(R.id.score_button);
         ImageButton evoButton = findViewById(R.id.evolution_button);
+        ImageButton infoButton = findViewById(R.id.info_button);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +111,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // for testing
+                Intent intent = new Intent(MainActivity.this, GameOverActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -117,4 +136,5 @@ public class MainActivity extends AppCompatActivity {
         mainBackgroundView.resume();
         backTrack.start();
     }
+
 }

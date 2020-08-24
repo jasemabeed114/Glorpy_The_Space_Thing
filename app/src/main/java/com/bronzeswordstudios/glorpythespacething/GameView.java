@@ -18,6 +18,7 @@ public class GameView extends SurfaceView implements Runnable {
     public Glorpy glorpy;
     public ArrayList<FireBall> fireballs = new ArrayList<>();
     volatile boolean playing;
+    private boolean canvasIsLocked;
     private Paint paint;
     private SurfaceHolder ourHolder;
     private Context context;
@@ -49,6 +50,7 @@ public class GameView extends SurfaceView implements Runnable {
         this.gameActivity = gameActivity;
         difficultyFactor = 1;
         spawnBoss = false;
+        canvasIsLocked = false;
         startGame();
     }
 
@@ -91,9 +93,12 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void draw() {
-        Canvas canvas;
+        Canvas canvas = new Canvas();
         if (ourHolder.getSurface().isValid()) {
-            canvas = ourHolder.lockCanvas();
+            if (!canvasIsLocked) {
+                canvas = ourHolder.lockCanvas();
+                canvasIsLocked = true;
+            }
             canvas.drawColor(Color.argb(255, 0, 0, 0));
             for (Star star : stars) {
                 canvas.drawBitmap(star.getBitmap(), star.getX(), star.getY(), paint);
@@ -126,6 +131,7 @@ public class GameView extends SurfaceView implements Runnable {
             drawGraphics(graphicElements, canvas, paint);
             glorpy.animationControl(canvas, paint);
             ourHolder.unlockCanvasAndPost(canvas);
+            canvasIsLocked = false;
         }
     }
 
@@ -193,7 +199,6 @@ public class GameView extends SurfaceView implements Runnable {
                                 fireballs.get(fireballIndex).updateHealth();
                             }
                             baseEnemy.isDestroyed = true;
-                            Log.e("TEST: ", "updateEnemies: " + fireballs.get(fireballIndex).getHealth());
                             if (fireballs.get(fireballIndex).getHealth() == 0) {
                                 fireballs.remove(fireballIndex);
                                 break;

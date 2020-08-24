@@ -50,7 +50,7 @@ public class GameOverActivity extends AppCompatActivity {
         Button exitButton = findViewById(R.id.exit_button);
 
 
-        //handle ads (note these are test ads)
+        //spawn ad
         MobileAds.initialize(this);
         if (DataHolder.interstitialAd.isLoaded()) {
             DataHolder.interstitialAd.show();

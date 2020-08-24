@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         DataHolder.interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
 
+        //Load or setup local database
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase localDb = dbHelper.getReadableDatabase();
         Cursor cursor = localDb.query(DataHolder.DataEntry.TABLE_NAME, DataHolder.DataEntry.projection,

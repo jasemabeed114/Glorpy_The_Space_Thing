@@ -54,12 +54,12 @@ public class GameOverActivity extends AppCompatActivity {
         MobileAds.initialize(this);
         if (DataHolder.interstitialAd.isLoaded()) {
             DataHolder.interstitialAd.show();
-            DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
         }
 
         replayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
                 Intent intent = new Intent(GameOverActivity.this, GameActivity.class);
                 DataHolder.score = 0;
                 startActivity(intent);

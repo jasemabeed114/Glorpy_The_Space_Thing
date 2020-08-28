@@ -23,4 +23,11 @@
     <string name="points_avail">points</string>
     <string name="name_exists">Error: That name is already taken!</string>
     <string name="evo_obtained">Evolution point obtained!</string>
+    <string name="play_button">Play</string>
+    <string name="evo_button">Evolution</string>
+    <string name="info_button">Information</string>
+    <string name="highscore_button">High Scores</string>
+    <string name="reward_button">Reward Ad</string>
+    <string name="reward_toast">evolution points obtained!</string>
+    <string name="time_remaining">Minutes remaining until next reward:</string>
 </resources>

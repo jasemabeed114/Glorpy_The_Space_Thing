@@ -21,7 +21,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataHolder.DataEntry.POWER_VALUE + " INTEGER NOT NULL, " +
                 DataHolder.DataEntry.LIFE_VALUE + " INTEGER NOT NULL, " +
                 DataHolder.DataEntry.SPEED_VALUE + " INTEGER NOT NULL, " +
-                DataHolder.DataEntry.POINTS_VALUE + " INTEGER NOT NULL ); ";
+                DataHolder.DataEntry.POINTS_VALUE + " INTEGER NOT NULL, " +
+                DataHolder.DataEntry.TIME_VALUE + " INTEGER NOT NULL ); ";
         db.execSQL(SQL_CREATE_INVENTORY_TABLE);
     }
 

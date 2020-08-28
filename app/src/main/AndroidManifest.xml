@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/glorp_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EvolutionActivity"
+        <activity android:name=".InfoActivity"></activity>
+        <activity
+            android:name=".EvolutionActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".NewHighScoreActivity"
             android:screenOrientation="portrait" />
@@ -41,12 +43,10 @@
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-        <!--SAMPLE DATA TO BE UPDATED android:value="ca-app-pub-7113308763026501~9452235107" -->
+            android:resource="@array/preloaded_fonts" /> <!-- SAMPLE DATA TO BE UPDATED android:value="ca-app-pub-7113308763026501~9452235107" -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7113308763026501~9452235107"/>
-
+            android:value="ca-app-pub-7113308763026501~9452235107" />
     </application>
 
 </manifest>

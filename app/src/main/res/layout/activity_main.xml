@@ -20,59 +20,71 @@
         android:src="@drawable/title"
         android:textSize="64sp" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:orientation="vertical">
+        android:layout_marginTop="8dp">
 
-        <ImageButton
-            android:id="@+id/play_button"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="24dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/play_button" />
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/score_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="24dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/high_score_button" />
+            <TextView
+                android:id="@+id/play_button"
+                style="@style/menu_item_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/play_button" />
 
-        <ImageButton
-            android:id="@+id/evolution_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="24dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/evolution_button" />
+            <TextView
+                android:id="@+id/daily_button"
+                style="@style/menu_item_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/reward_button" />
 
-        <ImageButton
-            android:id="@+id/info_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="24dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="center"
-            android:src="@drawable/info_button" />
+            <TextView
+                android:id="@+id/evolution_button"
+                style="@style/menu_item_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/evo_button" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/score_button"
+                style="@style/menu_item_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/highscore_button" />
+
+            <TextView
+                android:id="@+id/info_button"
+                style="@style/menu_item_Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/info_button" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"

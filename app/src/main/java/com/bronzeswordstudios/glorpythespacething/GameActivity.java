@@ -216,6 +216,7 @@ public class GameActivity extends AppCompatActivity {
                 if (!gameView.glorpy.isShooting()) {
                     gameView.fireballs.add(new FireBall(GameActivity.this,
                             gameView.glorpy.getX(), gameView.glorpy.getY(), point.x, adjustedY));
+                    gameView.audioHandler.playFireBallSound();
                     gameView.glorpy.setIsShooting(true);
 
                 }

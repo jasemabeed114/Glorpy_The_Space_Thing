@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // handle music
-        backTrack = MediaPlayer.create(this, R.raw.glorpy_main);
+        backTrack = MediaPlayer.create(this, R.raw.glorpy_title);
         backTrack.setVolume(0.5f, 0.5f);
         backTrack.start();
 

@@ -27,7 +27,7 @@ public class GameView extends SurfaceView implements Runnable {
     private ArrayList<Star> stars = new ArrayList<>();
     private ArrayList<BaseEnemy> baseEnemies = new ArrayList<>();
     private ArrayList<LaserBlast> laserBlasts = new ArrayList<>();
-    private ArrayList<PilotPowerUp> pilotPowerUps = new ArrayList<>();
+    private ArrayList<PilotPowerUp> powerUps = new ArrayList<>();
     private ArrayList<GraphicElement> graphicElements = new ArrayList<>();
     private Thread gameThread;
     private Activity gameActivity;
@@ -38,11 +38,14 @@ public class GameView extends SurfaceView implements Runnable {
     private long lastExplosionTime;
     private int difficultyFactor;
     private boolean spawnBoss;
+    public AudioHandler audioHandler;
+    private boolean thrustPlayed;
 
 
     public GameView(Context context, Activity gameActivity, int x, int y) {
         super(context);
         this.context = context;
+        audioHandler = new AudioHandler(context);
         ourHolder = getHolder();
         paint = new Paint();
         screenX = x;
@@ -51,7 +54,9 @@ public class GameView extends SurfaceView implements Runnable {
         difficultyFactor = 1;
         spawnBoss = false;
         canvasIsLocked = false;
+        thrustPlayed = false;
         startGame();
+        audioHandler.playBattleMusic();
     }
 
     @Override
@@ -85,7 +90,7 @@ public class GameView extends SurfaceView implements Runnable {
         updateFireballs(fireballs);
         updateEnemies(baseEnemies, laserBlasts, glorpy);
         updateLasers(laserBlasts, glorpy);
-        updatePilots(pilotPowerUps, glorpy);
+        updatePowerUps(powerUps, glorpy);
         updateBigBossBlaster(bigBossBlaster, glorpy);
         updateGraphics(graphicElements, glorpy);
         createExplosion(explosionLocation);
@@ -121,9 +126,9 @@ public class GameView extends SurfaceView implements Runnable {
                     laserBlast.draw(canvas, paint);
                 }
             }
-            if (pilotPowerUps.size() > 0) {
-                for (int i = pilotPowerUps.size() - 1; i >= 0; i--) {
-                    PilotPowerUp pilot = pilotPowerUps.get(i);
+            if (powerUps.size() > 0) {
+                for (int i = powerUps.size() - 1; i >= 0; i--) {
+                    PilotPowerUp pilot = powerUps.get(i);
                     pilot.draw(canvas, paint);
                 }
             }
@@ -158,12 +163,14 @@ public class GameView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
 
         }
+        audioHandler.onPause();
     }
 
     public void resume() {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
+        audioHandler.onResume();
     }
 
     private void startGame() {
@@ -194,11 +201,10 @@ public class GameView extends SurfaceView implements Runnable {
                                         GameActivity.updateScore(baseEnemy.getScoreValue());
                                     }
                                 });
-                            }
-                            if (!baseEnemy.isDestroyed) {
+                                audioHandler.playSmallExplosion();
                                 fireballs.get(fireballIndex).updateHealth();
+                                baseEnemy.isDestroyed = true;
                             }
-                            baseEnemy.isDestroyed = true;
                             if (fireballs.get(fireballIndex).getHealth() == 0) {
                                 fireballs.remove(fireballIndex);
                                 break;
@@ -208,6 +214,7 @@ public class GameView extends SurfaceView implements Runnable {
                 }
                 if (baseEnemy.getHitBox().intersect(glorpy.gethitBox())) {
                     if (!baseEnemy.isDestroyed) {
+                        audioHandler.playSmallExplosion();
                         baseEnemy.isDestroyed = true;
 
                         gameActivity.runOnUiThread(new Runnable() {
@@ -222,7 +229,7 @@ public class GameView extends SurfaceView implements Runnable {
                     Random randGen = new Random();
                     int healthCode = randGen.nextInt(100);
                     if (healthCode <= 15) {
-                        pilotPowerUps.add(new PilotPowerUp(context, screenX, screenY, baseEnemy));
+                        powerUps.add(new PilotPowerUp(context, screenX, screenY, baseEnemy));
                     }
                     baseEnemies.remove(i);
                     break;
@@ -243,6 +250,7 @@ public class GameView extends SurfaceView implements Runnable {
                 if (baseEnemy.timeToShoot() &&
                         baseEnemy.getEnemyAICode() >= 5 && baseEnemy.getX() <= baseEnemy.getFiringRange()) {
                     laserBlasts.add(new LaserBlast(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY));
+                    audioHandler.playLaserSound();
                     baseEnemy.lastShotTime = System.currentTimeMillis();
                 }
             }
@@ -284,29 +292,30 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    private void updatePilots(ArrayList<PilotPowerUp> pilotPowerUps, Glorpy glorpy) {
-        for (int i = pilotPowerUps.size() - 1; i >= 0; i--) {
-            final PilotPowerUp pilot = pilotPowerUps.get(i);
-            pilot.update();
-            if (pilot.getX() < 0) {
-                pilotPowerUps.remove(i);
+    private void updatePowerUps(ArrayList<PilotPowerUp> powerUps, Glorpy glorpy) {
+        for (int i = powerUps.size() - 1; i >= 0; i--) {
+            final PilotPowerUp powerUp = powerUps.get(i);
+            powerUp.update();
+            if (powerUp.getX() < 0) {
+                powerUps.remove(i);
                 break;
             }
-            if (pilot.getHitBox().intersect(glorpy.gethitBox())) {
+            if (powerUp.getHitBox().intersect(glorpy.gethitBox())) {
                 // using shooting animation for power up consumption
                 glorpy.setIsShooting(true);
+                audioHandler.playPowerUp();
 
                 gameActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        GameActivity.updateHealth(pilot.getHealingPower());
-                        GameActivity.updateScore(pilot.getHealingPower());
+                        GameActivity.updateHealth(powerUp.getHealingPower());
+                        GameActivity.updateScore(powerUp.getHealingPower());
                     }
                 });
-                if (pilot instanceof EvoPowerUp) {
+                if (powerUp instanceof EvoPowerUp) {
                     DataHolder.freePoints++;
                 }
-                pilotPowerUps.remove(i);
+                powerUps.remove(i);
                 break;
             }
         }
@@ -330,7 +339,7 @@ public class GameView extends SurfaceView implements Runnable {
             }
         } else if (spawnBoss && baseEnemies.size() == 0) {
             bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
-            difficultyFactor += 4;
+            difficultyFactor += 8;
             spawnBoss = false;
         }
         return enemyCount;
@@ -340,6 +349,15 @@ public class GameView extends SurfaceView implements Runnable {
     private void updateBigBossBlaster(BigBossBlaster bigBossBlaster, Glorpy glorpy) {
         if (bigBossBlaster != null) {
             bigBossBlaster.update();
+            if (bigBossBlaster.getCurrentAI() == BigBossBlaster.AI_KAMIKAZE_MODE){
+                if (!thrustPlayed){
+                    audioHandler.playThrust();
+                    thrustPlayed = true;
+                }
+            }
+            else {
+                thrustPlayed = false;
+            }
             if (bigBossBlaster.getCurrentAI() == BigBossBlaster.AI_CANNON_MODE) {
                 if (!graphicElements.contains(cannonCharging)) {
                     cannonCharging = new CannonCharging(context, bigBossBlaster.getX(),
@@ -354,6 +372,7 @@ public class GameView extends SurfaceView implements Runnable {
                         cannonCharging = null;
                         graphicElements.add(new BigBlast(context, bigBossBlaster.getX(),
                                 bigBossBlaster.getY(), screenX, screenY));
+                        audioHandler.playBigBlast();
                         bigBossBlaster.setLastCannonShotTime(System.currentTimeMillis());
                         bigBossBlaster.setLastLaserShot(System.currentTimeMillis());
                         bigBossBlaster.setCurrentAI(BigBossBlaster.AI_LASER_MODE);
@@ -365,6 +384,7 @@ public class GameView extends SurfaceView implements Runnable {
                 if (bigBossBlaster.fireLaser()) {
                     laserBlasts.add(new LaserBlast(context, bigBossBlaster.getX(), bigBossBlaster.getY(), screenX, screenY));
                     bigBossBlaster.setLastLaserShot(System.currentTimeMillis());
+                    audioHandler.playLaserSound();
                 }
             }
             if (Rect.intersects(bigBossBlaster.getHitBox(), glorpy.gethitBox()) && !bigBossBlaster.isRamDamaged()) {
@@ -381,13 +401,15 @@ public class GameView extends SurfaceView implements Runnable {
                 FireBall fireBall = fireballs.get(i);
                 if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
                     bigBossBlaster.updateHealth(glorpy.getFireDamage());
+                    audioHandler.playSmallExplosion();
                     if (bigBossBlaster.getHealth() <= 0) {
                         graphicElements.remove(cannonCharging);
                         // set explosion details
                         explosionLocation = bigBossBlaster.getHitBox();
                         explosionCounter = 30;
                         lastExplosionTime = System.currentTimeMillis();
-                        pilotPowerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
+                        audioHandler.playBigExplosion();
+                        powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
                         this.bigBossBlaster = null;
                         final int scoreValue = bigBossBlaster.getScoreValue();
                         gameActivity.runOnUiThread(new Runnable() {

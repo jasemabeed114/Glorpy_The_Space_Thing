@@ -30,4 +30,5 @@
     <string name="reward_button">Reward Ad</string>
     <string name="reward_toast">evolution points obtained!</string>
     <string name="time_remaining">Minutes remaining until next reward:</string>
+    <string name="reward_not_ready">reward still loading: please try again</string>
 </resources>

@@ -31,8 +31,6 @@ public class PilotPowerUp {
     public PilotPowerUp(Context context, int screenX, int screenY, BaseEnemy baseEnemy) {
         x = baseEnemy.getX();
         y = baseEnemy.getY();
-        yMax = screenY;
-        yMin = 0;
         scaleFactorX = screenScaleX(screenX);
         scaleFactorY = screenScaleY(screenY);
         bitScale = bitmapScale(scaleFactorX, scaleFactorY);
@@ -46,6 +44,8 @@ public class PilotPowerUp {
 
         frameWidth = (int) (64 * bitScale);
         frameHeight = (int) (64 * bitScale);
+        yMax = screenY - frameHeight;
+        yMin = 0;
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth, frameHeight, false);
         hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);
         velocity = 5;

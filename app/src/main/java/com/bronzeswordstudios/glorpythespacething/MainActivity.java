@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout backgroundView = findViewById(R.id.background_view);
         backgroundView.addView(mainBackgroundView);
         // one hour minimum between ads
-        timeBetweenAdsMillis = 3600000;
+        timeBetweenAdsMillis = 1800000;
 
 
         // handle music
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, timeRemainingMessage, Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "ad still loading", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.reward_not_ready, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mainBackgroundView.resume();
         backTrack.start();
+        loadRewardAd();
     }
 
     private void loadRewardAd() {

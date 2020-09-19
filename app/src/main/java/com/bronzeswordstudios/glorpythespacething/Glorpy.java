@@ -147,7 +147,7 @@ public class Glorpy {
         return health;
     }
 
-    public Rect gethitBox() {
+    public Rect getHitBox() {
         return hitBox;
     }
 
@@ -170,4 +170,5 @@ public class Glorpy {
     public int getFireDamage() {
         return fireDamage;
     }
+
 }

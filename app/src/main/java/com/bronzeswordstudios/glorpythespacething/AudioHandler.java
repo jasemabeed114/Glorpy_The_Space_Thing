@@ -1,6 +1,5 @@
 package com.bronzeswordstudios.glorpythespacething;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -19,7 +18,7 @@ public class AudioHandler {
     private int smallExplosionID;
     private int thrustID;
 
-    public AudioHandler(Context context){
+    public AudioHandler(Context context) {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         soundPool = new SoundPool(100, AudioManager.STREAM_MUSIC, 0);
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
@@ -32,17 +31,16 @@ public class AudioHandler {
         this.context = context;
     }
 
-    public void playLaserSound(){
+    public void playLaserSound() {
         soundPool.play(laserID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
-    
-    public void playFireBallSound(){
+
+    public void playFireBallSound() {
         soundPool.play(fireballID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
 
 
-
-    public void playBattleMusic(){
+    public void playBattleMusic() {
         battleMusic = MediaPlayer.create(context, R.raw.glorpy_battlewav);
         battleMusic.setLooping(true);
         battleMusic.setVolume(0.8f, 0.8f);
@@ -58,40 +56,40 @@ public class AudioHandler {
             }
         };
         int focusRequest = audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-        if (focusRequest == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
-        battleMusic.start();
+        if (focusRequest == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            battleMusic.start();
         }
     }
 
-    public void playSmallExplosion(){
+    public void playSmallExplosion() {
         soundPool.play(smallExplosionID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
 
-    public void playPowerUp(){
+    public void playPowerUp() {
         soundPool.play(glorpyPowerUpID, 0.50f, 0.50f, 0, 0, 1.0f);
     }
 
-    public void playBigBlast(){
+    public void playBigBlast() {
         soundPool.play(bigBlastID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
 
-    public void playBigExplosion(){
+    public void playBigExplosion() {
         soundPool.play(bigExplosionID, 1.0f, 1.0f, 0, 0, 1.0f);
     }
 
-    public void playThrust(){
+    public void playThrust() {
         soundPool.play(thrustID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
 
-    public void onPause(){
+    public void onPause() {
         battleMusic.pause();
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
         battleMusic.release();
     }
 
-    public void onResume(){
+    public void onResume() {
         battleMusic.start();
     }
 }

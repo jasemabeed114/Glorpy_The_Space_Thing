@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,8 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private static final int SCORE_NUM_ID = 2856723;
     public static FrameLayout totalView;
     private static Activity activity;
-
-    private GameView gameView;
+    private static GameView gameView;
 
     private static void checkEndCondition(int health) {
         if (health <= 0) {
@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
             long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
             activity.startActivity(intent);
             activity.finish();
+
         }
     }
 
@@ -85,7 +86,6 @@ public class GameActivity extends AppCompatActivity {
         final int DOWN_BUTTON_ID = 2257611;
         final int SCORE_TEXT_ID = 2872821;
         final int HEALTH_TEXT_ID = 9872635;
-
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Display display = getWindowManager().getDefaultDisplay();
@@ -270,6 +270,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         gameView.resume();
+    }
+
+    @Override
+    protected void onStop() {
+        gameView.audioHandler.release();
+        super.onStop();
     }
 
     private float screenScaleX(float screenX) {

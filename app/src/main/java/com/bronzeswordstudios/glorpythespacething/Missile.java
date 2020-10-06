@@ -11,6 +11,7 @@ public class Missile extends FireBall {
     private Glorpy glorpy;
     private int damage;
     private int velocityX, velocityY;
+    private int pointValue;
 
     public Missile(Context context, int positionX, int positionY, int screenX, int screenY, Glorpy glorpy) {
         super(context, positionX, positionY, screenX, screenY);
@@ -25,6 +26,7 @@ public class Missile extends FireBall {
         velocityY = 7;
         health = 60;
         damage = -50;
+        pointValue = 150;
         hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);
     }
 
@@ -50,5 +52,9 @@ public class Missile extends FireBall {
 
     public int getDamage() {
         return damage;
+    }
+
+    public int getPointValue() {
+        return pointValue;
     }
 }

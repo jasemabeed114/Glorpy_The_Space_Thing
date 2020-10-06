@@ -56,8 +56,8 @@ public class FireBall {
 
     public void update() {
         x += velocity;
-        hitBox.left = x + (int) (60 * scaleFactorX);
-        hitBox.top = y + (int) (50 * scaleFactorY);
+        hitBox.left = x;
+        hitBox.top = y;
         hitBox.right = x + frameWidth - (int) (40 * scaleFactorX);
         hitBox.bottom = y + frameHeight - (int) (60 * scaleFactorY);
     }
@@ -113,12 +113,20 @@ public class FireBall {
         return x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public int getMaxX() {
         return maxX;
     }
 
     public Rect getHitBox() {
         return hitBox;
+    }
+
+    public int getFrameWidth() {
+        return frameWidth;
     }
 }
 

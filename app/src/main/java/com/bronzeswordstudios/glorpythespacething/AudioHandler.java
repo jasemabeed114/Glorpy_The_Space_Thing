@@ -20,7 +20,7 @@ public class AudioHandler {
 
     public AudioHandler(Context context) {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        soundPool = new SoundPool(100, AudioManager.STREAM_MUSIC, 0);
+        soundPool = new SoundPool(25, AudioManager.STREAM_MUSIC, 0);
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
         bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);
         fireballID = soundPool.load(context, R.raw.fireball, 1);
@@ -85,7 +85,8 @@ public class AudioHandler {
         battleMusic.pause();
     }
 
-    public void onDestroy() {
+    public void release() {
+        soundPool.release();
         battleMusic.release();
     }
 

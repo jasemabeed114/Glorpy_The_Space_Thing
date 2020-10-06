@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,6 +37,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread gameThread;
     private Activity gameActivity;
     private BigBossBlaster bigBossBlaster;
+    private BigBossBetty bigBossBetty;
     private CannonCharging cannonCharging;
     private int difficultyFactor;
     private boolean spawnBoss;
@@ -98,10 +101,11 @@ public class GameView extends SurfaceView implements Runnable {
         updateEnemies(baseEnemies, laserBlasts, glorpy);
         updateLasers(laserBlasts, glorpy);
         updatePowerUps(powerUps, glorpy);
-        updateBigBossBlaster(bigBossBlaster, glorpy);
+        updateBigBossBlaster();
         updateGraphics(graphicElements, glorpy);
         updateMissiles(missiles, glorpy);
         updateExplosions(explosions);
+        updateBigBossBetty();
         glorpy.update();
     }
 
@@ -153,6 +157,7 @@ public class GameView extends SurfaceView implements Runnable {
                 }
             }
             drawBigBossBlaster(bigBossBlaster, canvas, paint);
+            drawBigBossBetty(canvas, paint);
             glorpy.animationControl(canvas, paint);
             drawGraphics(graphicElements, canvas, paint);
             ourHolder.unlockCanvasAndPost(canvas);
@@ -208,30 +213,6 @@ public class GameView extends SurfaceView implements Runnable {
                 final BaseEnemy baseEnemy = baseEnemies.get(i);
                 baseEnemy.update();
 
-                // check to see if a fireball has hit an enemy, if so prompt animation and delete both
-                if (fireballs.size() > 0) {
-                    for (int fireballIndex = fireballs.size() - 1; fireballIndex >= 0; fireballIndex--) {
-                        if (fireballs.get(fireballIndex).getHitBox().intersect(baseEnemy.getHitBox())) {
-
-                            // We need to access our UI thread to update the score
-                            if (!baseEnemy.isDestroyed) {
-                                gameActivity.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        GameActivity.updateScore(baseEnemy.getScoreValue());
-                                    }
-                                });
-                                audioHandler.playSmallExplosion();
-                                fireballs.get(fireballIndex).updateHealth();
-                                baseEnemy.isDestroyed = true;
-                            }
-                            if (fireballs.get(fireballIndex).getHealth() == 0) {
-                                fireballs.remove(fireballIndex);
-                                break;
-                            }
-                        }
-                    }
-                }
                 if (baseEnemy.getHitBox().intersect(glorpy.getHitBox())) {
                     if (!baseEnemy.isDestroyed) {
                         audioHandler.playSmallExplosion();
@@ -269,8 +250,7 @@ public class GameView extends SurfaceView implements Runnable {
                 }
                 if (baseEnemy.timeToShoot() &&
                         baseEnemy.getEnemyAICode() >= 5 && baseEnemy.getX() <= baseEnemy.getFiringRange()) {
-                    //laserBlasts.add(new LaserBlast(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY));
-                    missiles.add(new Missile(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY, glorpy));
+                    laserBlasts.add(new LaserBlast(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY));
                     audioHandler.playLaserSound();
                     baseEnemy.lastShotTime = System.currentTimeMillis();
                 }
@@ -285,6 +265,97 @@ public class GameView extends SurfaceView implements Runnable {
                 fireBall.update();
                 if (fireBall.getX() > fireBall.getMaxX()) {
                     fireballs.remove(i);
+                }
+                if (baseEnemies.size() > 0)
+                    for (int enemyIndex = baseEnemies.size() - 1; enemyIndex >= 0; enemyIndex--) {
+                        final BaseEnemy baseEnemy = baseEnemies.get(enemyIndex);
+                        if (fireBall.getHitBox().intersect(baseEnemy.getHitBox())) {
+                            // We need to access our UI thread to update the score
+                            if (!baseEnemy.isDestroyed) {
+                                gameActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        GameActivity.updateScore(baseEnemy.getScoreValue());
+                                    }
+                                });
+                                audioHandler.playSmallExplosion();
+                                fireBall.updateHealth();
+                                baseEnemy.isDestroyed = true;
+                            }
+                            if (fireBall.getHealth() == 0) {
+                                fireballs.remove(fireBall);
+                                break;
+                            }
+                        }
+                    }
+                if (bigBossBlaster != null) {
+                    if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
+                        bigBossBlaster.updateHealth(glorpy.getFireDamage());
+                        audioHandler.playSmallExplosion();
+                        if (bigBossBlaster.getHealth() <= 0) {
+                            graphicElements.remove(cannonCharging);
+                            // set explosion details
+                            explosions.add(new Explosion(context, bigBossBlaster.getHitBox(), 30, screenX, screenY));
+                            audioHandler.playBigExplosion();
+                            powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
+                            final int scoreValue = bigBossBlaster.getScoreValue();
+                            gameActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    GameActivity.updateScore(scoreValue);
+                                }
+                            });
+                            bigBossBlaster = null;
+                        }
+                        int yHitPosition = fireBall.getHitBox().centerY();
+                        int xHitPosition = fireBall.getX() + fireBall.getFrameWidth();
+                        graphicElements.add(new FireDamageGraphic(context, xHitPosition, yHitPosition, screenX, screenY));
+                        fireballs.remove(i);
+                        break;
+
+                    }
+                }
+                if (bigBossBetty != null) {
+                    if (Rect.intersects(fireBall.getHitBox(), bigBossBetty.getHitBox())) {
+                        bigBossBetty.updateHealth(glorpy.getFireDamage());
+                        graphicElements.add(new FireDamageGraphic(context, fireBall.getX() + fireBall.frameWidth, fireBall.getY() + (fireBall.frameHeight / 2), screenX, screenY));
+                        audioHandler.playSmallExplosion();
+                        if (bigBossBetty.getHealth() <= 0) {
+                            explosions.add(new Explosion(context, bigBossBetty.getHitBox(), 150, screenX, screenY));
+                            gameActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    GameActivity.updateScore(bigBossBetty.getScoreValue());
+                                }
+                            });
+                            audioHandler.playBigExplosion();
+                            bigBossBetty = null;
+                        }
+                        fireballs.remove(fireBall);
+                        break;
+                    }
+
+                }
+                if (missiles.size() > 0){
+                    for (int missileIndex = missiles.size() - 1; missileIndex >= 0; missileIndex--) {
+                        final Missile missile = missiles.get(missileIndex);
+                        if (Rect.intersects(fireBall.getHitBox(), missile.getHitBox())) {
+                            explosions.add(new Explosion(context, missile.getHitBox(), 5, screenX, screenY));
+                            missiles.remove(missile);
+                            gameActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    GameActivity.updateScore(missile.getPointValue());
+                                }
+                            });
+                            fireBall.updateHealth();
+                            audioHandler.playSmallExplosion();
+                            if (fireBall.getHealth() <= 0) {
+                                fireballs.remove(fireBall);
+                            }
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -345,7 +416,7 @@ public class GameView extends SurfaceView implements Runnable {
     private int updateDifficulty(int score) {
         // todo: add multiples boss spawns and vary boss abilities based on score, also make 3 more bosses for random gen
         int enemyCount = 0;
-        if (bigBossBlaster == null && !spawnBoss) {
+        if (bigBossBlaster == null && bigBossBetty == null && !spawnBoss) {
             if (score < 100) {
                 enemyCount = 1;
             } else if (score < 200) {
@@ -359,15 +430,33 @@ public class GameView extends SurfaceView implements Runnable {
                 spawnBoss = true;
             }
         } else if (spawnBoss && baseEnemies.size() == 0) {
-            bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
-            difficultyFactor += 8;
+            if (difficultyFactor < 10) {
+                bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
+                difficultyFactor += 10;
+            }
+            else if (difficultyFactor > 10 && difficultyFactor < 20){
+                bigBossBetty = new BigBossBetty(context, screenX, screenY, laserBlasts, missiles, glorpy, audioHandler);
+                difficultyFactor += 20;
+            }
+             else {
+                 Random random = new Random();
+                 int randomInt = random.nextInt(100);
+                 if (randomInt < 51){
+                     bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
+                     difficultyFactor += 10;
+                 }
+                 else {
+                     bigBossBetty = new BigBossBetty(context, screenX, screenY, laserBlasts, missiles, glorpy, audioHandler);
+                     difficultyFactor += 20;
+                 }
+            }
             spawnBoss = false;
         }
         return enemyCount;
 
     }
 
-    private void updateBigBossBlaster(BigBossBlaster bigBossBlaster, Glorpy glorpy) {
+    private void updateBigBossBlaster() {
         if (bigBossBlaster != null) {
             bigBossBlaster.update();
             if (bigBossBlaster.getCurrentAI() == BigBossBlaster.AI_KAMIKAZE_MODE) {
@@ -417,33 +506,20 @@ public class GameView extends SurfaceView implements Runnable {
                     }
                 });
             }
-            for (int i = 0; i < fireballs.size(); i++) {
-                FireBall fireBall = fireballs.get(i);
-                if (Rect.intersects(fireBall.getHitBox(), bigBossBlaster.getHitBox())) {
-                    bigBossBlaster.updateHealth(glorpy.getFireDamage());
-                    audioHandler.playSmallExplosion();
-                    if (bigBossBlaster.getHealth() <= 0) {
-                        graphicElements.remove(cannonCharging);
-                        // set explosion details
-                        explosions.add(new Explosion(context, bigBossBlaster.getHitBox(), 30, screenX, screenY));
-                        audioHandler.playBigExplosion();
-                        powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
-                        this.bigBossBlaster = null;
-                        final int scoreValue = bigBossBlaster.getScoreValue();
-                        gameActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                GameActivity.updateScore(scoreValue);
-                            }
-                        });
+        }
+    }
+
+    public void updateBigBossBetty() {
+        if (bigBossBetty != null) {
+            bigBossBetty.update();
+            if (Rect.intersects(glorpy.getHitBox(), bigBossBetty.getHitBox()) && !bigBossBetty.didHitGlorpy()) {
+                bigBossBetty.setDidHitGlorpy(true);
+                gameActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameActivity.updateHealth(bigBossBetty.getDamage());
                     }
-                    Random randInt = new Random();
-                    int yHitPosition = fireBall.getHitBox().centerY() + randInt.nextInt(150) - 75;
-                    int xHitPosition = fireBall.getX() + randInt.nextInt(100);
-                    graphicElements.add(new FireDamageGraphic(context, xHitPosition, yHitPosition, screenX, screenY));
-                    fireballs.remove(i);
-                    break;
-                }
+                });
             }
         }
     }
@@ -467,18 +543,6 @@ public class GameView extends SurfaceView implements Runnable {
                 if (missile.getX() < -missile.frameWidth) {
                     missiles.remove(i);
                     break;
-                }
-                for (int fireIndex = fireballs.size() - 1; fireIndex >= 0; fireIndex--) {
-                    FireBall fireBall = fireballs.get(fireIndex);
-                    if (Rect.intersects(fireBall.getHitBox(), missile.getHitBox())) {
-                        explosions.add(new Explosion(context, missile.getHitBox(), 5, screenX, screenY));
-                        missiles.remove(missile);
-                        fireBall.updateHealth();
-                        if (fireBall.getHealth() <= 0) {
-                            fireballs.remove(fireBall);
-                        }
-                        break;
-                    }
                 }
             }
 
@@ -539,6 +603,12 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void drawBigBossBetty(Canvas canvas, Paint paint) {
+        if (bigBossBetty != null) {
+            bigBossBetty.animationControl(canvas, paint);
+        }
+    }
+
     float screenScaleX(float screenX) {
         screenX = screenX / 1920f;
         return screenX;
@@ -550,3 +620,4 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
 }
+

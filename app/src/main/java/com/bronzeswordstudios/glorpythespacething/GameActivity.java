@@ -274,7 +274,7 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        gameView.audioHandler.release();
+        gameView.audioHandler.soundPoolRelease();
         super.onStop();
     }
 

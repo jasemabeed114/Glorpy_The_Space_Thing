@@ -1,6 +1,7 @@
 package com.bronzeswordstudios.glorpythespacething;
 
 import android.content.Context;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -20,7 +21,7 @@ public class AudioHandler {
 
     public AudioHandler(Context context) {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        soundPool = new SoundPool(25, AudioManager.STREAM_MUSIC, 0);
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
         bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);
         fireballID = soundPool.load(context, R.raw.fireball, 1);
@@ -31,8 +32,7 @@ public class AudioHandler {
         this.context = context;
     }
 
-    public void playLaserSound() {
-        soundPool.play(laserID, 0.25f, 0.25f, 0, 0, 1.0f);
+    public void playLaserSound() { soundPool.play(laserID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
 
     public void playFireBallSound() {
@@ -85,12 +85,24 @@ public class AudioHandler {
         battleMusic.pause();
     }
 
-    public void release() {
+    public void soundPoolRelease() {
         soundPool.release();
+        soundPool = null;
+    }
+
+    public void musicRelease(){
         battleMusic.release();
     }
 
     public void onResume() {
         battleMusic.start();
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
+        bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);
+        fireballID = soundPool.load(context, R.raw.fireball, 1);
+        glorpyPowerUpID = soundPool.load(context, R.raw.glorpy_powerup, 1);
+        laserID = soundPool.load(context, R.raw.laser, 1);
+        smallExplosionID = soundPool.load(context, R.raw.small_explosion, 1);
+        thrustID = soundPool.load(context, R.raw.thrust, 1);
     }
 }

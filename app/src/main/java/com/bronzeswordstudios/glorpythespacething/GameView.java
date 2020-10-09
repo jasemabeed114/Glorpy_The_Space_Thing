@@ -229,11 +229,10 @@ public class GameView extends SurfaceView implements Runnable {
                 if (baseEnemy.isDestroyed && baseEnemy.deleteShip) {
                     Random randGen = new Random();
                     int healthCode = randGen.nextInt(100);
-                    if (healthCode <= 15) {
+                    if (healthCode <= 10) {
                         powerUps.add(new PilotPowerUp(context, screenX, screenY, baseEnemy));
                     }
                     baseEnemies.remove(i);
-                    break;
                 }
                 if (baseEnemy.getX() < 0 && !baseEnemy.isDestroyed) {
                     // lose points for enemies getting past
@@ -246,7 +245,6 @@ public class GameView extends SurfaceView implements Runnable {
                     });
 
                     baseEnemies.remove(i);
-                    break;
                 }
                 if (baseEnemy.timeToShoot() &&
                         baseEnemy.getEnemyAICode() >= 5 && baseEnemy.getX() <= baseEnemy.getFiringRange()) {
@@ -284,7 +282,6 @@ public class GameView extends SurfaceView implements Runnable {
                             }
                             if (fireBall.getHealth() == 0) {
                                 fireballs.remove(fireBall);
-                                break;
                             }
                         }
                     }
@@ -311,7 +308,6 @@ public class GameView extends SurfaceView implements Runnable {
                         int xHitPosition = fireBall.getX() + fireBall.getFrameWidth();
                         graphicElements.add(new FireDamageGraphic(context, xHitPosition, yHitPosition, screenX, screenY));
                         fireballs.remove(i);
-                        break;
 
                     }
                 }
@@ -332,7 +328,6 @@ public class GameView extends SurfaceView implements Runnable {
                             bigBossBetty = null;
                         }
                         fireballs.remove(fireBall);
-                        break;
                     }
 
                 }
@@ -353,7 +348,6 @@ public class GameView extends SurfaceView implements Runnable {
                             if (fireBall.getHealth() <= 0) {
                                 fireballs.remove(fireBall);
                             }
-                            break;
                         }
                     }
                 }
@@ -367,7 +361,6 @@ public class GameView extends SurfaceView implements Runnable {
             laserBlast.update();
             if (laserBlast.getX() < 0) {
                 laserBlasts.remove(i);
-                break;
             }
             if (laserBlast.getHitBox().intersect(glorpy.getHitBox())) {
 
@@ -379,7 +372,6 @@ public class GameView extends SurfaceView implements Runnable {
                 });
 
                 laserBlasts.remove(i);
-                break;
             }
         }
     }
@@ -390,7 +382,6 @@ public class GameView extends SurfaceView implements Runnable {
             powerUp.update();
             if (powerUp.getX() < 0) {
                 powerUps.remove(i);
-                break;
             }
             if (powerUp.getHitBox().intersect(glorpy.getHitBox())) {
                 // using shooting animation for power up consumption
@@ -408,7 +399,6 @@ public class GameView extends SurfaceView implements Runnable {
                     DataHolder.freePoints++;
                 }
                 powerUps.remove(i);
-                break;
             }
         }
     }
@@ -538,11 +528,9 @@ public class GameView extends SurfaceView implements Runnable {
                     });
                     explosions.add(new Explosion(context, glorpy.getHitBox(), 15, screenX, screenY));
                     missiles.remove(i);
-                    break;
                 }
                 if (missile.getX() < -missile.frameWidth) {
                     missiles.remove(i);
-                    break;
                 }
             }
 
@@ -551,7 +539,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void updateGraphics(final ArrayList<GraphicElement> graphicElements, Glorpy glorpy) {
         if (graphicElements.size() > 0) {
-            for (int i = 0; i < graphicElements.size(); i++) {
+            for (int i = graphicElements.size() - 1; i >= 0; i--) {
                 final GraphicElement currentElement = graphicElements.get(i);
                 currentElement.update();
                 if (currentElement.getX() < 0) {
@@ -566,11 +554,9 @@ public class GameView extends SurfaceView implements Runnable {
                         }
                     });
                     graphicElements.remove(i);
-                    break;
                 }
                 if (currentElement.isNeedDelete()) {
                     graphicElements.remove(i);
-                    break;
                 }
             }
         }
@@ -578,12 +564,11 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void updateExplosions(ArrayList<Explosion> explosions) {
         if (explosions.size() > 0) {
-            for (int i = 0; i < explosions.size(); i++) {
+            for (int i = explosions.size() - 1; i >= 0; i--) {
                 Explosion explosion = explosions.get(i);
                 explosion.update();
                 if (explosion.isNeedsDelete()) {
                     explosions.remove(explosion);
-                    break;
                 }
             }
         }

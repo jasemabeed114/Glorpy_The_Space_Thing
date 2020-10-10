@@ -41,7 +41,6 @@ public class GameActivity extends AppCompatActivity {
             long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
             activity.startActivity(intent);
             activity.finish();
-
         }
     }
 
@@ -276,6 +275,18 @@ public class GameActivity extends AppCompatActivity {
     protected void onStop() {
         gameView.audioHandler.soundPoolRelease();
         super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        gameView.audioHandler.onRestart();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        gameView.audioHandler.musicRelease();
+        super.onDestroy();
     }
 
     private float screenScaleX(float screenX) {

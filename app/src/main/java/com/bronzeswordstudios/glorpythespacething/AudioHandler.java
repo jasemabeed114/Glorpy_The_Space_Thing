@@ -96,6 +96,9 @@ public class AudioHandler {
 
     public void onResume() {
         battleMusic.start();
+    }
+
+    public void onRestart(){
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
         bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);

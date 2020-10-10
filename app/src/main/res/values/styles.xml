@@ -23,4 +23,21 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">16dp</item>
     </style>
+
+    <style name="title_item_info"
+        parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/geo</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="text_item_info"
+        parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:fontFamily">@font/geo</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
 </resources>

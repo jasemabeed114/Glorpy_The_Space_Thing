@@ -31,4 +31,20 @@
     <string name="reward_toast">evolution points obtained!</string>
     <string name="time_remaining">Minutes remaining until next reward:</string>
     <string name="reward_not_ready">reward still loading: please try again</string>
+    <string name="story_title">Story:</string>
+    <string name="story_text">Glorpy is a… well a… a thing in space! At least that is all the
+        earthlings know about it. Glorpy is not amused by their ignorance.
+        The earthlings keep trying to land on Glorpy\'s planet and Glorpy wants them gone.
+        Glorpy knows what they want. The earthlings are looking for another planet to destroy
+        for resources. Take the role Glorpy and defend your home from the alien earthling invaders!
+        The harder you fight, the more earthlings attack so survive as long as you can so your
+        people can prepare the defense!</string>
+    <string name="controls_title">Controls:</string>
+    <string name="controls_text">Above is a picture of the controller that will be built into the
+        phone screen. Use the arrow buttons to move Glorpy and use the fire ball picture button
+        to shoot! </string>
+    <string name="how_to_play_title">How to play:</string>
+    <string name="how_to_play_text">Move Glorpy to dodge lasers, missiles, and kamikazes.
+        Fire back with Glorpy\'s fireballs. Eat astronauts for health and watch for cargo boxes for
+        earn evolution points! How high can you get your score before going down?</string>
 </resources>

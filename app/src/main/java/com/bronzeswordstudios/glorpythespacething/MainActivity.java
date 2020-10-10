@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                 // for testing
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 

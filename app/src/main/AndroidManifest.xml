@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/glorp_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InfoActivity"></activity>
+
+        <activity android:name=".InfoActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EvolutionActivity"
             android:screenOrientation="portrait"

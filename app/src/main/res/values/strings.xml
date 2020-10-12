@@ -47,4 +47,9 @@
     <string name="how_to_play_text">Move Glorpy to dodge lasers, missiles, and kamikazes.
         Fire back with Glorpy\'s fireballs. Eat astronauts for health and watch for cargo boxes for
         earn evolution points! How high can you get your score before going down?</string>
+    <string name="evolution_title">Evolution:</string>
+    <string name="evolution_text">Make Glorpy stronger by spending your evolution points! There are 3 categories. Power, Speed, and Life.
+        \n \n Power: Upgrades Glorpy\'s fireball damage, durability, and reduces time between firing.
+        \n \n Speed: Upgrades Glorpy\'s movement speed and fireball speed.
+        \n \n Life: Upgrades Glorpy\'s max life and reduces damage taken.</string>
 </resources>

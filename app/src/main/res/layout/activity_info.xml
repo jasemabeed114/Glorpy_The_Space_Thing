@@ -59,6 +59,17 @@
                 android:layout_height="wrap_content"
                 style="@style/text_item_info"
                 android:text="@string/how_to_play_text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/title_item_info"
+                android:text="@string/evolution_title"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text_item_info"
+                android:text="@string/evolution_text"/>
+
             
         </LinearLayout>
 

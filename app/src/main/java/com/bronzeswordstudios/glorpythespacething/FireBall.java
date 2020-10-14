@@ -36,12 +36,12 @@ public class FireBall {
         x = positionX;
         y = positionY;
         maxX = screenX;
-        health = 1 + (DataHolder.powerMod / 10);
+        health = 1 + (DataHolder.powerMod / 15);
         bitFrames = 4;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.glorpy_fireball);
         frameHeight = (int) (175 * bitScale);
         frameWidth = (int) (175 * bitScale);
-        velocity = (int) (20 * scaleFactorX);
+        velocity = (20 + DataHolder.speedMod / 2) * (int) scaleFactorX ;
         // hit box is adjusted for ideal collision detection
         hitBox = new Rect(x + (int) (60 * scaleFactorX), y + (int) (50 * scaleFactorY),
                 x + frameWidth - (int) (40 * scaleFactorX),

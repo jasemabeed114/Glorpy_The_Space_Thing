@@ -61,7 +61,16 @@ public class GameActivity extends AppCompatActivity {
     public static void updateHealth(int healthChange) {
         TextView healthNumView = totalView.findViewById(HEALTH_NUM_ID);
         int currentHealth = Integer.parseInt(healthNumView.getText().toString());
-        currentHealth += healthChange;
+        if (healthChange < 0){
+            int damageReduction = DataHolder.lifeMod / 5;
+            if (damageReduction > 12){
+                damageReduction = 12;
+            }
+            currentHealth += (healthChange + damageReduction);
+        }
+        else{
+            currentHealth += healthChange;
+        }
         // make sure we stay in range
         if (currentHealth > (100 + DataHolder.lifeMod)) {
             currentHealth = 100 + DataHolder.lifeMod;
@@ -212,7 +221,8 @@ public class GameActivity extends AppCompatActivity {
         fireButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (!gameView.glorpy.isShooting()) {
+                int fireBallQuantity = 3 + (DataHolder.powerMod / 10);
+                if (!gameView.glorpy.isShooting() && gameView.fireballs.size() <= fireBallQuantity) {
                     gameView.fireballs.add(new FireBall(GameActivity.this,
                             gameView.glorpy.getX(), gameView.glorpy.getY(), point.x, adjustedY));
                     gameView.audioHandler.playFireBallSound();

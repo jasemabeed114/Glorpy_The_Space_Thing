@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         // one hour minimum between ads
         timeBetweenAdsMillis = 1800000;
 
-
         // handle music
         backTrack = MediaPlayer.create(this, R.raw.glorpy_title);
         backTrack.setVolume(0.5f, 0.5f);

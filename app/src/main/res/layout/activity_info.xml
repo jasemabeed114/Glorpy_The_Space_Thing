@@ -9,34 +9,37 @@
         android:id="@+id/background_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:background="#000000"/>
+        tools:background="#000000" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@null"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:background="@null">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 style="@style/title_item_info"
-                android:text="@string/story_title"/>
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/story_title" />
+
+            <TextView
                 style="@style/text_item_info"
-                android:text="@string/story_text"/>
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/story_text" />
+
+            <TextView
                 style="@style/title_item_info"
-                android:text="@string/controls_title"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/controls_title" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,27 +53,41 @@
                 android:text="@string/controls_text" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 style="@style/title_item_info"
-                android:text="@string/how_to_play_title"/>
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_item_info"
-                android:text="@string/how_to_play_text"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/title_item_info"
-                android:text="@string/evolution_title"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text_item_info"
-                android:text="@string/evolution_text"/>
+                android:text="@string/evolution_title" />
 
-            
+            <TextView
+                style="@style/text_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/evolution_text" />
+
+            <TextView
+                style="@style/title_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_reward_ad" />
+
+            <TextView
+                style="@style/text_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_reward_ad" />
+
+            <TextView
+                style="@style/title_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/how_to_play_title" />
+
+            <TextView
+                style="@style/text_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/how_to_play_text" />
+
         </LinearLayout>
 
 

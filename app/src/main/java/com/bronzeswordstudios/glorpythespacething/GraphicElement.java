@@ -117,6 +117,10 @@ public class GraphicElement {
         return x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public int getDamage() {
         return damage;
     }

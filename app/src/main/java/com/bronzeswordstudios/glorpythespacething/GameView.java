@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import androidx.core.content.ContextCompat;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -331,7 +329,7 @@ public class GameView extends SurfaceView implements Runnable {
                     }
 
                 }
-                if (missiles.size() > 0){
+                if (missiles.size() > 0) {
                     for (int missileIndex = missiles.size() - 1; missileIndex >= 0; missileIndex--) {
                         final Missile missile = missiles.get(missileIndex);
                         if (Rect.intersects(fireBall.getHitBox(), missile.getHitBox())) {
@@ -423,22 +421,19 @@ public class GameView extends SurfaceView implements Runnable {
             if (difficultyFactor < 10) {
                 bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
                 difficultyFactor += 10;
-            }
-            else if (difficultyFactor > 10 && difficultyFactor < 20){
+            } else if (difficultyFactor > 10 && difficultyFactor < 20) {
                 bigBossBetty = new BigBossBetty(context, screenX, screenY, laserBlasts, missiles, glorpy, audioHandler);
                 difficultyFactor += 20;
-            }
-             else {
-                 Random random = new Random();
-                 int randomInt = random.nextInt(100);
-                 if (randomInt < 51){
-                     bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
-                     difficultyFactor += 10;
-                 }
-                 else {
-                     bigBossBetty = new BigBossBetty(context, screenX, screenY, laserBlasts, missiles, glorpy, audioHandler);
-                     difficultyFactor += 20;
-                 }
+            } else {
+                Random random = new Random();
+                int randomInt = random.nextInt(100);
+                if (randomInt < 51) {
+                    bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);
+                    difficultyFactor += 10;
+                } else {
+                    bigBossBetty = new BigBossBetty(context, screenX, screenY, laserBlasts, missiles, glorpy, audioHandler);
+                    difficultyFactor += 20;
+                }
             }
             spawnBoss = false;
         }

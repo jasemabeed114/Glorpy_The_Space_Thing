@@ -50,10 +50,10 @@ public class BigBossBetty {
     float scaleFactorY;
     int damage;
     float bitScale;
+    AudioHandler audioHandler;
     private int currentAI;
     private ArrayList<LaserBlast> laserBlasts;
     private ArrayList<Missile> missiles;
-    AudioHandler audioHandler;
     private boolean didHitGlorpy;
 
     public BigBossBetty(Context context, int screenX, int screenY, ArrayList<LaserBlast> laserBlasts, ArrayList<Missile> missiles, Glorpy glorpy, AudioHandler audioHandler) {
@@ -82,12 +82,12 @@ public class BigBossBetty {
         frameWidth = (int) (175 * bitScale) * 3;
         startingRange = maxX - (frameWidth);
         Random random = new Random(screenY);
-        y = screenY/2;
+        y = screenY / 2;
         x = screenX + frameWidth;
         maxY = screenY - frameHeight;
         this.screenY = screenY;
         this.screenX = screenX;
-        hitBox = new Rect(x, y + (frameHeight/4), x + frameWidth, y + (3*frameHeight/4));
+        hitBox = new Rect(x, y + (frameHeight / 4), x + frameWidth, y + (3 * frameHeight / 4));
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.big_boss_betty);
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth * bitFrames, frameHeight, false);
         currentFrame = 0;
@@ -116,13 +116,13 @@ public class BigBossBetty {
                     } else {
                         // note adding to y moves towards the bottom of the screen
                         if (moveDown) {
-                            y += velocity/2 * scaleFactorY;
+                            y += velocity / 2 * scaleFactorY;
                             if (y >= maxY) {
                                 moveUp = true;
                                 moveDown = false;
                             }
                         } else {
-                            y -= velocity/2 * scaleFactorY;
+                            y -= velocity / 2 * scaleFactorY;
                             if (y <= 0) {
                                 moveDown = true;
                                 moveUp = false;
@@ -134,44 +134,41 @@ public class BigBossBetty {
                         x -= velocity * scaleFactorX;
                     } else if (x <= maxX / 2) {
                         if (System.currentTimeMillis() - lastShotTime >= shotTime) {
-                            laserBlasts.add(new LaserBlast(context, x, y + (frameHeight/2), screenX, screenY));
+                            laserBlasts.add(new LaserBlast(context, x, y + (frameHeight / 2), screenX, screenY));
                             audioHandler.playLaserSound();
                             lastShotTime = System.currentTimeMillis();
                         }
                     }
-                    if (x < (maxX / 2) - 100){
+                    if (x < (maxX / 2) - 100) {
                         x += velocity * scaleFactorX;
                     }
                     break;
                 case AI_CODE_ASSAULT:
-                    if (x >= -frameWidth){
+                    if (x >= -frameWidth) {
                         x -= velocity * 4 * scaleFactorX;
-                    }
-                    else {
+                    } else {
                         x = maxX + frameWidth;
-                        y = glorpy.getY() - (frameHeight/2);
+                        y = glorpy.getY() - (frameHeight / 2);
                         // reset for next attack run
                         didHitGlorpy = false;
                     }
                     break;
                 case AI_CODE_MISSILES:
                     // if too far in: reset position for balance
-                    if (x < startingRange - frameWidth){
+                    if (x < startingRange - frameWidth) {
                         x -= velocity * scaleFactorX;
-                        if (x <= -frameWidth){
+                        if (x <= -frameWidth) {
                             x = maxX + frameWidth;
                         }
-                    }
-                    else{
-                        if (System.currentTimeMillis() - lastShotTime >= 1000){
+                    } else {
+                        if (System.currentTimeMillis() - lastShotTime >= 1000) {
                             Random random = new Random();
                             int randomInt = random.nextInt(100);
                             int yPos;
-                            if (randomInt >= 50){
-                                yPos = y + (frameHeight/4);
-                            }
-                            else{
-                                yPos = y + (3*frameHeight/4);
+                            if (randomInt >= 50) {
+                                yPos = y + (frameHeight / 4);
+                            } else {
+                                yPos = y + (3 * frameHeight / 4);
                             }
                             missiles.add(new Missile(context, x, yPos, screenX, screenY, glorpy));
                             audioHandler.playSmallExplosion();
@@ -193,8 +190,8 @@ public class BigBossBetty {
 
         hitBox.left = x;
         hitBox.right = x + frameWidth;
-        hitBox.top = y + (frameHeight/4);
-        hitBox.bottom = y + (3*frameHeight/4);
+        hitBox.top = y + (frameHeight / 4);
+        hitBox.bottom = y + (3 * frameHeight / 4);
 
 
     }
@@ -253,7 +250,7 @@ public class BigBossBetty {
         this.didHitGlorpy = didHitGlorpy;
     }
 
-    public void updateHealth(int damage){
+    public void updateHealth(int damage) {
         health += damage;
     }
 

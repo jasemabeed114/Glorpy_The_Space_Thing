@@ -3,9 +3,13 @@ package com.bronzeswordstudios.glorpythespacething;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,14 +27,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class GameOverActivity extends AppCompatActivity {
-    private String TAG = "Debug: ";
 
-    private InterstitialAd mInterstitialAd;
+    GameOverBackground gameOverBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        //set super cool background
+        Display display = getWindowManager().getDefaultDisplay();
+        Point displayPoint = new Point();
+        display.getSize(displayPoint);
+        gameOverBackground = new GameOverBackground(this, displayPoint.x, displayPoint.y);
+        FrameLayout backgroundLayout = findViewById(R.id.background_view);
+        backgroundLayout.addView(gameOverBackground);
+
+        //get database info!
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase localDb = dbHelper.getWritableDatabase();
         if (DataHolder.score > DataHolder.highestScore) {
@@ -56,6 +69,7 @@ public class GameOverActivity extends AppCompatActivity {
             DataHolder.interstitialAd.show();
         }
 
+        //Buttons
         replayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +102,7 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
+        // assess scores from FireBase, update if new high scores
         firestore.collection(DataHolder.SCORE_KEY).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -122,10 +137,22 @@ public class GameOverActivity extends AppCompatActivity {
                     }
 
                 } else {
+                    //TODO add timeout code here
                     Toast.makeText(GameOverActivity.this, "TEST: No data available", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameOverBackground.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameOverBackground.resume();
+    }
 }

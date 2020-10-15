@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mainBackgroundView = new MainBackgroundView(this, displayPoint.x, displayPoint.y);
         FrameLayout backgroundView = findViewById(R.id.background_view);
         backgroundView.addView(mainBackgroundView);
-        // one hour minimum between ads
+        // half hour minimum between ads
         timeBetweenAdsMillis = 1800000;
 
         // handle music
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = localDb.query(DataHolder.DataEntry.TABLE_NAME, DataHolder.DataEntry.projection,
                 null, null, null, null, null);
         TextView highest_score_view = findViewById(R.id.highest_score_number);
+
         // if database exists get data
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -112,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                //for testing
+                //Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                Intent intent = new Intent(MainActivity.this, GameOverActivity.class);
                 startActivity(intent);
                 finish();
             }

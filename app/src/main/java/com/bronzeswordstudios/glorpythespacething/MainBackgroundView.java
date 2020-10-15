@@ -18,15 +18,16 @@ public class MainBackgroundView extends SurfaceView implements Runnable {
     volatile boolean running = true;
     Paint paint;
     SurfaceHolder holder;
+    Canvas canvas;
     private Thread backgroundThread;
 
-    public MainBackgroundView(Context context, int x, int y) {
+    public MainBackgroundView(Context context, int screenX, int screenY) {
         super(context);
         this.context = context;
         paint = new Paint();
         holder = getHolder();
-        screenX = x;
-        screenY = y;
+        this.screenX = screenX;
+        this.screenY = screenY;
         startAnimation();
     }
 
@@ -39,8 +40,7 @@ public class MainBackgroundView extends SurfaceView implements Runnable {
         }
     }
 
-    private void draw() {
-        Canvas canvas;
+    void draw() {
         if (holder.getSurface().isValid()) {
             canvas = holder.lockCanvas();
             canvas.drawColor(Color.argb(255, 0, 0, 0));
@@ -51,13 +51,13 @@ public class MainBackgroundView extends SurfaceView implements Runnable {
         }
     }
 
-    private void update() {
+    void update() {
         for (Star star : stars) {
             star.update();
         }
     }
 
-    private void control() {
+    void control() {
         try {
             Thread.sleep(13);
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class MainBackgroundView extends SurfaceView implements Runnable {
         }
     }
 
-    private void startAnimation() {
+    void startAnimation() {
         int numStars = 25;
         for (int i = 0; i < numStars; i++) {
             Star star = new Star(context, screenX, screenY);
@@ -74,13 +74,13 @@ public class MainBackgroundView extends SurfaceView implements Runnable {
         }
     }
 
-    public void resume() {
+    void resume() {
         running = true;
         backgroundThread = new Thread(this);
         backgroundThread.start();
     }
 
-    public void pause() {
+    void pause() {
         running = false;
         try {
             backgroundThread.join();

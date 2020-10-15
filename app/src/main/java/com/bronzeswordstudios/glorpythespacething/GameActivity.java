@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -61,14 +60,13 @@ public class GameActivity extends AppCompatActivity {
     public static void updateHealth(int healthChange) {
         TextView healthNumView = totalView.findViewById(HEALTH_NUM_ID);
         int currentHealth = Integer.parseInt(healthNumView.getText().toString());
-        if (healthChange < 0){
+        if (healthChange < 0) {
             int damageReduction = DataHolder.lifeMod / 5;
-            if (damageReduction > 12){
+            if (damageReduction > 12) {
                 damageReduction = 12;
             }
             currentHealth += (healthChange + damageReduction);
-        }
-        else{
+        } else {
             currentHealth += healthChange;
         }
         // make sure we stay in range

@@ -1,7 +1,6 @@
 package com.bronzeswordstudios.glorpythespacething;
 
 import android.content.Context;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -32,7 +31,8 @@ public class AudioHandler {
         this.context = context;
     }
 
-    public void playLaserSound() { soundPool.play(laserID, 0.25f, 0.25f, 0, 0, 1.0f);
+    public void playLaserSound() {
+        soundPool.play(laserID, 0.25f, 0.25f, 0, 0, 1.0f);
     }
 
     public void playFireBallSound() {
@@ -90,7 +90,7 @@ public class AudioHandler {
         soundPool = null;
     }
 
-    public void musicRelease(){
+    public void musicRelease() {
         battleMusic.release();
     }
 
@@ -98,7 +98,7 @@ public class AudioHandler {
         battleMusic.start();
     }
 
-    public void onRestart(){
+    public void onRestart() {
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
         bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);

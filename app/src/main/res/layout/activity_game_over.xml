@@ -3,53 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_over_screen"
+    android:background="@null"
     tools:context=".GameOverActivity">
 
-    <ImageView
-        android:id="@+id/glorpy_image"
+    <FrameLayout
+        android:id="@+id/background_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_above="@id/game_over_text"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/glorpy_game_over" />
-
-    <TextView
-        android:id="@+id/game_over_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/geo"
-        android:text="GAME OVER"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/background_view"
+        android:layout_centerInParent="true" />
 
     <LinearLayout
-        android:id="@+id/score_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/game_over_text"
         android:layout_centerInParent="true"
-        android:layout_margin="24dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/game_over_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="@font/geo"
-            android:text="@string/score_text"
+            android:text="@string/game_over"
             android:textColor="#FFFFFF"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
-        <TextView
-            android:id="@+id/score_value"
+        <LinearLayout
+            android:id="@+id/score_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:fontFamily="@font/geo"
-            android:text="0"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp" />
+            android:layout_gravity="center"
+            android:layout_margin="24dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/geo"
+                android:text="@string/score_text"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/score_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/geo"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -66,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:fontFamily="@font/concert_one"
+            android:fontFamily="@font/geo"
             android:text="@string/play_again" />
 
         <Button
@@ -74,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:fontFamily="@font/concert_one"
+            android:fontFamily="@font/geo"
             android:text="@string/scores_button" />
 
         <Button
@@ -82,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:fontFamily="@font/concert_one"
+            android:fontFamily="@font/geo"
             android:text="@string/exit_button" />
 
     </LinearLayout>

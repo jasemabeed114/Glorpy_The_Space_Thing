@@ -8,10 +8,10 @@ import java.util.Random;
 
 public class Star {
 
-    private Bitmap bitmap;
-    private int x, y;
+    Bitmap bitmap;
+    int speed;
+    int x, y;
     private int maxX, maxY;
-    private int speed;
     // designed for a phone that is x:1920 by y:1080 so we must scale to other screens
     // to maintain play style
     private float scaleFactorX;

@@ -137,7 +137,6 @@ public class GameOverActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    //TODO add timeout code here
                     Toast.makeText(GameOverActivity.this, "TEST: No data available", Toast.LENGTH_SHORT).show();
                 }
             }

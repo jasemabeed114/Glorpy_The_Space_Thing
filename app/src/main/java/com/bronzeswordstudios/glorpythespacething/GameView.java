@@ -290,7 +290,7 @@ public class GameView extends SurfaceView implements Runnable {
                         if (bigBossBlaster.getHealth() <= 0) {
                             graphicElements.remove(cannonCharging);
                             // set explosion details
-                            explosions.add(new Explosion(context, bigBossBlaster.getHitBox(), 30, screenX, screenY));
+                            explosions.add(new Explosion(context, bigBossBlaster.getHitBox(), 3, screenX, screenY, Explosion.LARGE_EXPLOSION));
                             audioHandler.playBigExplosion();
                             powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
                             final int scoreValue = bigBossBlaster.getScoreValue();
@@ -315,7 +315,7 @@ public class GameView extends SurfaceView implements Runnable {
                         graphicElements.add(new FireDamageGraphic(context, fireBall.getX() + fireBall.frameWidth, fireBall.getY() + (fireBall.frameHeight / 2), screenX, screenY));
                         audioHandler.playSmallExplosion();
                         if (bigBossBetty.getHealth() <= 0) {
-                            explosions.add(new Explosion(context, bigBossBetty.getHitBox(), 150, screenX, screenY));
+                            explosions.add(new Explosion(context, bigBossBetty.getHitBox(), 6, screenX, screenY, Explosion.LARGE_EXPLOSION));
                             gameActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -333,7 +333,7 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int missileIndex = missiles.size() - 1; missileIndex >= 0; missileIndex--) {
                         final Missile missile = missiles.get(missileIndex);
                         if (Rect.intersects(fireBall.getHitBox(), missile.getHitBox())) {
-                            explosions.add(new Explosion(context, missile.getHitBox(), 5, screenX, screenY));
+                            explosions.add(new Explosion(context, missile.getHitBox(), 5, screenX, screenY, Explosion.SMALL_EXPLOSION));
                             missiles.remove(missile);
                             gameActivity.runOnUiThread(new Runnable() {
                                 @Override
@@ -521,7 +521,7 @@ public class GameView extends SurfaceView implements Runnable {
                             GameActivity.updateHealth(missile.getDamage());
                         }
                     });
-                    explosions.add(new Explosion(context, glorpy.getHitBox(), 15, screenX, screenY));
+                    explosions.add(new Explosion(context, glorpy.getHitBox(), 10, screenX, screenY, Explosion.SMALL_EXPLOSION));
                     missiles.remove(i);
                 }
                 if (missile.getX() < -missile.frameWidth) {

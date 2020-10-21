@@ -21,13 +21,13 @@ public class FireBall {
     float scaleFactorX;
     float scaleFactorY;
     float bitScale;
-    private int maxX;
-    private int velocity;
+    private final int maxX;
+    private final int velocity;
     private int currentFrame;
     private long lastFrameChangeTime;
-    private int frameLengthInMilliseconds;
-    private Rect frameToDraw;
-    private RectF whereToDraw;
+    private final int frameLengthInMilliseconds;
+    private final Rect frameToDraw;
+    private final RectF whereToDraw;
 
     public FireBall(Context context, int positionX, int positionY, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);

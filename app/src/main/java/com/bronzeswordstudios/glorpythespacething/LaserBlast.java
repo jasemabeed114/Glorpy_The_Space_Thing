@@ -8,17 +8,18 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class LaserBlast {
-    private Rect hitBox;
+    private final Rect hitBox;
     private Bitmap bitmap;
-    private int x, y;
-    private int velocity;
-    private int frameWidth;
-    private int frameHeight;
+    private int x;
+    private final int y;
+    private final int velocity;
+    private final int frameWidth;
+    private final int frameHeight;
     // designed for a phone that is x:1920 by y:1080 so we must scale to other screens
     // to maintain play style
-    private float scaleFactorX;
-    private float scaleFactorY;
-    private int damage;
+    private final float scaleFactorX;
+    private final float scaleFactorY;
+    private final int damage;
 
     public LaserBlast(Context context, int positionX, int positionY, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);

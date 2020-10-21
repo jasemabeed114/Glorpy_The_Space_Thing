@@ -9,15 +9,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Explosion {
-    private int explosionCount;
-    private Rect explosionLocation;
-    private ArrayList<GraphicElement> graphicElements;
-    private Context context;
-    private boolean needsDelete;
     public static final int SMALL_EXPLOSION = 0;
     public static final int LARGE_EXPLOSION = 1;
-    private int type;
-    private int screenX, screenY;
+    private int explosionCount;
+    private final Rect explosionLocation;
+    private final ArrayList<GraphicElement> graphicElements;
+    private final Context context;
+    private boolean needsDelete;
+    private final int type;
+    private final int screenX;
+    private final int screenY;
 
     public Explosion(Context context, Rect explosionLocation, int explosionCount, int screenX, int screenY, int type) {
         this.context = context;
@@ -31,7 +32,7 @@ public class Explosion {
     }
 
     public void update() {
-        if (explosionCount > 0){
+        if (explosionCount > 0) {
             addGraphic(type);
             explosionCount--;
         }
@@ -56,14 +57,13 @@ public class Explosion {
         return needsDelete;
     }
 
-    private void addGraphic(int type){
+    private void addGraphic(int type) {
         Random randInt = new Random();
         int xPos = randInt.nextInt(explosionLocation.right - explosionLocation.left) + explosionLocation.left;
         int yPos = randInt.nextInt(explosionLocation.bottom - explosionLocation.top) + explosionLocation.top;
         if (type == SMALL_EXPLOSION) {
             graphicElements.add(new FireDamageGraphic(context, xPos, yPos, screenX, screenY));
-        }
-        else if(type == LARGE_EXPLOSION){
+        } else if (type == LARGE_EXPLOSION) {
             graphicElements.add(new LargeExplosionGraphic(context, xPos, yPos, screenX, screenY));
         }
     }

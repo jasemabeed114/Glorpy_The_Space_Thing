@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> {
 
-    private ArrayList<ScoreItem> scoreList;
+    private final ArrayList<ScoreItem> scoreList;
 
     public ScoreAdapter(ArrayList<ScoreItem> scoreList) {
         this.scoreList = scoreList;

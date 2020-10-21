@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 public class CannonCharging extends GraphicElement {
 
-    private BigBossBlaster bigBossBlaster;
+    private final BigBossBlaster bigBossBlaster;
 
     public CannonCharging(Context context, int positionX, int positionY, int screenX, int screenY, BigBossBlaster bigBossBlaster) {
         super(context, positionX, positionY, screenX, screenY);

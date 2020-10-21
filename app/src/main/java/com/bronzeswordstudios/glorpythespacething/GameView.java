@@ -20,20 +20,20 @@ public class GameView extends SurfaceView implements Runnable {
     public AudioHandler audioHandler;
     volatile boolean playing;
     private boolean canvasIsLocked;
-    private Paint paint;
-    private SurfaceHolder ourHolder;
-    private Context context;
-    private int screenX;
-    private int screenY;
-    private ArrayList<Star> stars;
-    private ArrayList<BaseEnemy> baseEnemies;
-    private ArrayList<LaserBlast> laserBlasts;
-    private ArrayList<PilotPowerUp> powerUps;
-    private ArrayList<GraphicElement> graphicElements;
-    private ArrayList<Explosion> explosions;
-    private ArrayList<Missile> missiles;
+    private final Paint paint;
+    private final SurfaceHolder ourHolder;
+    private final Context context;
+    private final int screenX;
+    private final int screenY;
+    private final ArrayList<Star> stars;
+    private final ArrayList<BaseEnemy> baseEnemies;
+    private final ArrayList<LaserBlast> laserBlasts;
+    private final ArrayList<PilotPowerUp> powerUps;
+    private final ArrayList<GraphicElement> graphicElements;
+    private final ArrayList<Explosion> explosions;
+    private final ArrayList<Missile> missiles;
     private Thread gameThread;
-    private Activity gameActivity;
+    private final Activity gameActivity;
     private BigBossBlaster bigBossBlaster;
     private BigBossBetty bigBossBetty;
     private CannonCharging cannonCharging;
@@ -316,6 +316,9 @@ public class GameView extends SurfaceView implements Runnable {
                         audioHandler.playSmallExplosion();
                         if (bigBossBetty.getHealth() <= 0) {
                             explosions.add(new Explosion(context, bigBossBetty.getHitBox(), 6, screenX, screenY, Explosion.LARGE_EXPLOSION));
+                            powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBetty));
+                            powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBetty));
+                            powerUps.add(new PilotPowerUp(context, screenX, screenY, bigBossBetty));
                             gameActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

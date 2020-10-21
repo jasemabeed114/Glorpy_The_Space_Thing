@@ -52,8 +52,8 @@ public class BigBossBetty {
     float bitScale;
     AudioHandler audioHandler;
     private int currentAI;
-    private ArrayList<LaserBlast> laserBlasts;
-    private ArrayList<Missile> missiles;
+    private final ArrayList<LaserBlast> laserBlasts;
+    private final ArrayList<Missile> missiles;
     private boolean didHitGlorpy;
 
     public BigBossBetty(Context context, int screenX, int screenY, ArrayList<LaserBlast> laserBlasts, ArrayList<Missile> missiles, Glorpy glorpy, AudioHandler audioHandler) {
@@ -260,5 +260,21 @@ public class BigBossBetty {
 
     public int getScoreValue() {
         return scoreValue;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getFrameHeight() {
+        return frameHeight;
+    }
+
+    public int getFrameWidth() {
+        return frameWidth;
     }
 }

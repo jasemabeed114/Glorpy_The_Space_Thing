@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class GameOverBackground extends MainBackgroundView {
     AudioHandler audioHandler;
     boolean audioPlayed;
-    private ArrayList<GameOverFighter> gameOverFighters;
+    private final ArrayList<GameOverFighter> gameOverFighters;
     private GlorpyKO glorpyKO;
 
     public GameOverBackground(Context context, int screenX, int screenY) {

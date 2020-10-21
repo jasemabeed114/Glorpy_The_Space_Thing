@@ -1,8 +1,8 @@
 package com.bronzeswordstudios.glorpythespacething;
 
 public class ScoreItem {
-    private int scoreValue;
-    private String scoreOwner;
+    private final int scoreValue;
+    private final String scoreOwner;
 
     public ScoreItem(int scoreValue, String scoreOwner) {
         this.scoreValue = scoreValue;

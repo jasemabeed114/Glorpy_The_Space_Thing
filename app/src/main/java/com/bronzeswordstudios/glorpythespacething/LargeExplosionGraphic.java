@@ -9,8 +9,8 @@ public class LargeExplosionGraphic extends GraphicElement {
     public LargeExplosionGraphic(Context context, int positionX, int positionY, int screenX, int screenY) {
         super(context, positionX, positionY, screenX, screenY);
         bitFrames = 8;
-        frameHeight = (int) (128);
-        frameWidth = (int) (175);
+        frameHeight = 128;
+        frameWidth = 175;
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.big_explosion);
         bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth * bitFrames, frameHeight, false);
 

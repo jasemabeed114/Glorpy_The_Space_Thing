@@ -8,10 +8,11 @@ import android.graphics.Rect;
 public class Missile extends FireBall {
 
     private int targetY;
-    private Glorpy glorpy;
-    private int damage;
-    private int velocityX, velocityY;
-    private int pointValue;
+    private final Glorpy glorpy;
+    private final int damage;
+    private final int velocityX;
+    private final int velocityY;
+    private final int pointValue;
 
     public Missile(Context context, int positionX, int positionY, int screenX, int screenY, Glorpy glorpy) {
         super(context, positionX, positionY, screenX, screenY);

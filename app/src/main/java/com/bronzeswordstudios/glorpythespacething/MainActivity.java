@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     RewardedAd rewardedAd;
     private MainBackgroundView mainBackgroundView;
     private MediaPlayer backTrack;
-    private String TAG = "Debug: ";
+    private final String TAG = "Debug: ";
     private long timeBetweenAdsMillis;
 
     @Override

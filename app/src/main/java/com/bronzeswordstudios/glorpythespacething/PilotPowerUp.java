@@ -15,15 +15,17 @@ public class PilotPowerUp {
     int frameHeight;
     int healingPower;
     float bitScale;
+    Random random;
     // used as parent class for evo power ups
-    private Rect hitBox;
+    private final Rect hitBox;
     private int x, y;
-    private int velocity;
-    private int yMax, yMin;
+    private final int velocity;
+    private final int yMax;
+    private final int yMin;
     // designed for a phone that is x:1920 by y:1080 so we must scale to other screens
     // to maintain play style
-    private float scaleFactorX;
-    private float scaleFactorY;
+    private final float scaleFactorX;
+    private final float scaleFactorY;
     private int randInt;
     private boolean movingUp;
     private boolean movingDown;
@@ -50,7 +52,38 @@ public class PilotPowerUp {
         hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);
         velocity = 5;
         healingPower = 18;
-        Random random = new Random();
+        random = new Random();
+        randInt = random.nextInt(10);
+        movingUp = false;
+        movingDown = false;
+    }
+
+    public PilotPowerUp(Context context, int screenX, int screenY, BigBossBetty bigBossBetty) {
+        random = new Random();
+        int randX = random.nextInt(bigBossBetty.getFrameWidth()) + bigBossBetty.getX();
+        int randY = random.nextInt(bigBossBetty.getFrameHeight()) + bigBossBetty.getY();
+        x = randX;
+        y = randY;
+        scaleFactorX = screenScaleX(screenX);
+        scaleFactorY = screenScaleY(screenY);
+        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+
+        // create pilot bitmap based on which pilot was in the cockpit
+        randInt = random.nextInt(100);
+        if (randInt < 50) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pilot_1);
+        } else {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pilot_2);
+        }
+
+        frameWidth = (int) (64 * bitScale);
+        frameHeight = (int) (64 * bitScale);
+        yMax = screenY - frameHeight;
+        yMin = 0;
+        bitmap = Bitmap.createScaledBitmap(bitmap, frameWidth, frameHeight, false);
+        hitBox = new Rect(x, y, x + frameWidth, y + frameHeight);
+        velocity = 5;
+        healingPower = 18;
         randInt = random.nextInt(10);
         movingUp = false;
         movingDown = false;

@@ -9,9 +9,12 @@ import android.graphics.Paint;
 public class GameOverFighter extends GraphicElement {
     public static final int FIGHTER_STANDARD = 0;
     public static final int FIGHTER_SPINNING = 1;
-    private int speedX, speedY, shrinkSpeed;
-    private long timeTillSlowDown, lastSlowdownTime;
-    private int type;
+    private int speedX;
+    private final int speedY;
+    private final int shrinkSpeed;
+    private final long timeTillSlowDown;
+    private final long lastSlowdownTime;
+    private final int type;
 
     public GameOverFighter(Context context, int positionX, int positionY, int screenX, int screenY, int type) {
         super(context, positionX, positionY, screenX, screenY);

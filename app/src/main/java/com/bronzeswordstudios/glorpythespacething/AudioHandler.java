@@ -6,8 +6,8 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 
 public class AudioHandler {
-    private AudioManager audioManager;
-    private Context context;
+    private final AudioManager audioManager;
+    private final Context context;
     private MediaPlayer battleMusic;
     private SoundPool soundPool;
     private int bigBlastID;

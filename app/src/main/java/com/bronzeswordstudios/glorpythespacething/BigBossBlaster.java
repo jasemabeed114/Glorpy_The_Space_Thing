@@ -10,13 +10,13 @@ public class BigBossBlaster extends BaseEnemy {
     static final int AI_LASER_MODE = 1;
     static final int AI_CANNON_MODE = 2;
     static final int AI_KAMIKAZE_MODE = 3;
-    private int cannonChargeTime;
+    private final int cannonChargeTime;
     private long animationStartTime;
     private long lastCannonShotTime;
-    private long attackRunTime;
+    private final long attackRunTime;
     private long lastRunTime;
     private boolean moveUp;
-    private long laserReload;
+    private final long laserReload;
     private long lastLaserShot;
     private int currentAI;
     private boolean ramDamaged;

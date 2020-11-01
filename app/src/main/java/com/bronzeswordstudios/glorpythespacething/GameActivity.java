@@ -61,7 +61,7 @@ public class GameActivity extends AppCompatActivity {
         TextView healthNumView = totalView.findViewById(HEALTH_NUM_ID);
         int currentHealth = Integer.parseInt(healthNumView.getText().toString());
         if (healthChange < 0) {
-            int damageReduction = DataHolder.lifeMod / 5;
+            int damageReduction = DataHolder.lifeMod / 7;
             if (damageReduction > 12) {
                 damageReduction = 12;
             }
@@ -219,7 +219,7 @@ public class GameActivity extends AppCompatActivity {
         fireButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int fireBallQuantity = 3 + (DataHolder.powerMod / 10);
+                int fireBallQuantity = 2 + (DataHolder.powerMod / 10);
                 if (!gameView.glorpy.isShooting() && gameView.fireballs.size() <= fireBallQuantity) {
                     gameView.fireballs.add(new FireBall(GameActivity.this,
                             gameView.glorpy.getX(), gameView.glorpy.getY(), point.x, adjustedY));

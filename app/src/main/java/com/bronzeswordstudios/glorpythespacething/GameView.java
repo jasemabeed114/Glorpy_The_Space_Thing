@@ -293,6 +293,8 @@ public class GameView extends SurfaceView implements Runnable {
                             explosions.add(new Explosion(context, bigBossBlaster.getHitBox(), 3, screenX, screenY, Explosion.LARGE_EXPLOSION));
                             audioHandler.playBigExplosion();
                             powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBlaster));
+                            // note we need to assign the score value here, as the update score method can potentially be called after bigBossBetty is deleted
+                            // this is due to threading lag on occasion (depending on the users phone)
                             final int scoreValue = bigBossBlaster.getScoreValue();
                             gameActivity.runOnUiThread(new Runnable() {
                                 @Override
@@ -319,10 +321,13 @@ public class GameView extends SurfaceView implements Runnable {
                             powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBetty));
                             powerUps.add(new EvoPowerUp(context, screenX, screenY, bigBossBetty));
                             powerUps.add(new PilotPowerUp(context, screenX, screenY, bigBossBetty));
+                            // note we need to assign the score value here, as the update score method can potentially be called after bigBossBetty is deleted
+                            // this is due to threading lag on occasion (depending on the users phone)
+                            final int scoreVal = bigBossBetty.getScoreValue();
                             gameActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    GameActivity.updateScore(bigBossBetty.getScoreValue());
+                                    GameActivity.updateScore(scoreVal);
                                 }
                             });
                             audioHandler.playBigExplosion();

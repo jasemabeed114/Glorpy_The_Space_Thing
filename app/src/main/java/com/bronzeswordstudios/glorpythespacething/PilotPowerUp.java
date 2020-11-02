@@ -10,15 +10,8 @@ import android.graphics.Rect;
 import java.util.Random;
 
 public class PilotPowerUp {
-    Bitmap bitmap;
-    int frameWidth;
-    int frameHeight;
-    int healingPower;
-    float bitScale;
-    Random random;
     // used as parent class for evo power ups
     private final Rect hitBox;
-    private int x, y;
     private final int velocity;
     private final int yMax;
     private final int yMin;
@@ -26,6 +19,13 @@ public class PilotPowerUp {
     // to maintain play style
     private final float scaleFactorX;
     private final float scaleFactorY;
+    Bitmap bitmap;
+    int frameWidth;
+    int frameHeight;
+    int healingPower;
+    float bitScale;
+    Random random;
+    private int x, y;
     private int randInt;
     private boolean movingUp;
     private boolean movingDown;

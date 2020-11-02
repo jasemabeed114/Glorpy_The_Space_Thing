@@ -9,8 +9,6 @@ import android.graphics.Rect;
 
 public class LaserBlast {
     private final Rect hitBox;
-    private Bitmap bitmap;
-    private int x;
     private final int y;
     private final int velocity;
     private final int frameWidth;
@@ -20,6 +18,8 @@ public class LaserBlast {
     private final float scaleFactorX;
     private final float scaleFactorY;
     private final int damage;
+    private Bitmap bitmap;
+    private int x;
 
     public LaserBlast(Context context, int positionX, int positionY, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);

@@ -6,9 +6,9 @@ import android.graphics.Color;
 import java.util.ArrayList;
 
 public class GameOverBackground extends MainBackgroundView {
+    private final ArrayList<GameOverFighter> gameOverFighters;
     AudioHandler audioHandler;
     boolean audioPlayed;
-    private final ArrayList<GameOverFighter> gameOverFighters;
     private GlorpyKO glorpyKO;
 
     public GameOverBackground(Context context, int screenX, int screenY) {

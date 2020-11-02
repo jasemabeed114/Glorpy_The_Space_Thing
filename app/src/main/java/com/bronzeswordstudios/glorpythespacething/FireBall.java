@@ -9,6 +9,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class FireBall {
+    private final int maxX;
+    private final int velocity;
+    private final int frameLengthInMilliseconds;
+    private final Rect frameToDraw;
+    private final RectF whereToDraw;
     int bitFrames;
     Rect hitBox;
     Bitmap bitmap;
@@ -21,13 +26,8 @@ public class FireBall {
     float scaleFactorX;
     float scaleFactorY;
     float bitScale;
-    private final int maxX;
-    private final int velocity;
     private int currentFrame;
     private long lastFrameChangeTime;
-    private final int frameLengthInMilliseconds;
-    private final Rect frameToDraw;
-    private final RectF whereToDraw;
 
     public FireBall(Context context, int positionX, int positionY, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);

@@ -15,11 +15,6 @@ import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
 
-    public Glorpy glorpy;
-    public ArrayList<FireBall> fireballs = new ArrayList<>();
-    public AudioHandler audioHandler;
-    volatile boolean playing;
-    private boolean canvasIsLocked;
     private final Paint paint;
     private final SurfaceHolder ourHolder;
     private final Context context;
@@ -32,8 +27,13 @@ public class GameView extends SurfaceView implements Runnable {
     private final ArrayList<GraphicElement> graphicElements;
     private final ArrayList<Explosion> explosions;
     private final ArrayList<Missile> missiles;
-    private Thread gameThread;
     private final Activity gameActivity;
+    public Glorpy glorpy;
+    public ArrayList<FireBall> fireballs = new ArrayList<>();
+    public AudioHandler audioHandler;
+    volatile boolean playing;
+    private boolean canvasIsLocked;
+    private Thread gameThread;
     private BigBossBlaster bigBossBlaster;
     private BigBossBetty bigBossBetty;
     private CannonCharging cannonCharging;
@@ -410,7 +410,6 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private int updateDifficulty(int score) {
-        // todo: add multiples boss spawns and vary boss abilities based on score, also make 3 more bosses for random gen
         int enemyCount = 0;
         if (bigBossBlaster == null && bigBossBetty == null && !spawnBoss) {
             if (score < 100) {
@@ -434,6 +433,7 @@ public class GameView extends SurfaceView implements Runnable {
                 difficultyFactor += 20;
             } else {
                 Random random = new Random();
+                enemyCount = score / 7000;
                 int randomInt = random.nextInt(100);
                 if (randomInt < 51) {
                     bigBossBlaster = new BigBossBlaster(context, screenX, screenY, glorpy);

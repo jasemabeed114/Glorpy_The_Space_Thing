@@ -8,15 +8,15 @@ import java.util.Random;
 
 public class Star {
 
-    Bitmap bitmap;
-    int speed;
-    int x, y;
     private final int maxX;
     private final int maxY;
     // designed for a phone that is x:1920 by y:1080 so we must scale to other screens
     // to maintain play style
     private final float scaleFactorX;
     private final float scaleFactorY;
+    Bitmap bitmap;
+    int speed;
+    int x, y;
 
     public Star(Context context, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);

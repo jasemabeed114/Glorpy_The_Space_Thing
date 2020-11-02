@@ -28,10 +28,10 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = "Debug: ";
     RewardedAd rewardedAd;
     private MainBackgroundView mainBackgroundView;
     private MediaPlayer backTrack;
-    private final String TAG = "Debug: ";
     private long timeBetweenAdsMillis;
 
     @Override

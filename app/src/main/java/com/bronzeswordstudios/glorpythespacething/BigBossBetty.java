@@ -16,6 +16,8 @@ public class BigBossBetty {
     private final int AI_CODE_MACHINE_GUN = 0;
     private final int AI_CODE_MISSILES = 1;
     private final int AI_CODE_ASSAULT = 2;
+    private final ArrayList<LaserBlast> laserBlasts;
+    private final ArrayList<Missile> missiles;
     Glorpy glorpy;
     Context context;
     int bitFrames;
@@ -52,8 +54,6 @@ public class BigBossBetty {
     float bitScale;
     AudioHandler audioHandler;
     private int currentAI;
-    private final ArrayList<LaserBlast> laserBlasts;
-    private final ArrayList<Missile> missiles;
     private boolean didHitGlorpy;
 
     public BigBossBetty(Context context, int screenX, int screenY, ArrayList<LaserBlast> laserBlasts, ArrayList<Missile> missiles, Glorpy glorpy, AudioHandler audioHandler) {

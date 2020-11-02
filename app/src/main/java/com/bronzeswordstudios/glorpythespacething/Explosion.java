@@ -11,14 +11,14 @@ import java.util.Random;
 public class Explosion {
     public static final int SMALL_EXPLOSION = 0;
     public static final int LARGE_EXPLOSION = 1;
-    private int explosionCount;
     private final Rect explosionLocation;
     private final ArrayList<GraphicElement> graphicElements;
     private final Context context;
-    private boolean needsDelete;
     private final int type;
     private final int screenX;
     private final int screenY;
+    private int explosionCount;
+    private boolean needsDelete;
 
     public Explosion(Context context, Rect explosionLocation, int explosionCount, int screenX, int screenY, int type) {
         this.context = context;

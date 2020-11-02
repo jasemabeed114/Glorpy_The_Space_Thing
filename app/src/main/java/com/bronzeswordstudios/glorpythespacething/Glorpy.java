@@ -10,22 +10,13 @@ import android.graphics.RectF;
 
 public class Glorpy {
 
-    int bitFrames;
     private final Rect hitBox;
-    private Bitmap bitmap;
     private final int x;
-    private int y;
-    private boolean movingUp;
-    private boolean movingDown;
-    private boolean isShooting;
     private final int maxY;
     private final int minY;
     private final int health;
-    private int velocity;
     private final int frameWidth;
     private final int frameHeight;
-    private int currentFrame;
-    private long lastFrameChangeTime;
     private final int frameLengthInMilliseconds;
     private final Rect frameToDraw;
     private final RectF whereToDraw;
@@ -34,6 +25,15 @@ public class Glorpy {
     private final float scaleFactorX;
     private final float scaleFactorY;
     private final int fireDamage;
+    int bitFrames;
+    private Bitmap bitmap;
+    private int y;
+    private boolean movingUp;
+    private boolean movingDown;
+    private boolean isShooting;
+    private int velocity;
+    private int currentFrame;
+    private long lastFrameChangeTime;
 
     public Glorpy(Context context, int screenX, int screenY) {
         scaleFactorX = screenScaleX((float) screenX);

@@ -323,11 +323,11 @@ public class GameView extends SurfaceView implements Runnable {
                             powerUps.add(new PilotPowerUp(context, screenX, screenY, bigBossBetty));
                             // note we need to assign the score value here, as the update score method can potentially be called after bigBossBetty is deleted
                             // this is due to threading lag on occasion (depending on the users phone)
-                            final int scoreVal = bigBossBetty.getScoreValue();
+                            final int scoreValue = bigBossBetty.getScoreValue();
                             gameActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    GameActivity.updateScore(scoreVal);
+                                    GameActivity.updateScore(scoreValue);
                                 }
                             });
                             audioHandler.playBigExplosion();

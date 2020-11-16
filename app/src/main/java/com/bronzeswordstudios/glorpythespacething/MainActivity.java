@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         backTrack.start();
 
         //setup ads
+        // todo: set to my ad id on release
         DataHolder.interstitialAd = new InterstitialAd(MainActivity.this);
         DataHolder.interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
@@ -213,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadRewardAd() {
+        // todo: insert my add key on release
         rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917");
         RewardedAdLoadCallback rewardedAdLoadCallback = new RewardedAdLoadCallback();
         rewardedAd.loadAd(new AdRequest.Builder().build(), rewardedAdLoadCallback);

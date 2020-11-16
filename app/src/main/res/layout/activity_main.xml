@@ -113,4 +113,12 @@
             tools:text="0000" />
     </LinearLayout>
 
+    <TextView
+        style="@style/text_item_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="32dp"
+        android:text="V: 1.0" />
+
 </RelativeLayout>

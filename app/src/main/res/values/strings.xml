@@ -15,7 +15,7 @@
     <string name="user_name_error">Error: Please enter a valid username</string>
     <string name="upload_success">upload successful</string>
     <string name="upload_error">upload error: Please try again!</string>
-    <string name="your_score_text">Your highest score:</string>
+    <string name="your_score_text">Best Score:</string>
     <string name="power">Power</string>
     <string name="speed">Speed</string>
     <string name="life">Life</string>

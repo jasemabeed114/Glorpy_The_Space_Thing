@@ -26,6 +26,8 @@ public class ScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        // handle views
         final ProgressBar scoreLoader = findViewById(R.id.score_loader);
         final RecyclerView scoreListView = findViewById(R.id.score_recycle_view);
         final TextView emptyViewText = findViewById(R.id.no_score_text);
@@ -33,6 +35,10 @@ public class ScoreActivity extends AppCompatActivity {
         scoreListView.setVisibility(View.INVISIBLE);
         emptyViewText.setVisibility(View.INVISIBLE);
 
+        // start music
+        DataHolder.backTrack.start();
+
+        // handle database
         CollectionReference scoreData = firestore.collection(DataHolder.SCORE_KEY);
         scoreData.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -61,6 +67,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        DataHolder.backTrack.pause();
         finish();
     }
 }

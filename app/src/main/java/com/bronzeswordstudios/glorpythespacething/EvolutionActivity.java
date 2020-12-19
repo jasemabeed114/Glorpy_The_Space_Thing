@@ -28,9 +28,10 @@ public class EvolutionActivity extends AppCompatActivity {
         mainBackgroundView = new MainBackgroundView(this, displayPoint.x, displayPoint.y);
         backgroundView.addView(mainBackgroundView);
         contentValues = new ContentValues();
+        DataHolder.backTrack.start();
 
+        // set up display
         Button submitButton = findViewById(R.id.submit_button);
-
         final TextView freePointsView = findViewById(R.id.free_points);
         TextView increasePowerView = findViewById(R.id.increase_power_button);
         TextView decreasePowerView = findViewById(R.id.decrease_power_button);
@@ -47,6 +48,7 @@ public class EvolutionActivity extends AppCompatActivity {
         speedValueView.setText(String.valueOf(DataHolder.speedMod));
         freePointsView.setText(String.valueOf(DataHolder.freePoints));
 
+        // handle clicks
         increasePowerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,12 +149,14 @@ public class EvolutionActivity extends AppCompatActivity {
         if (contentValues.size() > 0) {
             updateDatabase(contentValues);
         }
+        DataHolder.backTrack.pause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         mainBackgroundView.resume();
+        DataHolder.backTrack.start();
         super.onResume();
     }
 
@@ -161,6 +165,7 @@ public class EvolutionActivity extends AppCompatActivity {
         if (contentValues.size() > 0) {
             updateDatabase(contentValues);
         }
+        DataHolder.backTrack.pause();
         super.onBackPressed();
     }
 

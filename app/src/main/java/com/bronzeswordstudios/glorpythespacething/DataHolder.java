@@ -1,5 +1,6 @@
 package com.bronzeswordstudios.glorpythespacething;
 
+import android.media.MediaPlayer;
 import android.provider.BaseColumns;
 
 import com.google.android.gms.ads.InterstitialAd;
@@ -20,6 +21,7 @@ public class DataHolder {
     public static long lastRewardTime;
     public static InterstitialAd interstitialAd;
     public static ScoreItem userToRemove;
+    public static MediaPlayer backTrack;
 
     // insertion sort by score value in descending order
     public static ArrayList<ScoreItem> sortScoreItems(ArrayList<ScoreItem> scoreItems) {

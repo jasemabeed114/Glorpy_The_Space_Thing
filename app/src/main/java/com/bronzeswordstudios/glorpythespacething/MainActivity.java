@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "Debug: ";
     RewardedAd rewardedAd;
     private MainBackgroundView mainBackgroundView;
-    private MediaPlayer backTrack;
     private long timeBetweenAdsMillis;
 
     @Override
@@ -49,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
         timeBetweenAdsMillis = 1800000;
 
         // handle music
-        backTrack = MediaPlayer.create(this, R.raw.glorpy_title);
-        backTrack.setVolume(0.5f, 0.5f);
-        backTrack.start();
+        if (DataHolder.backTrack == null) {
+            DataHolder.backTrack = MediaPlayer.create(this, R.raw.glorpy_title);
+            DataHolder.backTrack.setVolume(0.5f, 0.5f);
+        }
+        DataHolder.backTrack.start();
 
         //setup ads
         // todo: set to my ad id on release
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(intent);
+                DataHolder.backTrack.release();
                 finish();
             }
         });
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
+                DataHolder.backTrack.pause();
                 startActivity(intent);
             }
         });
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EvolutionActivity.class);
+                DataHolder.backTrack.pause();
                 startActivity(intent);
             }
         });
@@ -141,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // for testing
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                DataHolder.backTrack.pause();
                 startActivity(intent);
             }
         });
@@ -202,14 +207,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mainBackgroundView.pause();
-        backTrack.pause();
+        DataHolder.backTrack.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mainBackgroundView.resume();
-        backTrack.start();
+        DataHolder.backTrack.start();
         loadRewardAd();
     }
 

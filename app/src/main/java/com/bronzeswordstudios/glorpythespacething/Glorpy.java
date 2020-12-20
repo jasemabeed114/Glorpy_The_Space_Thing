@@ -62,9 +62,9 @@ public class Glorpy {
 
     public void update() {
         if (movingDown) {
-            velocity = (int) ((-8 - (DataHolder.speedMod / 2)) * scaleFactorY);
+            velocity = (int) ((-8 - (DataHolder.speedMod / 4)) * scaleFactorY);
         } else if (movingUp) {
-            velocity = (int) ((8 + (DataHolder.speedMod / 2)) * scaleFactorY);
+            velocity = (int) ((8 + (DataHolder.speedMod / 4)) * scaleFactorY);
         } else {
             velocity = 0;
         }

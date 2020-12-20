@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -220,7 +221,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int fireBallQuantity = 2 + (DataHolder.powerMod / 10);
-                if (!gameView.glorpy.isShooting() && gameView.fireballs.size() <= fireBallQuantity) {
+                if (!gameView.glorpy.isShooting() && gameView.fireballs.size() < fireBallQuantity) {
                     gameView.fireballs.add(new FireBall(GameActivity.this,
                             gameView.glorpy.getX(), gameView.glorpy.getY(), point.x, adjustedY));
                     gameView.audioHandler.playFireBallSound();

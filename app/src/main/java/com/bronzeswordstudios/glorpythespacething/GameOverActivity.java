@@ -64,9 +64,10 @@ public class GameOverActivity extends AppCompatActivity {
 
 
         //spawn ad
-        MobileAds.initialize(this);
-        if (DataHolder.interstitialAd.isLoaded()) {
-            DataHolder.interstitialAd.show();
+        if (DataHolder.interstitialAd != null){
+            if (DataHolder.interstitialAd.isLoaded()) {
+                DataHolder.interstitialAd.show();
+            }
         }
 
         //Buttons

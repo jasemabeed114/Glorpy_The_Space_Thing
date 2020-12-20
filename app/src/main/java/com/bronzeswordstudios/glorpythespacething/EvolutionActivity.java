@@ -156,7 +156,6 @@ public class EvolutionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         mainBackgroundView.resume();
-        DataHolder.backTrack.start();
         super.onResume();
     }
 
@@ -165,7 +164,6 @@ public class EvolutionActivity extends AppCompatActivity {
         if (contentValues.size() > 0) {
             updateDatabase(contentValues);
         }
-        DataHolder.backTrack.pause();
         super.onBackPressed();
     }
 

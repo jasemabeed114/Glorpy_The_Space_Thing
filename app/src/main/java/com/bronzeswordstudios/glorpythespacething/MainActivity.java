@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(intent);
-                DataHolder.backTrack.release();
+                DataHolder.backTrack.seekTo(0);
                 finish();
             }
         });
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
-                DataHolder.backTrack.pause();
                 startActivity(intent);
             }
         });
@@ -145,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EvolutionActivity.class);
-                DataHolder.backTrack.pause();
                 startActivity(intent);
             }
         });
@@ -153,9 +151,7 @@ public class MainActivity extends AppCompatActivity {
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // for testing
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
-                DataHolder.backTrack.pause();
                 startActivity(intent);
             }
         });
@@ -230,17 +226,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         mainBackgroundView.pause();
         DataHolder.backTrack.pause();
+        super.onPause();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
         mainBackgroundView.resume();
         DataHolder.backTrack.start();
         loadRewardAd();
+        super.onResume();
     }
 
     private void loadRewardAd() {

@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         mainBackgroundView = new MainBackgroundView(this, displayPoint.x, displayPoint.y);
         FrameLayout backgroundView = findViewById(R.id.background_view);
         backgroundView.addView(mainBackgroundView);
+
+        // set up add confirmation
+        final LinearLayout adPopUp = findViewById(R.id.ad_confirm);
+        adPopUp.setVisibility(View.INVISIBLE);
+        Button yes_button = findViewById(R.id.yes_button);
+        Button no_button = findViewById(R.id.no_button);
+
+
         // half hour minimum between ads
         timeBetweenAdsMillis = 1800000;
 
@@ -153,6 +163,15 @@ public class MainActivity extends AppCompatActivity {
         dailyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adPopUp.setVisibility(View.VISIBLE);
+            }
+
+        });
+
+        yes_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adPopUp.setVisibility(View.INVISIBLE);
                 if (rewardedAd.isLoaded()) {
                     if (System.currentTimeMillis() - DataHolder.lastRewardTime >= timeBetweenAdsMillis) {
 
@@ -199,7 +218,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.reward_not_ready, Toast.LENGTH_SHORT).show();
                 }
             }
+        });
 
+        no_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adPopUp.setVisibility(View.INVISIBLE);
+            }
         });
     }
 

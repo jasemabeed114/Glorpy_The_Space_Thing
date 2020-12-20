@@ -6,6 +6,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <FrameLayout
         android:id="@+id/background_view"
         android:layout_width="match_parent"
@@ -120,5 +121,44 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="32dp"
         android:text="V: 1.0" />
+
+    <LinearLayout
+        android:id="@+id/ad_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="24dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_item_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reward_confirm_message"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/yes_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="@string/yes" />
+
+            <Button
+                android:id="@+id/no_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/no" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

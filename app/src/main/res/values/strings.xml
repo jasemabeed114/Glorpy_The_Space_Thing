@@ -27,7 +27,7 @@
     <string name="evo_button">Evolution</string>
     <string name="info_button">Information</string>
     <string name="highscore_button">High Scores</string>
-    <string name="reward_button">Reward Ad</string>
+    <string name="reward_button">Free PowerUps!</string>
     <string name="reward_toast">evolution points obtained!</string>
     <string name="time_remaining">Minutes remaining until next reward:</string>
     <string name="reward_not_ready">reward still loading: please try again</string>
@@ -53,8 +53,11 @@
         \n \n Power: Upgrades Glorpy\'s fireball damage, durability, and reduces time between firing.
         \n \n Speed: Upgrades Glorpy\'s movement speed and fireball speed.
         \n \n Life: Upgrades Glorpy\'s max life and reduces damage taken.</string>
-    <string name="title_reward_ad">Reward Ads</string>
-    <string name="text_reward_ad">Get Rewards! It will only take a few seconds. Watch
-        a short reward ad and instantly revive 5 evolution points to upgrade Glorpy!
+    <string name="title_reward_ad">Free PowerUps!</string>
+    <string name="text_reward_ad">Get Free Rewards! It will only take a few seconds. Watch
+        a short reward ad and receive 3 evolution points to upgrade Glorpy!
         You may receive rewards once every 30 minutes.</string>
+    <string name="reward_confirm_message">You are about to watch a rewarded video ad. Would you like to proceed?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 </resources>

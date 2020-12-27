@@ -65,6 +65,17 @@ public class ScoreActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DataHolder.backTrack.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DataHolder.backTrack.start();
+    }
 }
 
 

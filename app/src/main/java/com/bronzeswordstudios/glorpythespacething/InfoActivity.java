@@ -31,12 +31,14 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         mainBackgroundView.pause();
+        DataHolder.backTrack.pause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         mainBackgroundView.resume();
+        DataHolder.backTrack.start();
         super.onResume();
     }
 }

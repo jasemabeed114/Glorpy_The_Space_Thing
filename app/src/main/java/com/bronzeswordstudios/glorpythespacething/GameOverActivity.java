@@ -55,6 +55,7 @@ public class GameOverActivity extends AppCompatActivity {
             int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
         }
         final int score = DataHolder.score;
+        DataHolder.highScore = score;
         final TextView scoreValueView = findViewById(R.id.score_value);
         scoreValueView.setText(String.valueOf(score));
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -138,7 +139,7 @@ public class GameOverActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(GameOverActivity.this, "TEST: No data available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameOverActivity.this, "No data available", Toast.LENGTH_SHORT).show();
                 }
             }
         });

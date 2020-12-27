@@ -12,6 +12,7 @@ public class DataHolder {
     public static final String SCORE_KEY = "score";
     // holds static data for use across activities
     public static int score;
+    public static int highScore;
     public static int highestScore;
     public static int rank;
     public static int powerMod;

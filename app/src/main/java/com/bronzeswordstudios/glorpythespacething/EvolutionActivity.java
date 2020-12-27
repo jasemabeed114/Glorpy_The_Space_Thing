@@ -156,6 +156,7 @@ public class EvolutionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         mainBackgroundView.resume();
+        DataHolder.backTrack.start();
         super.onResume();
     }
 

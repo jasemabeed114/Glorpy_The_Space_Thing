@@ -41,7 +41,7 @@ public class NewHighScoreActivity extends AppCompatActivity {
         submitButton.setVisibility(View.VISIBLE);
         scoreLoader.setVisibility(View.INVISIBLE);
 
-        String scoreString = DataHolder.score + " Pts";
+        String scoreString = DataHolder.highScore + " Pts";
         String rankString = "#" + DataHolder.rank;
         scoreView.setText(scoreString);
         rankView.setText(rankString);
@@ -60,7 +60,7 @@ public class NewHighScoreActivity extends AppCompatActivity {
                     scoreLoader.setVisibility(View.VISIBLE);
 
                     scoreData = new HashMap<>();
-                    scoreData.put("score", DataHolder.score);
+                    scoreData.put("score", DataHolder.highScore);
                     final FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
                     DocumentReference documentReference = dataBase.collection(DataHolder.SCORE_KEY).document(userNameString);
                     documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

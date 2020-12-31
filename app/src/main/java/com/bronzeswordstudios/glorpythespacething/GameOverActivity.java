@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -54,7 +53,7 @@ public class GameOverActivity extends AppCompatActivity {
             String[] selectionArgs = {String.valueOf(DataHolder.DataEntry.HIGHEST_SCORE_INDEX)};
             int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
         }
-        if (DataHolder.highScore == 0){
+        if (DataHolder.highScore == 0) {
             DataHolder.highScore = DataHolder.score;
         }
         final TextView scoreValueView = findViewById(R.id.score_value);
@@ -66,7 +65,7 @@ public class GameOverActivity extends AppCompatActivity {
 
 
         //spawn ad
-        if (DataHolder.interstitialAd != null){
+        if (DataHolder.interstitialAd != null) {
             if (DataHolder.interstitialAd.isLoaded()) {
                 DataHolder.interstitialAd.show();
             }

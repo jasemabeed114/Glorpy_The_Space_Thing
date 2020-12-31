@@ -96,7 +96,6 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GameOverActivity.this, ScoreActivity.class);
-                DataHolder.score = 0;
                 startActivity(intent);
             }
         });

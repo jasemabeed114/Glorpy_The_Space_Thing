@@ -41,7 +41,7 @@ public class NewHighScoreActivity extends AppCompatActivity {
         submitButton.setVisibility(View.VISIBLE);
         scoreLoader.setVisibility(View.INVISIBLE);
 
-        String scoreString = DataHolder.highScore + " Pts";
+        String scoreString = DataHolder.score + " Pts";
         String rankString = "#" + DataHolder.rank;
         scoreView.setText(scoreString);
         rankView.setText(rankString);
@@ -60,7 +60,7 @@ public class NewHighScoreActivity extends AppCompatActivity {
                     scoreLoader.setVisibility(View.VISIBLE);
 
                     scoreData = new HashMap<>();
-                    scoreData.put("score", DataHolder.highScore);
+                    scoreData.put("score", DataHolder.score);
                     final FirebaseFirestore dataBase = FirebaseFirestore.getInstance();
                     DocumentReference documentReference = dataBase.collection(DataHolder.SCORE_KEY).document(userNameString);
                     documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -72,7 +72,6 @@ public class NewHighScoreActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful() && DataHolder.userToRemove == null) {
                                             Toast.makeText(NewHighScoreActivity.this, R.string.upload_success, Toast.LENGTH_SHORT).show();
-                                            DataHolder.highestScore = 0;
                                             finish();
                                         } else if (task.isSuccessful()) {
                                             dataBase.collection(DataHolder.SCORE_KEY).document(DataHolder.userToRemove.getScoreOwner()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -81,7 +80,6 @@ public class NewHighScoreActivity extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         Toast.makeText(NewHighScoreActivity.this, R.string.upload_success, Toast.LENGTH_SHORT).show();
                                                         DataHolder.userToRemove = null;
-                                                        DataHolder.highestScore = 0;
                                                         finish();
                                                     } else {
                                                         Toast.makeText(NewHighScoreActivity.this, R.string.upload_error, Toast.LENGTH_SHORT).show();

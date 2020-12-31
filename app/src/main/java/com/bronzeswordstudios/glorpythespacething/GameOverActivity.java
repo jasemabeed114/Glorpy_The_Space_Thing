@@ -47,6 +47,7 @@ public class GameOverActivity extends AppCompatActivity {
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase localDb = dbHelper.getWritableDatabase();
         if (DataHolder.score > DataHolder.highestScore) {
+            DataHolder.highestScore = DataHolder.score;
             ContentValues values = new ContentValues();
             values.put(DataHolder.DataEntry.HIGHEST_SCORE, DataHolder.score);
             String selection = DataHolder.DataEntry._ID + " = ?";

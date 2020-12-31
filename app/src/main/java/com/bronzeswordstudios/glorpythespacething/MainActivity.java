@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mainBackgroundView = new MainBackgroundView(this, displayPoint.x, displayPoint.y);
         FrameLayout backgroundView = findViewById(R.id.background_view);
         backgroundView.addView(mainBackgroundView);
+        MobileAds.initialize(this);
 
         // set up add confirmation
         final LinearLayout adPopUp = findViewById(R.id.ad_confirm);

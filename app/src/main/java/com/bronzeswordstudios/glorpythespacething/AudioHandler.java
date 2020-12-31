@@ -90,10 +90,6 @@ public class AudioHandler {
         soundPool = null;
     }
 
-    public void musicRelease() {
-        battleMusic.release();
-    }
-
     public void onResume() {
         battleMusic.start();
     }

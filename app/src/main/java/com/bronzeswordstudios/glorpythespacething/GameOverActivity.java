@@ -54,10 +54,11 @@ public class GameOverActivity extends AppCompatActivity {
             String[] selectionArgs = {String.valueOf(DataHolder.DataEntry.HIGHEST_SCORE_INDEX)};
             int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
         }
-        final int score = DataHolder.score;
-        DataHolder.highScore = score;
+        if (DataHolder.highScore == 0){
+            DataHolder.highScore = DataHolder.score;
+        }
         final TextView scoreValueView = findViewById(R.id.score_value);
-        scoreValueView.setText(String.valueOf(score));
+        scoreValueView.setText(String.valueOf(DataHolder.highScore));
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         Button replayButton = findViewById(R.id.replay_button);
         Button viewScoresButton = findViewById(R.id.view_scores_button);
@@ -100,7 +101,6 @@ public class GameOverActivity extends AppCompatActivity {
                 Intent intent = new Intent(GameOverActivity.this, ScoreActivity.class);
                 DataHolder.score = 0;
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -121,10 +121,10 @@ public class GameOverActivity extends AppCompatActivity {
                     scoreItems = DataHolder.sortScoreItems(scoreItems);
                     boolean higherScore = false;
                     for (int i = 0; i < scoreItems.size(); i++) {
-                        if (score >= scoreItems.get(i).getScoreValue()) {
+                        if (DataHolder.highestScore >= scoreItems.get(i).getScoreValue()) {
                             DataHolder.rank = i + 1;
                             higherScore = true;
-                            if (scoreItems.size() >= 10) {
+                            if (scoreItems.size() == 10) {
                                 DataHolder.userToRemove = scoreItems.get(scoreItems.size() - 1);
                             }
                             Intent intent = new Intent(GameOverActivity.this, NewHighScoreActivity.class);

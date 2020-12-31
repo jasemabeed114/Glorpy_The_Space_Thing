@@ -210,9 +210,8 @@ public class GameView extends SurfaceView implements Runnable {
             for (int i = baseEnemies.size() - 1; i >= 0; i--) {
                 final BaseEnemy baseEnemy = baseEnemies.get(i);
                 baseEnemy.update();
-
-                if (baseEnemy.getHitBox().intersect(glorpy.getHitBox())) {
-                    if (!baseEnemy.isDestroyed) {
+                if (!baseEnemy.isDestroyed) {
+                    if (baseEnemy.getHitBox().intersect(glorpy.getHitBox())) {
                         audioHandler.playSmallExplosion();
                         baseEnemy.isDestroyed = true;
 
@@ -222,6 +221,25 @@ public class GameView extends SurfaceView implements Runnable {
                                 GameActivity.updateHealth(baseEnemy.getDamage());
                             }
                         });
+
+                    }
+                    if (baseEnemy.getX() < 0) {
+                        // lose points for enemies getting past
+                        gameActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int scoreDeduction = -1 * (baseEnemy.getScoreValue() / 2);
+                                GameActivity.updateScore(scoreDeduction);
+                            }
+                        });
+
+                        baseEnemies.remove(i);
+                    }
+                    if (baseEnemy.timeToShoot() &&
+                            baseEnemy.getEnemyAICode() >= 5 && baseEnemy.getX() <= baseEnemy.getFiringRange()) {
+                        laserBlasts.add(new LaserBlast(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY));
+                        audioHandler.playLaserSound();
+                        baseEnemy.lastShotTime = System.currentTimeMillis();
                     }
                 }
                 if (baseEnemy.isDestroyed && baseEnemy.deleteShip) {
@@ -231,24 +249,6 @@ public class GameView extends SurfaceView implements Runnable {
                         powerUps.add(new PilotPowerUp(context, screenX, screenY, baseEnemy));
                     }
                     baseEnemies.remove(i);
-                }
-                if (baseEnemy.getX() < 0 && !baseEnemy.isDestroyed) {
-                    // lose points for enemies getting past
-                    gameActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int scoreDeduction = -1 * (baseEnemy.getScoreValue() / 2);
-                            GameActivity.updateScore(scoreDeduction);
-                        }
-                    });
-
-                    baseEnemies.remove(i);
-                }
-                if (baseEnemy.timeToShoot() &&
-                        baseEnemy.getEnemyAICode() >= 5 && baseEnemy.getX() <= baseEnemy.getFiringRange()) {
-                    laserBlasts.add(new LaserBlast(context, baseEnemy.getX(), baseEnemy.getY(), screenX, screenY));
-                    audioHandler.playLaserSound();
-                    baseEnemy.lastShotTime = System.currentTimeMillis();
                 }
             }
         }
@@ -265,9 +265,9 @@ public class GameView extends SurfaceView implements Runnable {
                 if (baseEnemies.size() > 0)
                     for (int enemyIndex = baseEnemies.size() - 1; enemyIndex >= 0; enemyIndex--) {
                         final BaseEnemy baseEnemy = baseEnemies.get(enemyIndex);
-                        if (fireBall.getHitBox().intersect(baseEnemy.getHitBox())) {
-                            // We need to access our UI thread to update the score
-                            if (!baseEnemy.isDestroyed) {
+                        if (!baseEnemy.isDestroyed) {
+                            if (fireBall.getHitBox().intersect(baseEnemy.getHitBox())) {
+                                // We need to access our UI thread to update the score
                                 gameActivity.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -277,9 +277,9 @@ public class GameView extends SurfaceView implements Runnable {
                                 audioHandler.playSmallExplosion();
                                 fireBall.updateHealth();
                                 baseEnemy.isDestroyed = true;
-                            }
-                            if (fireBall.getHealth() == 0) {
-                                fireballs.remove(fireBall);
+                                if (fireBall.getHealth() == 0) {
+                                    fireballs.remove(fireBall);
+                                }
                             }
                         }
                     }

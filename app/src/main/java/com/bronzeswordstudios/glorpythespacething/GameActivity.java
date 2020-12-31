@@ -292,12 +292,6 @@ public class GameActivity extends AppCompatActivity {
         super.onRestart();
     }
 
-    @Override
-    protected void onDestroy() {
-        gameView.audioHandler.musicRelease();
-        super.onDestroy();
-    }
-
     private float screenScaleX(float screenX) {
         screenX = screenX / 1920f;
         return screenX;

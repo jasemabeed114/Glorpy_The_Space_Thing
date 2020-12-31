@@ -53,11 +53,9 @@ public class GameOverActivity extends AppCompatActivity {
             String[] selectionArgs = {String.valueOf(DataHolder.DataEntry.HIGHEST_SCORE_INDEX)};
             int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
         }
-        if (DataHolder.highScore == 0) {
-            DataHolder.highScore = DataHolder.score;
-        }
+        
         final TextView scoreValueView = findViewById(R.id.score_value);
-        scoreValueView.setText(String.valueOf(DataHolder.highScore));
+        scoreValueView.setText(String.valueOf(DataHolder.score));
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         Button replayButton = findViewById(R.id.replay_button);
         Button viewScoresButton = findViewById(R.id.view_scores_button);
@@ -120,7 +118,7 @@ public class GameOverActivity extends AppCompatActivity {
                     scoreItems = DataHolder.sortScoreItems(scoreItems);
                     boolean higherScore = false;
                     for (int i = 0; i < scoreItems.size(); i++) {
-                        if (DataHolder.highestScore >= scoreItems.get(i).getScoreValue()) {
+                        if (DataHolder.score >= scoreItems.get(i).getScoreValue()) {
                             DataHolder.rank = i + 1;
                             higherScore = true;
                             if (scoreItems.size() == 10) {

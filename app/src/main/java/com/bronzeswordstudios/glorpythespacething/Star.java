@@ -25,7 +25,7 @@ public class Star {
         maxX = screenX;
         maxY = screenY;
         Random numGenerator = new Random();
-        speed = numGenerator.nextInt((int) (5 * scaleFactorX)) + (int) (5 * scaleFactorX);
+        speed = numGenerator.nextInt((int) (5 * scaleFactorX)) + 1;
         x = numGenerator.nextInt(maxX);
         y = numGenerator.nextInt(maxY);
 
@@ -46,11 +46,17 @@ public class Star {
 
     private float screenScaleX(float screenX) {
         screenX = screenX / 1920f;
+        if (screenX < 1){
+            screenX = 1;
+        }
         return screenX;
     }
 
     private float screenScaleY(float screenY) {
         screenY = screenY / 930f;
+        if (screenY < 1){
+            screenY = 1;
+        }
         return screenY;
     }
 

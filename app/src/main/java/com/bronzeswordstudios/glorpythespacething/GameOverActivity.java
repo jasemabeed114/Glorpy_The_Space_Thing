@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class GameOverActivity extends AppCompatActivity {
 
     GameOverBackground gameOverBackground;
+    SQLiteDatabase localDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class GameOverActivity extends AppCompatActivity {
 
         //get database info!
         DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+        localDb = dbHelper.getWritableDatabase();
         if (DataHolder.score > DataHolder.highestScore) {
             DataHolder.highestScore = DataHolder.score;
             ContentValues values = new ContentValues();
@@ -152,5 +153,13 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         gameOverBackground.resume();
+    }
+
+    @Override
+    protected void onStop() {
+        if(localDb != null){
+            localDb.close();
+        }
+        super.onStop();
     }
 }

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     RewardedAd rewardedAd;
     private MainBackgroundView mainBackgroundView;
     private long timeBetweenAdsMillis;
+    private SQLiteDatabase localDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Load or setup local database
         DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase localDb = dbHelper.getReadableDatabase();
+        localDb = dbHelper.getReadableDatabase();
         Cursor cursor = localDb.query(DataHolder.DataEntry.TABLE_NAME, DataHolder.DataEntry.projection,
                 null, null, null, null, null);
         TextView highest_score_view = findViewById(R.id.highest_score_number);
@@ -241,6 +242,12 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onStop() {
+        localDb.close();
+        super.onStop();
+    }
+
     private void loadRewardAd() {
         // todo: insert my add key on release
         rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917");
@@ -250,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateDatabase(ContentValues contentValues) {
         DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+        localDb = dbHelper.getWritableDatabase();
         if (contentValues.size() > 0) {
 
             long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);

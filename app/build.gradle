@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -8,16 +7,23 @@ android {
         applicationId "com.bronzeswordstudios.glorpythespacething"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+    // check for depreciation
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
 }
 
@@ -34,6 +40,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.android.support:recyclerview-v7:29.0.0'
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
 }
 repositories {
     mavenCentral()

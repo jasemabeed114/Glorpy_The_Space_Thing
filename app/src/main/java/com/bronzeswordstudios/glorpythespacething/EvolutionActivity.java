@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EvolutionActivity extends AppCompatActivity {
     private MainBackgroundView mainBackgroundView;
     private ContentValues contentValues;
+    private SQLiteDatabase localDb;
 
 
     @Override
@@ -170,11 +171,17 @@ public class EvolutionActivity extends AppCompatActivity {
 
     public void updateDatabase(ContentValues contentValues) {
         DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase localDb = dbHelper.getWritableDatabase();
+        localDb = dbHelper.getWritableDatabase();
         if (contentValues.size() > 0) {
 
             long newRowID = localDb.update(DataHolder.DataEntry.TABLE_NAME, contentValues, null, null);
         }
     }
 
+    @Override
+    protected void onStop() {
+        if (localDb != null)
+            localDb.close();
+        super.onStop();
+    }
 }

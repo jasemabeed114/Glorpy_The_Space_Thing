@@ -1,9 +1,12 @@
 package com.bronzeswordstudios.glorpythespacething;
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.Build;
 
 public class AudioHandler {
     private final AudioManager audioManager;
@@ -17,10 +20,22 @@ public class AudioHandler {
     private int laserID;
     private int smallExplosionID;
     private int thrustID;
+    private AudioAttributes audioAttributes;
 
     public AudioHandler(Context context) {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(10)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        }
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
         bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);
         fireballID = soundPool.load(context, R.raw.fireball, 1);
@@ -55,8 +70,21 @@ public class AudioHandler {
                 }
             }
         };
-        int focusRequest = audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-        if (focusRequest == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        int focusResult;
+        // Don't use depreciated API for audioFocusRequest starting in OREO (API 26 +)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            AudioFocusRequest focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setAudioAttributes(audioAttributes).setAcceptsDelayedFocusGain(true)
+                    .setOnAudioFocusChangeListener(onAudioFocusChangeListener).build();
+            focusResult = audioManager.requestAudioFocus(focusRequest);
+        } else {
+            focusResult = audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        }
+        if (focusResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             battleMusic.start();
         }
     }
@@ -95,7 +123,18 @@ public class AudioHandler {
     }
 
     public void onRestart() {
-        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(10)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        }
         bigBlastID = soundPool.load(context, R.raw.big_blast, 1);
         bigExplosionID = soundPool.load(context, R.raw.big_explosion, 1);
         fireballID = soundPool.load(context, R.raw.fireball, 1);

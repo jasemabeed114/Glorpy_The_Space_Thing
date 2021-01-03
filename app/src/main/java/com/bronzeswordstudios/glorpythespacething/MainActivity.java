@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.ads.mediationtestsuite.MediationTestSuite;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         backgroundView.addView(mainBackgroundView);
         MobileAds.initialize(this);
 
+
         // set up add confirmation
         final LinearLayout adPopUp = findViewById(R.id.ad_confirm);
         adPopUp.setVisibility(View.INVISIBLE);
@@ -68,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         DataHolder.backTrack.start();
 
         //setup ads
-        // todo: set to my ad id on release
+        // todo: set to my ad id on release TEST AD - ca-app-pub-3940256099942544/1033173712
         DataHolder.interstitialAd = new InterstitialAd(MainActivity.this);
-        DataHolder.interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        DataHolder.interstitialAd.setAdUnitId("ca-app-pub-7113308763026501/6290352317");
         DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
         loadRewardAd();
 
@@ -225,6 +227,8 @@ public class MainActivity extends AppCompatActivity {
                 adPopUp.setVisibility(View.INVISIBLE);
             }
         });
+        // for ad testing when needed
+        //MediationTestSuite.launch(MainActivity.this);
     }
 
     @Override
@@ -249,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadRewardAd() {
-        // todo: insert my add key on release
-        rewardedAd = new RewardedAd(this, "ca-app-pub-3940256099942544/5224354917");
+        // todo: insert my add key on release TEST AD - ca-app-pub-3940256099942544/5224354917
+        rewardedAd = new RewardedAd(this, "ca-app-pub-7113308763026501/3547018337");
         RewardedAdLoadCallback rewardedAdLoadCallback = new RewardedAdLoadCallback();
         rewardedAd.loadAd(new AdRequest.Builder().build(), rewardedAdLoadCallback);
     }

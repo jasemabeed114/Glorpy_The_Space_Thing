@@ -218,7 +218,7 @@ public class BigBossBetty {
 
     private float screenScaleX(float screenX) {
         screenX = screenX / 1920f;
-        if (screenX < 1){
+        if (screenX < 1) {
             screenX = 1;
         }
         return screenX;
@@ -226,7 +226,7 @@ public class BigBossBetty {
 
     private float screenScaleY(float screenY) {
         screenY = screenY / 930f;
-        if (screenY < 1){
+        if (screenY < 1) {
             screenY = 1;
         }
         return screenY;

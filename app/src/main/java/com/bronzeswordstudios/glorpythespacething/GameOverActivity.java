@@ -55,7 +55,7 @@ public class GameOverActivity extends AppCompatActivity {
             String[] selectionArgs = {String.valueOf(DataHolder.DataEntry.HIGHEST_SCORE_INDEX)};
             int count = localDb.update(DataHolder.DataEntry.TABLE_NAME, values, selection, selectionArgs);
         }
-        
+
         final TextView scoreValueView = findViewById(R.id.score_value);
         scoreValueView.setText(String.valueOf(DataHolder.score));
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -157,7 +157,7 @@ public class GameOverActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        if(localDb != null){
+        if (localDb != null) {
             localDb.close();
         }
         super.onStop();

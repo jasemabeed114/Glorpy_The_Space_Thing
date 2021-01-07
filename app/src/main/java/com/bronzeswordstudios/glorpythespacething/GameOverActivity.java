@@ -77,7 +77,6 @@ public class GameOverActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
                 Intent intent = new Intent(GameOverActivity.this, GameActivity.class);
-                DataHolder.score = 0;
                 startActivity(intent);
                 finish();
             }
@@ -87,7 +86,6 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GameOverActivity.this, MainActivity.class);
-                DataHolder.score = 0;
                 startActivity(intent);
                 finish();
 
@@ -161,5 +159,11 @@ public class GameOverActivity extends AppCompatActivity {
             localDb.close();
         }
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        DataHolder.score = 0;
+        super.onDestroy();
     }
 }

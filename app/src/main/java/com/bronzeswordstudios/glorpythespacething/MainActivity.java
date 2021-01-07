@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // half hour minimum between ads
-        timeBetweenAdsMillis = 1800000;
+        timeBetweenAdsMillis = 180000;
 
         // handle music
         if (DataHolder.backTrack == null) {
@@ -68,12 +68,15 @@ public class MainActivity extends AppCompatActivity {
         }
         DataHolder.backTrack.start();
 
+        // initialize score holder
+        DataHolder.score = 0;
+
         //setup ads
         // todo: set to my ad id on release TEST AD - ca-app-pub-3940256099942544/1033173712
+        // real ad ca-app-pub-7113308763026501/6290352317
         DataHolder.interstitialAd = new InterstitialAd(MainActivity.this);
         DataHolder.interstitialAd.setAdUnitId("ca-app-pub-7113308763026501/6290352317");
         DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
-        loadRewardAd();
 
         //Load or setup local database
         DBHelper dbHelper = new DBHelper(this);
@@ -253,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadRewardAd() {
         // todo: insert my add key on release TEST AD - ca-app-pub-3940256099942544/5224354917
+        //MAIN AD - ca-app-pub-7113308763026501/3547018337
         rewardedAd = new RewardedAd(this, "ca-app-pub-7113308763026501/3547018337");
         RewardedAdLoadCallback rewardedAdLoadCallback = new RewardedAdLoadCallback();
         rewardedAd.loadAd(new AdRequest.Builder().build(), rewardedAdLoadCallback);

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // half hour minimum between ads
-        timeBetweenAdsMillis = 180000;
+        timeBetweenAdsMillis = 1800000;
 
         // handle music
         if (DataHolder.backTrack == null) {

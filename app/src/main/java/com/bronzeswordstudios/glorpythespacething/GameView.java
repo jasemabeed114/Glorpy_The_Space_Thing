@@ -65,6 +65,7 @@ public class GameView extends SurfaceView implements Runnable {
         thrustPlayed = false;
         startGame();
         audioHandler.playBattleMusic();
+        DataHolder.score = 0;
     }
 
     @Override

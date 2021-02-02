@@ -465,7 +465,7 @@ public class GameView extends SurfaceView implements Runnable {
                 if (!graphicElements.contains(cannonCharging)) {
                     cannonCharging = new CannonCharging(context, bigBossBlaster.getX(),
                             bigBossBlaster.getY() + ((bigBossBlaster.getFrameHeight())
-                                    * (int) screenScaleY(screenY)) - CannonCharging.getFrameHeight(screenX, screenY),
+                                    * (int) DataHolder.screenScaleY(screenY)) - CannonCharging.getFrameHeight(screenX, screenY),
                             screenX, screenY, bigBossBlaster);
                     graphicElements.add(cannonCharging);
                     bigBossBlaster.setAnimationStartTime(System.currentTimeMillis());
@@ -596,16 +596,6 @@ public class GameView extends SurfaceView implements Runnable {
         if (bigBossBetty != null) {
             bigBossBetty.animationControl(canvas, paint);
         }
-    }
-
-    float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        return screenX;
-    }
-
-    float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        return screenY;
     }
 
 }

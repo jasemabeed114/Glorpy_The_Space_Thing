@@ -48,9 +48,9 @@ class BaseEnemy {
     float bitScale;
 
     BaseEnemy(Context context, int screenX, int screenY, Glorpy glorpy) {
-        scaleFactorX = screenScaleX((float) screenX);
-        scaleFactorY = screenScaleY((float) screenY);
-        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        scaleFactorX = DataHolder.screenScaleX((float) screenX);
+        scaleFactorY = DataHolder.screenScaleY((float) screenY);
+        bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
         scoreValue = 55;
         minY = 0;
         maxX = screenX;
@@ -166,30 +166,6 @@ class BaseEnemy {
         }
         frameToDraw.left = currentFrame * frameWidth;
         frameToDraw.right = frameToDraw.left + frameWidth;
-    }
-
-    private float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        if (screenX < 1) {
-            screenX = 1;
-        }
-        return screenX;
-    }
-
-    private float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        if (screenY < 1) {
-            screenY = 1;
-        }
-        return screenY;
-    }
-
-    float bitmapScale(float scaleX, float scaleY) {
-        if (scaleX > scaleY) {
-            return scaleX;
-        } else {
-            return scaleY;
-        }
     }
 
     boolean timeToShoot() {

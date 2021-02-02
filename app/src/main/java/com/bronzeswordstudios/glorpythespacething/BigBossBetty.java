@@ -60,9 +60,9 @@ public class BigBossBetty {
         this.context = context;
         this.glorpy = glorpy;
         this.audioHandler = audioHandler;
-        scaleFactorX = screenScaleX((float) screenX);
-        scaleFactorY = screenScaleY((float) screenY);
-        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        scaleFactorX = DataHolder.screenScaleX((float) screenX);
+        scaleFactorY = DataHolder.screenScaleY((float) screenY);
+        bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
         scoreValue = 10000;
         minY = 0;
         maxX = screenX;
@@ -213,31 +213,6 @@ public class BigBossBetty {
         }
         frameToDraw.left = currentFrame * frameWidth;
         frameToDraw.right = frameToDraw.left + frameWidth;
-    }
-
-
-    private float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        if (screenX < 1) {
-            screenX = 1;
-        }
-        return screenX;
-    }
-
-    private float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        if (screenY < 1) {
-            screenY = 1;
-        }
-        return screenY;
-    }
-
-    private float bitmapScale(float scaleX, float scaleY) {
-        if (scaleX > scaleY) {
-            return scaleX;
-        } else {
-            return scaleY;
-        }
     }
 
     public Rect getHitBox() {

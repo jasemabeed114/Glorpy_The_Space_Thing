@@ -22,9 +22,9 @@ public class LaserBlast {
     private int x;
 
     public LaserBlast(Context context, int positionX, int positionY, int screenX, int screenY) {
-        scaleFactorX = screenScaleX((float) screenX);
-        scaleFactorY = screenScaleY((float) screenY);
-        float bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        scaleFactorX = DataHolder.screenScaleX((float) screenX);
+        scaleFactorY = DataHolder.screenScaleY((float) screenY);
+        float bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
         x = positionX;
         y = positionY;
         velocity = (int) (25 * scaleFactorX);
@@ -46,30 +46,6 @@ public class LaserBlast {
 
     public void draw(Canvas canvas, Paint paint) {
         canvas.drawBitmap(bitmap, x, y, paint);
-    }
-
-    private float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        if (screenX < 1) {
-            screenX = 1;
-        }
-        return screenX;
-    }
-
-    private float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        if (screenY < 1) {
-            screenY = 1;
-        }
-        return screenY;
-    }
-
-    private float bitmapScale(float scaleX, float scaleY) {
-        if (scaleX > scaleY) {
-            return scaleX;
-        } else {
-            return scaleY;
-        }
     }
 
     public int getX() {

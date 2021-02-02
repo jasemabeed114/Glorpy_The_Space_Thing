@@ -98,11 +98,11 @@ public class GameActivity extends AppCompatActivity {
         activity = this;
         final Point point = new Point();
         display.getSize(point);
-        final int adjustedY = point.y - 150;
-        gameView = new GameView(this, GameActivity.this, point.x, adjustedY);
         float screenScaleX = screenScaleX(point.x);
-        float screenScaleY = screenScaleY(adjustedY);
+        float screenScaleY = screenScaleY(point.y);
         float bitScale = bitmapScale(screenScaleX, screenScaleY);
+        final int adjustedY = point.y - (int) (130 * bitScale);
+        gameView = new GameView(this, GameActivity.this, point.x, adjustedY);
         Typeface typeface = ResourcesCompat.getFont(this, R.font.geo);
 
         // begin creating the layout
@@ -117,7 +117,7 @@ public class GameActivity extends AppCompatActivity {
         ImageButton fireButton = new ImageButton(this);
         fireButton.setImageResource(R.drawable.fireball);
         fireButton.setBackground(null);
-        RelativeLayout.LayoutParams fireButtonParams = new RelativeLayout.LayoutParams(250, 150);
+        RelativeLayout.LayoutParams fireButtonParams = new RelativeLayout.LayoutParams((int) (250 * bitScale), (int) (150 * bitScale));
         fireButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         fireButtonParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         fireButton.setLayoutParams(fireButtonParams);
@@ -127,8 +127,8 @@ public class GameActivity extends AppCompatActivity {
         ImageButton downButton = new ImageButton(this);
         upButton.setImageResource(R.drawable.baseline_arrow_upward_black_18dp);
         downButton.setImageResource(R.drawable.baseline_arrow_downward_black_18dp);
-        RelativeLayout.LayoutParams upButtonParams = new RelativeLayout.LayoutParams(200, 150);
-        RelativeLayout.LayoutParams downButtonParams = new RelativeLayout.LayoutParams(200, 150);
+        RelativeLayout.LayoutParams upButtonParams = new RelativeLayout.LayoutParams((int) (200 * bitScale), (int) (150 * bitScale));
+        RelativeLayout.LayoutParams downButtonParams = new RelativeLayout.LayoutParams((int) (200 * bitScale), (int) (150 * bitScale));
         upButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
         downButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
         downButton.setId(DOWN_BUTTON_ID);
@@ -143,7 +143,7 @@ public class GameActivity extends AppCompatActivity {
         // controller background
         View controllerBackground = new View(this);
         RelativeLayout.LayoutParams ctrlBackLayoutParam = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, 150);
+                RelativeLayout.LayoutParams.MATCH_PARENT, (int) (150 * bitScale));
         controllerBackground.setBackgroundColor(Color.GRAY);
         controllerBackground.setAlpha(0.15f);
         ctrlBackLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -166,12 +166,12 @@ public class GameActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         scoreTextLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         scoreTextLayoutParam.addRule(RelativeLayout.LEFT_OF, SCORE_NUM_ID);
-        scoreTextLayoutParam.setMargins(0, 0, 36, 0);
+        scoreTextLayoutParam.setMargins(0, 0, (int) (36 * bitScale), 0);
         scoreTextView.setId(SCORE_TEXT_ID);
         scoreNumberView.setId(SCORE_NUM_ID);
         scoreNumLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         scoreNumLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        scoreNumLayoutParam.setMargins(0, 0, 24, 0);
+        scoreNumLayoutParam.setMargins(0, 0, (int) (24 * bitScale), 0);
         scoreTextView.setLayoutParams(scoreTextLayoutParam);
         scoreNumberView.setLayoutParams(scoreNumLayoutParam);
 
@@ -195,8 +195,8 @@ public class GameActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         healthTextParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         healthTextParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        healthTextParams.setMargins(36, 0, 0, 0);
-        healthNumParams.setMargins(24, 0, 0, 0);
+        healthTextParams.setMargins((int) (36 * bitScale), 0, 0, 0);
+        healthNumParams.setMargins((int) (24 * bitScale), 0, 0, 0);
         healthNumParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         healthNumParams.addRule(RelativeLayout.RIGHT_OF, HEALTH_TEXT_ID);
         healthNum.setLayoutParams(healthNumParams);

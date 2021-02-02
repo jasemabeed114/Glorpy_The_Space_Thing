@@ -30,9 +30,9 @@ public class FireBall {
     private long lastFrameChangeTime;
 
     public FireBall(Context context, int positionX, int positionY, int screenX, int screenY) {
-        scaleFactorX = screenScaleX((float) screenX);
-        scaleFactorY = screenScaleY((float) screenY);
-        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        scaleFactorX = DataHolder.screenScaleX((float) screenX);
+        scaleFactorY = DataHolder.screenScaleY((float) screenY);
+        bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
         x = positionX;
         y = positionY;
         maxX = screenX;
@@ -41,7 +41,7 @@ public class FireBall {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.glorpy_fireball);
         frameHeight = (int) (175 * bitScale);
         frameWidth = (int) (175 * bitScale);
-        velocity = (20 + DataHolder.speedMod / 6) * (int) scaleFactorX;
+        velocity = (int) ((20 + (DataHolder.speedMod / 6)) * scaleFactorX);
         // hit box is adjusted for ideal collision detection
         hitBox = new Rect(x + (int) (60 * scaleFactorX), y + (int) (50 * scaleFactorY),
                 x + frameWidth - (int) (40 * scaleFactorX),
@@ -81,30 +81,6 @@ public class FireBall {
         frameToDraw.right = frameToDraw.left + frameWidth;
         frameToDraw.top = 0;
         frameToDraw.bottom = frameHeight;
-    }
-
-    private float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        if (screenX < 1) {
-            screenX = 1;
-        }
-        return screenX;
-    }
-
-    private float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        if (screenY < 1) {
-            screenY = 1;
-        }
-        return screenY;
-    }
-
-    private float bitmapScale(float scaleX, float scaleY) {
-        if (scaleX > scaleY) {
-            return scaleX;
-        } else {
-            return scaleY;
-        }
     }
 
     public int getHealth() {

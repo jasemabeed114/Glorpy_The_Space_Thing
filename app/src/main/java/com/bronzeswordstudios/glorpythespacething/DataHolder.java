@@ -45,6 +45,40 @@ public class DataHolder {
         return sortedItems;
     }
 
+    public static float screenScaleX(float screenX) {
+        screenX = screenX / 1920f;
+        if (screenX < 1) {
+            screenX = 1;
+        }
+        return screenX;
+    }
+
+    public static float screenScaleY(float screenY) {
+        screenY = screenY / 930f;
+        if (screenY < 1) {
+            screenY = 1;
+        }
+        return screenY;
+    }
+
+    public static float screenScaleX_noFloor(float screenX) {
+        screenX = screenX / 1920f;
+        return screenX;
+    }
+
+    public static float screenScaleY_noFloor(float screenY) {
+        screenY = screenY / 930f;
+        return screenY;
+    }
+
+    public static float bitmapScale(float scaleX, float scaleY) {
+        if (scaleX > scaleY) {
+            return scaleX;
+        } else {
+            return scaleY;
+        }
+    }
+
     public static final class DataEntry implements BaseColumns {
         public static final String _ID = BaseColumns._ID;
         public static final String HIGHEST_SCORE = "user_score";

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,13 +51,11 @@ public class MainActivity extends AppCompatActivity {
         backgroundView.addView(mainBackgroundView);
         MobileAds.initialize(this);
 
-
         // set up add confirmation
         final LinearLayout adPopUp = findViewById(R.id.ad_confirm);
         adPopUp.setVisibility(View.INVISIBLE);
         Button yes_button = findViewById(R.id.yes_button);
         Button no_button = findViewById(R.id.no_button);
-
 
         // half hour minimum between ads
         timeBetweenAdsMillis = 1800000;
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         //setup ads
         // todo: set to my ad id on release TEST AD - ca-app-pub-3940256099942544/1033173712
-        // real ad ca-app-pub-7113308763026501/6290352317
         DataHolder.interstitialAd = new InterstitialAd(MainActivity.this);
         DataHolder.interstitialAd.setAdUnitId("ca-app-pub-7113308763026501/6290352317");
         DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
@@ -83,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
         localDb = dbHelper.getReadableDatabase();
         Cursor cursor = localDb.query(DataHolder.DataEntry.TABLE_NAME, DataHolder.DataEntry.projection,
                 null, null, null, null, null);
-        TextView highest_score_view = findViewById(R.id.highest_score_number);
+        TextView highestScoreView = findViewById(R.id.highest_score_number);
 
         // if database exists get data
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             String highestScore = String.valueOf(cursor.getInt(DataHolder.DataEntry.HIGHEST_SCORE_INDEX));
-            highest_score_view.setText(highestScore);
+            highestScoreView.setText(highestScore);
             int powerMod = cursor.getInt(DataHolder.DataEntry.POWER_INDEX);
             int lifeMod = cursor.getInt(DataHolder.DataEntry.LIFE_INDEX);
             int speedMod = cursor.getInt(DataHolder.DataEntry.SPEED_INDEX);
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             // else create database
         } else {
-            highest_score_view.setText("0");
+            highestScoreView.setText("0");
             DataHolder.highestScore = 0;
             DataHolder.powerMod = 0;
             DataHolder.lifeMod = 0;
@@ -128,6 +126,28 @@ public class MainActivity extends AppCompatActivity {
         TextView evoButton = findViewById(R.id.evolution_button);
         TextView infoButton = findViewById(R.id.info_button);
         TextView dailyButton = findViewById(R.id.daily_button);
+
+        // set up menu scaling
+        TextView versionCode = findViewById(R.id.version_code);
+        TextView highestScoreText = findViewById(R.id.highest_score_text);
+        ImageView titleView = findViewById(R.id.title);
+        // note these are inverse when compared to others due to the portrait mode and not landscape
+        float scaleX = DataHolder.screenScaleX_noFloor(displayPoint.y);
+        float scaleY = DataHolder.screenScaleY_noFloor(displayPoint.x);
+        float bitScale = DataHolder.bitmapScale(scaleX, scaleY);
+        int textSize = (int) (30 * bitScale);
+        int titleWidth = (int) (297 * 2 * bitScale);
+        int titleHeight = (int) (159 * 2 * bitScale);
+        titleView.getLayoutParams().width = titleWidth;
+        titleView.getLayoutParams().height = titleHeight;
+        highestScoreView.setTextSize(24 * bitScale);
+        highestScoreText.setTextSize(24 * bitScale);
+        versionCode.setTextSize(textSize);
+        playButton.setTextSize(textSize);
+        scoreButton.setTextSize(textSize);
+        evoButton.setTextSize(textSize);
+        infoButton.setTextSize(textSize);
+        dailyButton.setTextSize(textSize);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadRewardAd() {
         // todo: insert my add key on release TEST AD - ca-app-pub-3940256099942544/5224354917
-        //MAIN AD - ca-app-pub-7113308763026501/3547018337
         rewardedAd = new RewardedAd(this, "ca-app-pub-7113308763026501/3547018337");
         RewardedAdLoadCallback rewardedAdLoadCallback = new RewardedAdLoadCallback();
         rewardedAd.loadAd(new AdRequest.Builder().build(), rewardedAdLoadCallback);

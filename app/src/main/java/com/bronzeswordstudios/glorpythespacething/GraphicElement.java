@@ -31,10 +31,10 @@ public class GraphicElement {
     float bitScale;
 
     public GraphicElement(Context context, int positionX, int positionY, int screenX, int screenY) {
-        scaleFactorX = screenScaleX((float) screenX);
-        scaleFactorY = screenScaleY((float) screenY);
+        scaleFactorX = DataHolder.screenScaleX((float) screenX);
+        scaleFactorY = DataHolder.screenScaleY((float) screenY);
         this.context = context;
-        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
         // bitFrames must be updated per game object's sprite sheet. How many frames does it have?
         bitFrames = 5;
         // bitmap to be updated in the child class
@@ -56,35 +56,10 @@ public class GraphicElement {
 
     }
 
-
-    private static float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        if (screenX < 1) {
-            screenX = 1;
-        }
-        return screenX;
-    }
-
-    private static float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        if (screenY < 1) {
-            screenY = 1;
-        }
-        return screenY;
-    }
-
-    private static float bitmapScale(float scaleX, float scaleY) {
-        if (scaleX > scaleY) {
-            return scaleX;
-        } else {
-            return scaleY;
-        }
-    }
-
     public static int getFrameHeight(int screenX, int screenY) {
-        float scaleFactorX = screenScaleX((float) screenX);
-        float scaleFactorY = screenScaleY((float) screenY);
-        float bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        float scaleFactorX = DataHolder.screenScaleX((float) screenX);
+        float scaleFactorY = DataHolder.screenScaleY((float) screenY);
+        float bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
         // number needs to match initial frameHeight
         int frameHeight = 50 * (int) bitScale;
         return frameHeight;

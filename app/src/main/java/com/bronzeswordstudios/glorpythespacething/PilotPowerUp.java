@@ -33,9 +33,9 @@ public class PilotPowerUp {
     public PilotPowerUp(Context context, int screenX, int screenY, BaseEnemy baseEnemy) {
         x = baseEnemy.getX();
         y = baseEnemy.getY();
-        scaleFactorX = screenScaleX(screenX);
-        scaleFactorY = screenScaleY(screenY);
-        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        scaleFactorX = DataHolder.screenScaleX(screenX);
+        scaleFactorY = DataHolder.screenScaleY(screenY);
+        bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
 
         // create pilot bitmap based on which pilot was in the cockpit
         if (baseEnemy.getEnemyArtAssetNum() >= 5) {
@@ -64,9 +64,9 @@ public class PilotPowerUp {
         int randY = random.nextInt(bigBossBetty.getFrameHeight()) + bigBossBetty.getY();
         x = randX;
         y = randY;
-        scaleFactorX = screenScaleX(screenX);
-        scaleFactorY = screenScaleY(screenY);
-        bitScale = bitmapScale(scaleFactorX, scaleFactorY);
+        scaleFactorX = DataHolder.screenScaleX(screenX);
+        scaleFactorY = DataHolder.screenScaleY(screenY);
+        bitScale = DataHolder.bitmapScale(scaleFactorX, scaleFactorY);
 
         // create pilot bitmap based on which pilot was in the cockpit
         randInt = random.nextInt(100);
@@ -120,30 +120,6 @@ public class PilotPowerUp {
 
     public void draw(Canvas canvas, Paint paint) {
         canvas.drawBitmap(bitmap, x, y, paint);
-    }
-
-    private float screenScaleX(float screenX) {
-        screenX = screenX / 1920f;
-        if (screenX < 1) {
-            screenX = 1;
-        }
-        return screenX;
-    }
-
-    private float screenScaleY(float screenY) {
-        screenY = screenY / 930f;
-        if (screenY < 1) {
-            screenY = 1;
-        }
-        return screenY;
-    }
-
-    private float bitmapScale(float scaleX, float scaleY) {
-        if (scaleX > scaleY) {
-            return scaleX;
-        } else {
-            return scaleY;
-        }
     }
 
     public Rect getHitBox() {

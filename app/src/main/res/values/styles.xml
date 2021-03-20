@@ -20,7 +20,6 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">#FF0000</item>
         <item name="android:fontFamily">@font/geo</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">16dp</item>
     </style>
 
@@ -29,7 +28,6 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">#ff073a</item>
         <item name="android:fontFamily">@font/geo</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">8dp</item>
     </style>
 

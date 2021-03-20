@@ -129,9 +129,6 @@ public class MainActivity extends AppCompatActivity {
         TextView infoButton = findViewById(R.id.info_button);
         TextView dailyButton = findViewById(R.id.daily_button);
 
-        //fix losing font on resize bug by creating font typeface
-        Typeface typeface = ResourcesCompat.getFont(this, R.font.geo);
-
         // set up menu scaling
         TextView versionCode = findViewById(R.id.version_code);
         TextView highestScoreText = findViewById(R.id.highest_score_text);
@@ -153,16 +150,6 @@ public class MainActivity extends AppCompatActivity {
         evoButton.setTextSize(textSize);
         infoButton.setTextSize(textSize);
         dailyButton.setTextSize(textSize);
-
-        // set typefaces to eliminate font loss here
-        highestScoreView.setTypeface(typeface);
-        highestScoreText.setTypeface(typeface);
-        versionCode.setTypeface(typeface);
-        playButton.setTypeface(typeface);
-        scoreButton.setTypeface(typeface);
-        evoButton.setTypeface(typeface);
-        infoButton.setTypeface(typeface);
-        dailyButton.setTypeface(typeface);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

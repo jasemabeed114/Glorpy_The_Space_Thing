@@ -7,7 +7,7 @@ android {
         applicationId "com.bronzeswordstudios.glorpythespacething"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 10
+        versionCode 11
         versionName "1.0.4.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

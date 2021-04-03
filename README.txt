@@ -9,7 +9,10 @@ That being said, there are several refactors and updates still to be made.
 No matter who you are, or your reasoning for looking at this code, if you have any questions about
 the codebase, I would love to hear from you.
 
-Some legal stuff here: The art, music, and program codebase are property of James Tauzin (me) and not for redistribution :)
+Some legal stuff here: The art, music, and program codebase are property of James Tauzin and not for redistribution :)
+
+(C) 2021 James Tauzin
+All rights reserved.
 
 James.Tauzin@BronzeSwordStudios.com
 

@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -66,16 +68,20 @@ public class GameOverActivity extends AppCompatActivity {
 
         //spawn ad
         if (DataHolder.interstitialAd != null) {
-            if (DataHolder.interstitialAd.isLoaded()) {
-                DataHolder.interstitialAd.show();
-            }
+            DataHolder.interstitialAd.show(GameOverActivity.this);
         }
 
         //Buttons
         replayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataHolder.interstitialAd.loadAd(new AdRequest.Builder().build());
+                AdRequest adRequest = new AdRequest.Builder().build();
+                InterstitialAd.load(GameOverActivity.this, "ca-app-pub-3940256099942544/1033173712", adRequest, new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        DataHolder.interstitialAd = interstitialAd;
+                    }
+                });
                 Intent intent = new Intent(GameOverActivity.this, GameActivity.class);
                 startActivity(intent);
                 finish();

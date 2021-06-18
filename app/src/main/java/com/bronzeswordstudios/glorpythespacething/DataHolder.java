@@ -3,7 +3,7 @@ package com.bronzeswordstudios.glorpythespacething;
 import android.media.MediaPlayer;
 import android.provider.BaseColumns;
 
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
 
 import java.util.ArrayList;
 import java.util.Arrays;

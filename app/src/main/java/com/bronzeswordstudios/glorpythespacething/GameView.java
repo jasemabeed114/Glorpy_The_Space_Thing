@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
+    // todo: create threads to calculate hit box detections to increase performance
 
     private final Paint paint;
     private final SurfaceHolder ourHolder;

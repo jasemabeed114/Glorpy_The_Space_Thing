@@ -257,6 +257,9 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void updateFireballs(ArrayList<FireBall> fireballs) {
+        // todo look into using a new Thread / Runnable combo for collision detection.
+        //  This may lead to needing to have a needs delete boolean or something of the like
+        //  in the background to prevent crashes
         if (fireballs.size() > 0) {
             for (int i = fireballs.size() - 1; i >= 0; i--) {
                 FireBall fireBall = fireballs.get(i);
